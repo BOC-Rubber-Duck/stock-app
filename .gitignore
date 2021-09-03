@@ -1,0 +1,8 @@
+#File types
+.txt
+
+#Folders
+node_modules/
+
+#Individual files
+.env
