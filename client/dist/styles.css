@@ -1,0 +1,37 @@
+:root {
+  --diamond-blue: #4FB6F5;
+  --background-dark: #333333;
+  --default-text: #FFFFFF;
+}
+
+* {
+  border: 1px solid red;
+}
+
+.navbar-icon {
+  color: var(--default-text);
+  align-self: center;
+  justify-self: center;
+}
+
+.navbar-container {
+  background-color: var(--background-dark);
+  color: var(--default-text);
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
