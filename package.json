@@ -10,24 +10,32 @@
   },
   "main": "index.js",
   "scripts": {
-    "react-dev": "webpack -d --watch",
+    "react-dev": "webpack --mode development --watch",
+    "react-prod": "webpack --mode production --watch",
     "start": "nodemon server/index.js",
     "test": "jest --watchAll --verbose --detectOpenHandles",
-    "test-coverage": "jest --coverage --watchAll --detectOpenHandles"
+    "test-coverage": "jest --coverage --watchAll --detectOpenHandles",
+    "test:ci": "jest --env=jsdom",
+    "build:ci": "webpack --mode production"
   },
   "dependencies": {
     "@babel/preset-react": "^7.14.5",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "express": "^4.17.1"
+    "eslint": "^7.32.0",
+    "express": "^4.17.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.15.4",
     "@babel/preset-env": "^7.15.4",
     "babel-loader": "^8.2.2",
-    "eslint": "^7.27.0",
+    "eslint-config-google": "^0.14.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "eslint-plugin-react": "^7.25.1",
     "jest": "^27.1.0",
-    "webpack": "^5.51.2"
+    "webpack": "^5.51.2",
+    "webpack-cli": "^4.8.0"
   }
 }
