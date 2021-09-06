@@ -57,7 +57,11 @@ var App = /*#__PURE__*/function (_React$Component) {
   _createClass(App, [{
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "React Header"), "React Component", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navbar_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
+        id: "app-main",
+        className: "app-main",
+        "data-testid": "app-main"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "React Header"), "React Component", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navbar_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
     }
   }]);
 

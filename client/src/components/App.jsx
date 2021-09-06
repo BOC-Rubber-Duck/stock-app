@@ -1,5 +1,6 @@
 import React from 'react';
 
+import Navbar from './Navbar.jsx'
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class App extends React.Component {
       >
         <h1>React Header</h1>
         React Component
+        <Navbar></Navbar>
       </div>
     );
   }
