@@ -7,7 +7,7 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div>
+      <div testId="app-main">
         <h1>React Header</h1>
         React Component
       </div>
