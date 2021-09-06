@@ -14,7 +14,9 @@
     "react-prod": "webpack --mode production --watch",
     "start": "nodemon server/index.js",
     "test": "jest --watchAll --verbose --detectOpenHandles",
-    "test-coverage": "jest --coverage --watchAll --detectOpenHandles"
+    "test-coverage": "jest --coverage --watchAll --detectOpenHandles",
+    "test:ci": "jest --env=jsdom",
+    "build:ci": "webpack --mode production"
   },
   "dependencies": {
     "@babel/preset-react": "^7.14.5",
