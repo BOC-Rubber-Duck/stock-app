@@ -4,16 +4,6 @@
   --default-text: #FFFFFF;
 }
 
-* {
-  border: 1px solid red;
-}
-
-.navbar-icon {
-  color: var(--default-text);
-  align-self: center;
-  justify-self: center;
-}
-
 .navbar-container {
   background-color: var(--background-dark);
   color: var(--default-text);
@@ -34,4 +24,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-size: 2em;
+}
+
+.navbar-button:hover {
+  color: var(--diamond-blue);
+}
+
+.navbar-button-text {
+  font-size: 1.4em;
 }
