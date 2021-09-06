@@ -6,3 +6,5 @@ node_modules/
 
 #Individual files
 .env
+bundle.js
+bundle.js.map
