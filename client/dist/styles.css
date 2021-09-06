@@ -34,3 +34,20 @@
 .navbar-button-text {
   font-size: 1.4em;
 }
+.searchbar-container {
+  border: 1px solid black;
+}
+.searchbar-display {
+  display: flex;
+  flex-direction: row;
+}
+.searchbar-icon {
+  padding-top: 1px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+}
+.searchbar-input {
+  width: 100%;
+  border: none;
+}

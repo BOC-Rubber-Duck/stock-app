@@ -13,7 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _Navbar_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navbar.jsx */ "./client/src/components/Navbar.jsx");
+/* harmony import */ var _Searchbar_jsx__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Searchbar.jsx */ "./client/src/components/Searchbar.jsx");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -61,7 +61,7 @@ var App = /*#__PURE__*/function (_React$Component) {
         id: "app-main",
         className: "app-main",
         "data-testid": "app-main"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "React Header"), "React Component", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Navbar_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("h1", null, "React Header"), "React Component", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(_Searchbar_jsx__WEBPACK_IMPORTED_MODULE_1__["default"], null));
     }
   }]);
 
@@ -72,10 +72,10 @@ var App = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./client/src/components/Navbar.jsx":
-/*!******************************************!*\
-  !*** ./client/src/components/Navbar.jsx ***!
-  \******************************************/
+/***/ "./client/src/components/Searchbar.jsx":
+/*!*********************************************!*\
+  !*** ./client/src/components/Searchbar.jsx ***!
+  \*********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -89,37 +89,23 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-var Navbar = function Navbar(props) {
+var Searchbar = function Searchbar() {
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "navbar-container"
+    className: "searchbar-container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "navbar-button"
+    className: "searchbar-display"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons__WEBPACK_IMPORTED_MODULE_1__.IconContext.Provider, {
     value: {
-      className: 'navbar-button'
+      className: 'searchbar-icon'
     }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_Bi__WEBPACK_IMPORTED_MODULE_2__.BiHomeAlt, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "navbar-button-text"
-  }, "Portfolio")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "navbar-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons__WEBPACK_IMPORTED_MODULE_1__.IconContext.Provider, {
-    value: {
-      className: 'navbar-button'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_Bi__WEBPACK_IMPORTED_MODULE_2__.BiSearch, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "navbar-button-text"
-  }, "Find Stocks")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", {
-    className: "navbar-button"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons__WEBPACK_IMPORTED_MODULE_1__.IconContext.Provider, {
-    value: {
-      className: 'navbar-button'
-    }
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_Bi__WEBPACK_IMPORTED_MODULE_2__.BiClipboard, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("span", {
-    className: "navbar-button-text"
-  }, "Leaderboard")));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement(react_icons_Bi__WEBPACK_IMPORTED_MODULE_2__.BiSearch, null))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0__.createElement("input", {
+    type: "text",
+    className: "searchbar-input",
+    placeholder: "Search..."
+  })));
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Navbar);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Searchbar);
 
 /***/ }),
 
