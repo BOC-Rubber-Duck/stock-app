@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import React from 'react';
 import { render, screen, cleanup } from '@testing-library/react';
 import App from '../client/src/components/App.jsx';
@@ -12,5 +16,6 @@ afterEach(() => {
 });
 
 test('Top level App component renders', () => {
-  expect(screen.getByTestId('app-main')).toBeInTheDocument();
+  const mainAppTestId = screen.getByTestId('app-main');
+  expect(mainAppTestId).toBeInTheDocument();
 });

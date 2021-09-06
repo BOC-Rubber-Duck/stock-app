@@ -7,7 +7,11 @@ class App extends React.Component {
   }
   render() {
     return (
-      <div testId="app-main">
+      <div
+        id="app-main"
+        className="app-main"
+        data-testid="app-main"
+      >
         <h1>React Header</h1>
         React Component
       </div>
