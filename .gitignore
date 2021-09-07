@@ -3,6 +3,9 @@
 
 #Folders
 node_modules/
+coverage/
 
 #Individual files
 .env
+bundle.js
+bundle.js.map
