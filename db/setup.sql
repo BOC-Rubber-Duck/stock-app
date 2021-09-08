@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id uuid not null primary key,
   password varchar(64) not null, -- bcrypt stores hashed password together with its salt.
   first_name varchar(64) not null,
@@ -12,19 +12,15 @@ CREATE INDEX ON users (last_name);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (cash_position);
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
-<<<<<<< HEAD
   strike_price int NOT NULL,
   time_entered timestamp NOT NULL
-=======
-  strike_price int NOT NULL
->>>>>>> main
 );
 
 comment on column transactions.transaction_type is 'Enum: buy: 0, sell: 1';
@@ -35,7 +31,7 @@ CREATE INDEX ON transactions (user_id);
 CREATE INDEX ON transactions (strike_price);
 CREATE INDEX ON transactions (ticker_symbol, exchange);
 
-CREATE TABLE positions (
+CREATE TABLE IF NOT EXISTS positions (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
@@ -46,13 +42,13 @@ CREATE TABLE positions (
 CREATE INDEX ON positions (user_id);
 CREATE INDEX ON positions (ticker_symbol, exchange);
 
-CREATE TABLE friendships (
+CREATE TABLE IF NOT EXISTS friendships (
   watching_user uuid PRIMARY KEY references users(id),
   watched_user uuid references users(id)
 );
 
 
-CREATE TABLE watchlist (
+CREATE TABLE IF NOT EXISTS watchlist (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
