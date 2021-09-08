@@ -19,8 +19,12 @@ CREATE TABLE transactions (
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
+<<<<<<< HEAD
   strike_price int NOT NULL,
   time_entered timestamp NOT NULL
+=======
+  strike_price int NOT NULL
+>>>>>>> main
 );
 
 comment on column transactions.transaction_type is 'Enum: buy: 0, sell: 1';
