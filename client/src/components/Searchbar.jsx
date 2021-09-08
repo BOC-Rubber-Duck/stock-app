@@ -7,7 +7,7 @@ const Searchbar = () => {
     <div className='searchbar-container'>
       <div className='searchbar-display'>
         <IconContext.Provider value={{className: 'searchbar-icon'}}>
-          <div>
+          <div className='search-icon-container'>
             <BiSearch />
           </div>
         </IconContext.Provider>

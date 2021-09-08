@@ -13,9 +13,10 @@ class App extends React.Component {
         className="app-main"
         data-testid="app-main"
       >
+        <Searchbar />
         <h1>React Header</h1>
         React Component
-        <Searchbar />
+
       </div>
     );
   }

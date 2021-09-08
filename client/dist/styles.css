@@ -2,6 +2,7 @@
   --diamond-blue: #4FB6F5;
   --background-dark: #333333;
   --default-text: #FFFFFF;
+  --search-bar: #AAAAAA;
 }
 
 .navbar-container {
@@ -35,19 +36,32 @@
   font-size: 1.4em;
 }
 .searchbar-container {
-  border: 1px solid black;
+  height: 10em;
+  background-color: var(--search-bar);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .searchbar-display {
   display: flex;
   flex-direction: row;
+  height: 50%;
+  padding: 1em;
 }
 .searchbar-icon {
-  padding-top: 1px;
   display: flex;
   align-content: center;
   justify-content: center;
+  height: 100%;
+  width: 100%;
+  background-color: var(--default-text);
 }
 .searchbar-input {
   width: 100%;
   border: none;
+  font-size: 24px;
+}
+.search-icon-container {
+  height: 100%;
+  width: 10%;
 }
