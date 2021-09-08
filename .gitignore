@@ -8,12 +8,4 @@ coverage/
 #Individual files
 .env
 bundle.js
-<<<<<<< HEAD
-<<<<<<< HEAD
 bundle.js.map
-=======
-bundle.js.map
->>>>>>> 0018636b792cf2681d6337104b9b5d0d6e4751ba
-=======
-bundle.js.map
->>>>>>> 03bde7830bbf99079d224fed40e4268877264e58
