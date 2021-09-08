@@ -6,8 +6,7 @@ const Navbar = (props) => {
   return (
     <div className='navbar-container'>
       <div className='navbar-button'>
-        <IconContext.Provider
-          value={{className: 'navbar-button'}} >
+        <IconContext.Provider value={{className: 'navbar-button'}} >
           <div>
             <BiHomeAlt/>
           </div>
