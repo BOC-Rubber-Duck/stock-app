@@ -1,6 +1,6 @@
 import React from 'react';
 import {IconContext} from 'react-icons';
-import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/Bi';
+import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
 
 
 const Navbar = (props) => {
