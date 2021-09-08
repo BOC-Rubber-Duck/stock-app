@@ -4,6 +4,7 @@
 #Folders
 node_modules/
 coverage/
+dist/
 
 #Individual files
 .env
