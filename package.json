@@ -10,7 +10,9 @@
   },
   "main": "index.js",
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/jest-setup.js"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest-setup.js"
+    ]
   },
   "scripts": {
     "react-dev": "webpack --mode development --watch",
