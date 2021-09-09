@@ -47,7 +47,6 @@ CREATE TABLE IF NOT EXISTS friendships (
   watched_user uuid references users(id)
 );
 
-
 CREATE TABLE IF NOT EXISTS watchlist (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
