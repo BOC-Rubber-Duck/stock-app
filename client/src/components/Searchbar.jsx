@@ -34,11 +34,10 @@ const Searchbar = () => {
           type='text'
           className='searchbar-input'
           placeholder='Search...'
-          onChange={(e) => handleUserInput(e)}
-          >
+          onChange={(e) => handleUserInput(e)}>
         </input>
       </div>
-          {stockPredictions && <Predictions predictions={stockPredictions}/>}
+      {stockPredictions && <Predictions predictions={stockPredictions}/>}
     </div>
   );
 };

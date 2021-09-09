@@ -12,7 +12,6 @@ app.use(express.urlencoded({extended: true}))
 
 
 app.get('/userStockSearch', (req, res) => {
-  console.log('got a search for stocks');
   const stockSearch = req.query.userStockSearch;
   const results = filterStockSearch(stockSearch);
 
