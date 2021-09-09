@@ -29,14 +29,14 @@ class BuySellMenu extends React.Component {
   render() {
     return (
       <div className='BuySellMenu'>
-        {displayBuy ?
+        {this.state.displayBuy ?
           <button
             className='buyButton'
             onClick={this.handleBuy}>
               Buy
           </button> :
           null}
-        {displaySell ?
+        {this.state.displaySell ?
           <button
             className='sellButton'
             onClick={this.handleSell}>
@@ -47,9 +47,9 @@ class BuySellMenu extends React.Component {
     );
   }
 }
-BuySellMenu.propTypes = {
-  cash: PropTypes.number.isRequired,
-  price: PropTypes.number.isRequired,
-  numStock: PropTypes.number.isRequired
-};
+// BuySellMenu.propTypes = {
+//   cash: PropTypes.number.isRequired,
+//   price: PropTypes.number.isRequired,
+//   numStock: PropTypes.number.isRequired
+// };
 export default BuySellMenu;

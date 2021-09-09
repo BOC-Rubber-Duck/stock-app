@@ -14,8 +14,6 @@ class StockDetailPage extends React.Component {
       numStock: 0, // app level or pull from db?
       trendData: [], // pull data for longest duration
     };
-
-    this.toggleGraphView = this.toggleGraphView.bind(this);
   }
 
   initialize() {

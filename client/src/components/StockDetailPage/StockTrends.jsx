@@ -1,6 +1,6 @@
 import React from 'react';
 import Graph from './Graph.jsx';
-import GraphViewMenu from './GraphView.Menu.jsx';
+import GraphViewMenu from './GraphViewMenu.jsx';
 import formatAPIData from './helpers/formatAPIData.js';
 
 class StockTrends extends React.Component {
@@ -37,7 +37,7 @@ class StockTrends extends React.Component {
   render() {
     return (
       <div className='StockTrends'>
-        <Graph data={this.props.trendData[graphView]}/>
+        <Graph data={this.props.trendData[this.state.graphView]}/>
         <GraphViewMenu
           graphView={this.state.graphView}
           views={this.state.views}
@@ -46,7 +46,7 @@ class StockTrends extends React.Component {
     );
   }
 }
-StockTrends.propTypes = {
-  trendData: PropTypes.object
-};
+// StockTrends.propTypes = {
+//   trendData: PropTypes.object
+// };
 export default StockTrends;

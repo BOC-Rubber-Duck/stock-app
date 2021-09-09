@@ -17,9 +17,9 @@ class StockInformation extends React.Component {
   }
 }
 
-StockInformation.propTypes = {
-  name: PropTypes.string.isRequired,
-  symbol: PropTypes.string.isRequired,
-  price: Proptypes.string.isRequired
-};
+// StockInformation.propTypes = {
+//   name: PropTypes.string.isRequired,
+//   symbol: PropTypes.string.isRequired,
+//   price: Proptypes.string.isRequired
+// };
 export default StockInformation;
