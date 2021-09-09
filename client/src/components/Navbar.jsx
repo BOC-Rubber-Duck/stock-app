@@ -1,13 +1,13 @@
 import React from 'react';
 import {IconContext} from 'react-icons';
-import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/Bi';
+import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
+
 
 const Navbar = (props) => {
   return (
     <div className='navbar-container'>
       <div className='navbar-button'>
-        <IconContext.Provider
-          value={{className: 'navbar-button'}} >
+        <IconContext.Provider value={{className: 'navbar-button'}} >
           <div>
             <BiHomeAlt/>
           </div>
