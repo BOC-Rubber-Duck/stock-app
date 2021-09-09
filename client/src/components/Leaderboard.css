@@ -1,0 +1,23 @@
+.leaderboard-element {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "rank username balance friend"
+}
+
+.leaderboard-rank {
+  grid-area: rank;
+}
+
+.leaderboard-username {
+  grid-area: username;
+}
+
+.leaderboard-balance {
+  grid-area: balance;
+}
+
+.leaderboard-friend {
+  grid-area: friend;
+}
