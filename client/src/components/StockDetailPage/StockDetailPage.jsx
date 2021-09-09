@@ -12,7 +12,7 @@ class StockDetailPage extends React.Component {
       price: 0, // need to figure out where this comes from
       cash: 0, // app level or pull from db?
       numStock: 0, // app level or pull from db?
-      trendData: {}, // format: key=timeframe, value=[]
+      trendData: [], // pull data for longest duration
     };
 
     this.toggleGraphView = this.toggleGraphView.bind(this);
