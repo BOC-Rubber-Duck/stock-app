@@ -8,7 +8,11 @@ class StockInformation extends React.Component {
 
     render() {
         return (
-            <div className='StockInformation'></div>
+            <div className='StockInformation'>
+                <span className='StockInformation-Name'>{this.props.name}</span>
+                <span className='StockInformation-Symbol'>{this.props.symbol}</span>
+                <span className='StockInformation-Price'>${this.props.price}</span>
+            </div>
         )
     }
 }
