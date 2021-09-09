@@ -18,20 +18,38 @@ class BuySellMenu extends React.Component {
   }
 
   handleBuy() {
+    console.log('Clicked Buy!'); // placeholder
     // TODO: direct to buy page
   }
 
   handleSell() {
+    console.log('Clicked Sell!'); // placeholder
     // TODO: direct to sell page
   }
   render() {
     return (
       <div className='BuySellMenu'>
-        <BuyButton displayBuyButton={this.state.displayBuyButton}/>
-        <SellButton diplaySellButton={this.state.displaySellButton}/>
+        {displayBuy ?
+          <button
+            className='buyButton'
+            onClick={this.handleBuy}>
+              Buy
+          </button> :
+          null}
+        {displaySell ?
+          <button
+            className='sellButton'
+            onClick={this.handleSell}>
+              Sell
+          </button> :
+          null}
       </div>
     );
   }
 }
-
+BuySellMenu.propTypes = {
+  cash: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  numStock: PropTypes.number.isRequired
+};
 export default BuySellMenu;
