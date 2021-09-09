@@ -4,6 +4,41 @@
   --default-text: #FFFFFF;
 }
 
+/**********BEGIN BASE**********/
+
+
+
+/**********END BASE**********/
+/**********BEGIN LAYOUT**********/
+.bar {
+  display: grid;
+  grid-template-areas: 'col col col';
+  grid-gap: 5 px;
+  grid-template-rows: 100 px;
+}
+
+.barColumn{
+  position: relative;
+  width: 50 px;
+  height: 100 px;
+  border-bottom: solid 1px #333333;
+  float: left;
+  font-size: 30px;
+  align-content: center;
+}
+/**********END LAYOUT**********/
+/**********BEGIN MODULE**********/
+
+
+
+/**********END MODULE**********/
+/**********BEGIN STATE**********/
+
+
+
+/**********END STATE**********/
+/**********BEGIN NAVBAR**********/
+
 .navbar-container {
   background-color: var(--background-dark);
   color: var(--default-text);
@@ -34,3 +69,16 @@
 .navbar-button-text {
   font-size: 1.4em;
 }
+
+/**********END NAVBAR**********/
+
+/*
+  DETAILS
+  Base: Default styles. Typically applies to native elements: body, form, input, a, a:hover, etc.
+  Layout: Styles that divide the page/component into sections. l- or layout-
+  Module: Reusable, modular parts of design. Think: callouts, product lists, ratings graphs, etc.
+  State: How things look in a particular state. Hidden or expanded? Active or inactive? is-hidden or is-collapse
+  http://smacss.com/book/categorizing
+  https://medium.com/@fuladuf/state-of-the-art-in-css-a-closer-look-at-css-architecture-systems-544339a6c625
+  Other, non-reusable CSS may be grouped by component (ex: Navbar)
+*/
