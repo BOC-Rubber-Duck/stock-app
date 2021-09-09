@@ -1,4 +1,4 @@
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id uuid not null primary key,
   password varchar(64) not null, -- bcrypt stores hashed password together with its salt.
   first_name varchar(64) not null,
@@ -12,14 +12,15 @@ CREATE INDEX ON users (last_name);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (cash_position);
 
-CREATE TABLE transactions (
+CREATE TABLE IF NOT EXISTS transactions (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
-  strike_price int NOT NULL
+  strike_price int NOT NULL,
+  time_entered timestamp NOT NULL
 );
 
 comment on column transactions.transaction_type is 'Enum: buy: 0, sell: 1';
@@ -30,7 +31,7 @@ CREATE INDEX ON transactions (user_id);
 CREATE INDEX ON transactions (strike_price);
 CREATE INDEX ON transactions (ticker_symbol, exchange);
 
-CREATE TABLE positions (
+CREATE TABLE IF NOT EXISTS positions (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
@@ -41,13 +42,12 @@ CREATE TABLE positions (
 CREATE INDEX ON positions (user_id);
 CREATE INDEX ON positions (ticker_symbol, exchange);
 
-CREATE TABLE friendships (
+CREATE TABLE IF NOT EXISTS friendships (
   watching_user uuid PRIMARY KEY references users(id),
   watched_user uuid references users(id)
 );
 
-
-CREATE TABLE watchlist (
+CREATE TABLE IF NOT EXISTS watchlist (
   id uuid NOT NULL PRIMARY KEY,
   user_id uuid NOT NULL references users(id),
   ticker_symbol varchar(8) NOT NULL,
@@ -78,15 +78,15 @@ VALUES
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A25', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse', 1000000);
 
 INSERT INTO transactions
-(id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price)
+(id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price, time_entered)
 VALUES
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A31', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 0, 100, 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A32', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq',  0, 100, 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A33', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq',  0, 100, 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A34', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq',  0, 100, 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A35', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse',  0, 100, 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A36', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  0, 66, 660000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A37', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  1, 66, 550000);
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A31', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A32', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A33', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A34', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A35', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A36', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  0, 66, 660000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A37', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  1, 66, 550000, '2021-09-08 12:28:25-07');
 
 INSERT INTO watchlist
 (id, user_id, ticker_symbol, exchange)
