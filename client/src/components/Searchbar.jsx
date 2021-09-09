@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {IconContext} from 'react-icons';
 import {BiSearch} from 'react-icons/Bi';
 
 const Searchbar = () => {
+
+  const [searchInput, setSearchInput] = useState('');
+
   return (
     <div className='searchbar-container'>
       <div className='searchbar-display'>
@@ -11,7 +14,14 @@ const Searchbar = () => {
             <BiSearch />
           </div>
         </IconContext.Provider>
-        <input type='text' className='searchbar-input' placeholder='Search...'></input>
+        <input
+          type='text'
+          className='searchbar-input'
+          placeholder='Search...'
+          onChange={(e) => setSearchInput(e.target.value)}
+          >
+        </input>
+        <button onClick={() => console.log(searchInput)}>clickme</button>
       </div>
     </div>
   );
