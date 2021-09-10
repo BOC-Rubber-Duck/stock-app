@@ -1,0 +1,15 @@
+# filetypes
+.git
+.gitignore
+.csv
+.rdb
+
+# folders
+.github/
+coverage/
+node_modules/
+
+# individual files
+.env
+.eslintrc.json
+.gitignore
