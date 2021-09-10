@@ -5,6 +5,11 @@
   --search-bar: #AAAAAA;
 }
 
+* {
+  margin: 0px;
+  padding: 0px;
+}
+
 .navbar-container {
   background-color: var(--background-dark);
   color: var(--default-text);
@@ -59,13 +64,42 @@
 .searchbar-input {
   width: 100%;
   border: none;
-  font-size: 24px;
+  font-size: 50px;
 }
 .search-icon-container {
   height: 100%;
   width: 10%;
 }
 
-.searchbar-prediction-container {
+.searchbar-prediction-display {
+  padding-left: 1em;
   background-color: white;
+  display: flex;
+  border-bottom: 1px solid black;
+  flex-direction: column;
+}
+.searchbar-predictions-container {
+  z-index: 2;
+  border: 1px solid black;
+  width: 100%;
+  position: absolute;
+}
+.searchbar-main {
+  width: 100%;
+}
+
+.searchbar-prediction-symbol {
+  margin: 0px;
+  font-size: 75px;
+  font-weight: bold;
+  margin: .2em 0px;
+}
+.searchbar-prediction-title {
+  margin: 0px;
+  font-size: 60px;
+  font-style: italic;
+  margin-bottom: .2em;
+}
+.searchbar-main {
+  width: inherit;
 }

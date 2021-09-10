@@ -2,7 +2,7 @@ import React from 'react';
 
 const Prediction = (props) => {
   return (
-    <div className='searchbar-prediction-container'>
+    <div className='searchbar-prediction-display'>
       <h3 className='searchbar-prediction-symbol'>
         {props.data.symbol}
       </h3>
