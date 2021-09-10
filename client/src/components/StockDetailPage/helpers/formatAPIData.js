@@ -5,15 +5,16 @@ module.exports.formatAPIData = (data) => {
     dataLength: data.length
   };
   for (let i = 0; i < data.length; i++) {
+    const dateUnix = new Date(data[i].date).getTime();
     formattedData.ohlc.push([
-      data[i].date,
+      dateUnix,
       data[i].open,
       data[i].high,
       data[i].low,
       data[i].close
     ]);
     formattedData.volume.push([
-      data[i].date,
+      dateUnix,
       data[i].volume
     ]);
   }

@@ -2,17 +2,18 @@ import React from 'react';
 import StockInformation from './StockInformation.jsx';
 import BuySellMenu from './BuySellMenu.jsx';
 import StockTrends from './StockTrends.jsx';
+import { sampleData } from '/Users/alizehrehman/Documents/RPP28/stock-app/sampleData/sampleData.js';
 
 class StockDetailPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: '', // should come from app as props
-      symbol: '', // should come from app as props
-      price: 0, // need to figure out where this comes from
-      cash: 0, // app level or pull from db?
+      name: 'Tesla Inc.', // should come from app as props
+      symbol: 'TSLA', // should come from app as props
+      price: 733.57, // need to figure out where this comes from
+      cash: 1000000, // app level or pull from db?
       numStock: 0, // app level or pull from db?
-      trendData: [], // pull data for longest duration
+      trendData: sampleData.data, // pull data for longest duration
     };
   }
 
