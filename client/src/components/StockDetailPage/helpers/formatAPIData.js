@@ -6,14 +6,14 @@ module.exports.formatAPIData = (data) => {
   };
   for (let i = 0; i < data.length; i++) {
     const dateUnix = new Date(data[i].date).getTime();
-    formattedData.ohlc.push([
+    formattedData.ohlc.unshift([
       dateUnix,
       data[i].open,
       data[i].high,
       data[i].low,
       data[i].close
     ]);
-    formattedData.volume.push([
+    formattedData.volume.unshift([
       dateUnix,
       data[i].volume
     ]);
