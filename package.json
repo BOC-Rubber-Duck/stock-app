@@ -26,13 +26,16 @@
   "dependencies": {
     "@babel/preset-react": "^7.14.5",
     "axios": "^0.21.4",
+    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
+    "enzyme": "^3.11.0",
     "eslint": "^7.32.0",
     "express": "^4.17.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.2.0"
+    "react-icons": "^4.2.0",
+    "react-router-dom": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.4",
