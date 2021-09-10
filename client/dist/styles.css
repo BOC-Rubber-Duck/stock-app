@@ -33,4 +33,6 @@
 
 .navbar-button-text {
   font-size: 1.4em;
+  text-decoration: inherit;
+  color: inherit;
 }

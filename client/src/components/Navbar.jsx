@@ -2,6 +2,8 @@ import React from 'react';
 import {IconContext} from 'react-icons';
 import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
 
+import {Link} from 'react-router-dom';
+
 
 const Navbar = (props) => {
   return (
@@ -12,7 +14,7 @@ const Navbar = (props) => {
             <BiHomeAlt/>
           </div>
         </IconContext.Provider>
-        <span className='navbar-button-text'>Portfolio</span>
+        <Link to="/login" className='navbar-button-text'>Portfolio</Link>
       </div>
       <div className='navbar-button'>
         <IconContext.Provider value={{className: 'navbar-button'}}>
@@ -20,7 +22,7 @@ const Navbar = (props) => {
             <BiSearch/>
           </div>
         </IconContext.Provider>
-        <span className='navbar-button-text'>Find Stocks</span>
+        <Link to="/trade" className='navbar-button-text'>Find Stocks</Link>
       </div>
       <div className='navbar-button'>
         <IconContext.Provider value={{className: 'navbar-button'}}>
@@ -28,8 +30,9 @@ const Navbar = (props) => {
             <BiClipboard/>
           </div>
         </IconContext.Provider>
-        <span className='navbar-button-text'>Leaderboard</span>
+        <Link to="/leaderboard" className='navbar-button-text'>Leaderboard</Link>
       </div>
+
     </div>
   );
 };
