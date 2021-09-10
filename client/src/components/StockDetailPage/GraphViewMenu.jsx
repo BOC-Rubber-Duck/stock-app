@@ -9,7 +9,7 @@ const GraphViewMenu = (props) => {
   );
 };
 
-GraphViewMenu.propTypes = {
-  views: PropTypes.array
-};
+// GraphViewMenu.propTypes = {
+//   views: PropTypes.array
+// };
 export default GraphViewMenu;

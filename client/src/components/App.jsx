@@ -1,4 +1,5 @@
 import React from 'react';
+import StockDetailPage from './StockDetailPage/StockDetailPage.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class App extends React.Component {
       >
         <h1>React Header</h1>
         React Component
+        <StockDetailPage />
       </div>
     );
   }
