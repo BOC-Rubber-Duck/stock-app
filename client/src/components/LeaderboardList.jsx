@@ -7,11 +7,16 @@ import axios from 'axios';
 const LeaderboardList = (props) => {
   // Declare a new state variable, which we'll call "count"
   const [list, setList] = useState([]);
+  const [page, setPage] = useState(0);
+  const [user] = useState('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12');
 
 
-  const fetchList = (user = null, page = 1) => {
+  const fetchList = () => {
     // Make a request for a user with a given ID
-    axios.get(`${process.env.DB}/leaderboard?user=${user}page=${page}`)
+    const entries = 2;
+    const offset = page * entries;
+    setPage(page + 1);
+    axios.get(`${process.env.DB}/leaderboard?user=${user}&offset=${offset}&entries=${entries}`)
       .then(function(response) {
         // handle success
         console.log(response);

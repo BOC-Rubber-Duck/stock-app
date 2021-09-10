@@ -7,9 +7,14 @@ const app = express();
 app.use(express.static(pathname));
 
 app.get('/leaderboard', (req, res) => {
-  let page = req.query.page;
-  let count = req.query.limit;
-  res.send('Hello World!');
+  const leaderboard = {user: req.query.user, offset: req.query.offset, entries: req.query.entries};
+  db.getLeaders(leaderboard, (error, data) => {
+    if (error) {
+      res.sendStatus(502).json(error);
+    } else {
+      res.status(200).json(data);
+    }
+  });
 });
 
 module.exports = app;

@@ -29,6 +29,8 @@
     "indent": ["error", 2],
     "eol-last": ["error", "never"],
     "require-jsdoc" : 0,
-    "comma-dangle": ["error", "only-multiline"]
+    "comma-dangle": ["error", "only-multiline"],
+    "max-len": "off",
+    "no-var": "off"
   }
 }
