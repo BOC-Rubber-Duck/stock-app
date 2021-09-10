@@ -4,7 +4,9 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
-import {shalllow} from 'enzyme';
+import {shallow, configure} from 'enzyme';
+import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
+configure({adapter: new Adapter()});
 
 
 import Searchbar from '../client/src/components/Searchbar.jsx';
@@ -12,30 +14,14 @@ import Predictions from '../client/src/components/Predictions.jsx';
 
 const samplePredictions = [
   {
-      "name": "American Airlines Group, Inc.",
-      "symbol": "AAL"
-  },
-  {
-      "name": "Atlantic American Corporation",
-      "symbol": "AAME"
-  },
-  {
-      "name": "Applied Optoelectronics, Inc.",
-      "symbol": "AAOI"
-  },
-  {
-      "name": "AAON, Inc.",
-      "symbol": "AAON"
-  },
-  {
-      "name": "Apple Inc.",
-      "symbol": "AAPL"
+    "name": "Apple Inc.",
+    "symbol": "AAPL"
   }
-]
+];
 
 beforeEach(() => {
   render(<Searchbar />);
-  render(<Predictions predictions={samplePredictions}/>)
+  render(<Predictions predictions={samplePredictions}/>);
 });
 
 afterEach(() => {
@@ -47,6 +33,7 @@ test('Searchbar renders correctly', () => {
   expect(placeholder).toBeTruthy();
 });
 
-test('Prediction render correctly', () => {
-  const predicitons =
-})
+test('Predictions render correctly', () => {
+  const AAPL = screen.getByText(/AAPL/);
+  expect(AAPL).toBeTruthy();
+});
