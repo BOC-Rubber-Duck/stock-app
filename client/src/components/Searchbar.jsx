@@ -11,15 +11,20 @@ const Searchbar = () => {
   const handleUserInput = (e) => {
     e.preventDefault;
     const userStockSearch = e.target.value;
-    axios.get('/userStockSearch', {
-      params: {
-        userStockSearch
-      }
-    })
-      .then((res) => {
-        const predictions = res.data;
-        setStockPredictions(predictions);
-      });
+
+    if (!userStockSearch) {
+      setStockPredictions([]);
+    } else {
+      axios.get('/userStockSearch', {
+        params: {
+          userStockSearch
+        }
+      })
+        .then((res) => {
+          const predictions = res.data;
+          setStockPredictions(predictions);
+        });
+    }
   };
 
   return (
