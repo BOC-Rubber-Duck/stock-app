@@ -10,6 +10,8 @@ import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Navbar from './Navbar.jsx';
 
+import Searchbar from './Searchbar.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -34,6 +36,7 @@ class App extends React.Component {
               </ul>
             </nav>
           </div>
+          <Searchbar />
           <Switch>
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/trade" component={Trade} />

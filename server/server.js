@@ -7,8 +7,8 @@ const {filterStockSearch} = require('./controllers/searchStocks.js');
 const app = express();
 
 app.use(express.static(pathname));
-app.use(express.json())
-app.use(express.urlencoded({extended: true}))
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
 
 
 app.get('/userStockSearch', (req, res) => {

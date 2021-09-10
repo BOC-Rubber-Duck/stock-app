@@ -23,9 +23,18 @@ const Searchbar = () => {
         .then((res) => {
           const predictions = res.data;
           setStockPredictions(predictions);
+        })
+        .catch((e) => {
+          console.log('error getting stock predictions', e)
         });
     }
   };
+
+  const handlePredictionClick = (symbol) => {
+    console.log('this is the stock sympbol', symbol)
+    //send api call here?
+    //import api call controller???
+  }
 
   return (
     <div className='searcbar-main'>
@@ -45,7 +54,7 @@ const Searchbar = () => {
         </div>
       </div>
       <div className='searchbar-predictions-container'>
-        {stockPredictions && <Predictions predictions={stockPredictions}/>}
+        {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
     </div>
   );

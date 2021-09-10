@@ -1,6 +1,9 @@
 const list = require('../stockList/stocks.json');
 
 const filterStockSearch = (input) => {
+  if (!input) {
+    return [];
+  }
   const filteredList = list.filter((stock) => {
     const name = stock['name'];
     const symbol = stock['symbol'];
