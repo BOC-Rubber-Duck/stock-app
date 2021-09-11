@@ -31,8 +31,11 @@
   color: var(--diamond-blue);
 }
 
-.navbar-button-text {
+.navbar-button-link {
   font-size: 1.4em;
   text-decoration: inherit;
   color: inherit;
+}
+.navbar-button-text{
+  margin: 0;
 }
