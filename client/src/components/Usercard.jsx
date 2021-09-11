@@ -1,29 +1,38 @@
 import React from 'react';
 
-// Expected props w/ examples:
-// username: 'RubberDuck'
-// rank: 2
-// cashbalance: 500000
-// stockbalance: 500000
+/*
+Will likely need to be refactored based on routes.
+May potentially be refactored to take in username and make request within the component.
+
+Current expected props w/ example:
+
+  user: {
+    username: 'RubberDuck'
+    rank: 2
+    cashbalance: 500000
+    stockbalance: 500000
+  }
+
+  */
 
 
 const Usercard = (props) => {
   return (
     <div className='usercard'>
       <div className='profdetail1'>
-        <span>Rubber Duck</span>
+        <span>{props.username}</span>
         <span></span>
-        <span>Rank: 2</span>
+        <span>Rank: {props.rank}</span>
       </div>
       <div className='profdetail1'>
         <span>
           <p>Cash Balance</p>
-          <p>$500000</p>
+          <p>${props.cashbalance}</p>
         </span>
         <span></span>
         <span>
           <p>Stonk Value</p>
-          <p>$500000</p>
+          <p>${props.stockbalance}</p>
         </span>
       </div>
       <div className='profdetail2'>
@@ -31,7 +40,7 @@ const Usercard = (props) => {
         <span><p className='diamond'>💎</p></span>
         <span>
           <p>Total</p>
-          <p>$1000000</p>
+          <p>${props.cashbalance + props.stockbalance}</p>
         </span>
         <span><p className='diamond'>💎</p></span>
         <span></span>
