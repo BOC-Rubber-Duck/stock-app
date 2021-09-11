@@ -7,6 +7,8 @@ import { shallow, configure } from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 configure({adapter: new Adapter()});
 
+import {BrowserRouter} from 'react-router-dom';
+
 import { render, cleanup } from '@testing-library/react';
 import App from '../client/src/components/App.jsx';
 import Navbar from '../client/src/components/Navbar.jsx';
@@ -14,8 +16,9 @@ import Login from '../client/src/components/Login.jsx';
 import Trade from '../client/src/components/Trade.jsx';
 import Leaderboard from '../client/src/components/Leaderboard.jsx';
 
+
 beforeEach(() => {
-  render(<App />);
+  render(<BrowserRouter><App /></BrowserRouter>);
 });
 
 afterEach(() => {

@@ -37,7 +37,7 @@
   color: var(--diamond-blue);
 }
 
-.navbar-button-text {
+.navbar-button-link {
   font-size: 1.4em;
 }
 .searchbar-container {
@@ -102,4 +102,9 @@
 }
 .searchbar-main {
   width: inherit;
+  text-decoration: inherit;
+  color: inherit;
+}
+.navbar-button-text{
+  margin: 0;
 }
