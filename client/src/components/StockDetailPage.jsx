@@ -1,8 +1,8 @@
 import React from 'react';
-import StockInformation from './StockInformation.jsx';
-import BuySellMenu from './BuySellMenu.jsx';
-import StockTrends from './StockTrends.jsx';
-import { sampleData } from '/Users/alizehrehman/Documents/RPP28/stock-app/sampleData/sampleData.js';
+import StockInformation from './StockDetailPage/StockInformation.jsx';
+import BuySellMenu from './StockDetailPage/BuySellMenu.jsx';
+import StockTrends from './StockDetailPage/StockTrends.jsx';
+import { sampleData } from '/sampleData/sampleData.js';
 
 class StockDetailPage extends React.Component {
   constructor(props) {
@@ -12,13 +12,9 @@ class StockDetailPage extends React.Component {
       symbol: 'TSLA', // should come from app as props
       price: 733.57, // need to figure out where this comes from
       cash: 1000000, // app level or pull from db?
-      numStock: 0, // app level or pull from db?
+      numStock: 1, // app level or pull from db?
       trendData: sampleData.data, // pull data for longest duration
     };
-  }
-
-  initialize() {
-    // TODO pull trendData from API and set state
   }
 
   render() {

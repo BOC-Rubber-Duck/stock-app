@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 class StockInformation extends React.Component {
@@ -17,9 +18,4 @@ class StockInformation extends React.Component {
   }
 }
 
-// StockInformation.propTypes = {
-//   name: PropTypes.string.isRequired,
-//   symbol: PropTypes.string.isRequired,
-//   price: Proptypes.string.isRequired
-// };
 export default StockInformation;

@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
@@ -74,21 +75,6 @@ const Graph = (props) => {
         units: groupingUnits
       }
     }],
-    // responsive: {
-    //   rules: [{
-    //     condition: {
-    //       maxWidth: 800
-    //     },
-    //     chartOptions: {
-    //       rangeSelector: {
-    //         inputEnabled: false
-    //       }
-    //     }
-    //   }]
-    // },
-    // dataGrouping: {
-    //   enabled: false
-    // }
   };
   return (
     <HighchartsReact

@@ -9,6 +9,7 @@ import Login from './Login.jsx';
 import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Navbar from './Navbar.jsx';
+import StockDetailPage from './StockDetailPage.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +32,9 @@ class App extends React.Component {
                 <li>
                   <Link to="/leaderboard">Leaderboard</Link>
                 </li>
+                <li>
+                  <Link to="/stockDetailPage">Stock Detail Page</Link>
+                </li>
               </ul>
             </nav>
           </div>
@@ -38,6 +42,7 @@ class App extends React.Component {
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/stockDetailPage" component={StockDetailPage} />
           </Switch>
           <Navbar />
         </React.Fragment>

@@ -1,55 +1,37 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
+import {useHistory} from 'react-router-dom';
 
-class BuySellMenu extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      displayBuy: false,
-      displaySell: false,
-    };
-  }
+const BuySellMenu = (props) => {
+  // check if cash balance is enough to buy at least one stock
+  const displayBuy = props.cash >= props.price ? true : false;
+  // check if stock is in portfolio
+  const displaySell = props.numStock > 0 ? true : false;
+  const history = useHistory();
+  const handleClick = () => {
+    history.push('/trade');
+  };
+  return (
+    <div className='BuySellMenu'>
+      {displayBuy ?
+        <button
+          className='buyButton'
+          onClick={handleClick}
+        >
+            Buy
+        </button> :
+        null}
+      {displaySell ?
+        <button
+          className='sellButton'
+          onClick={handleClick}
+        >
+            Sell
+        </button> :
+        null}
+    </div>
 
-  initialize() {
-    // check if cash balance is enough to buy at least one stock
-    const displayBuy = this.props.cash >= this.props.price ? true : false;
-    // check if stock is in portfolio
-    const displaySell = this.props.numStock > 0 ? true : false;
-    this.setState({displayBuy, displaySell});
-  }
+  );
+};
 
-  handleBuy() {
-    console.log('Clicked Buy!'); // placeholder
-    // TODO: direct to buy page
-  }
-
-  handleSell() {
-    console.log('Clicked Sell!'); // placeholder
-    // TODO: direct to sell page
-  }
-  render() {
-    return (
-      <div className='BuySellMenu'>
-        {this.state.displayBuy ?
-          <button
-            className='buyButton'
-            onClick={this.handleBuy}>
-              Buy
-          </button> :
-          null}
-        {this.state.displaySell ?
-          <button
-            className='sellButton'
-            onClick={this.handleSell}>
-              Sell
-          </button> :
-          null}
-      </div>
-    );
-  }
-}
-// BuySellMenu.propTypes = {
-//   cash: PropTypes.number.isRequired,
-//   price: PropTypes.number.isRequired,
-//   numStock: PropTypes.number.isRequired
-// };
 export default BuySellMenu;
