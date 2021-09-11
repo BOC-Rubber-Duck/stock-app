@@ -9,7 +9,6 @@ import Login from './Login.jsx';
 import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Navbar from './Navbar.jsx';
-import Portfolio from './Portfolio.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -19,7 +18,6 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <Portfolio />
         <React.Fragment>
           <div>
             <nav>

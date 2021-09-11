@@ -7,10 +7,10 @@ May potentially be refactored to take in username and make request within the co
 Current expected props w/ example:
 
   user: {
-    username: 'RubberDuck'
-    rank: 2
-    cashbalance: 500000
-    stockbalance: 500000
+    username: 'RubberDuck',
+    rank: 2,
+    cashbalance: 500000,
+    stockbalance: 500000,
   }
 */
 
