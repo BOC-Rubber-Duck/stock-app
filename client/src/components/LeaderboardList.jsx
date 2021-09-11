@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './Leaderboard.css';
 import LeaderboardListElement from './LeaderboardListElement.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -9,18 +9,23 @@ const LeaderboardList = (props) => {
   const [list, setList] = useState([]);
   const [page, setPage] = useState(0);
   const [user] = useState('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12');
+  const [hasMore, setHasMore] = useState(true);
 
 
   const fetchList = () => {
     // Make a request for a user with a given ID
+    console.log('list being fetched');
     const entries = 2;
     const offset = page * entries;
     setPage(page + 1);
-    axios.get(`${process.env.DB}/leaderboard?user=${user}&offset=${offset}&entries=${entries}`)
+    axios.get(`${process.env.SERVER}/leaders`, {params: {user: user, offset: offset, entries: entries}})
       .then(function(response) {
         // handle success
-        console.log(response);
-        setList(list.concat(response));
+        console.log('response:', response);
+        setList(list.concat(response.data));
+        if (response.data.length === 0) {
+          setHasMore(false);
+        }
       })
       .catch(function(error) {
         // handle error
@@ -28,12 +33,20 @@ const LeaderboardList = (props) => {
       });
   };
 
+  useEffect(() => {
+    const container = document.getElementById("container");
+    if ((container.scrollHeight === container.offsetHeight) && hasMore === true) {
+      fetchList();
+    }
+  }, [list]);
+
   return (
-    <div>
+    <div id="container">
       <InfiniteScroll
+        scrollableTarget={'container'}
         dataLength={list.length}
         next={fetchList}
-        hasMore={true}
+        hasMore={hasMore}
         loader={<h4>Loading...</h4>}
         endMessage={
           <p style={{textAlign: 'center'}}>
@@ -53,11 +66,11 @@ const LeaderboardList = (props) => {
       >
         {list.map((element, index) => (
           <LeaderboardListElement
-            key={element.username}
+            key={element.id}
             rank={(index + 1)}
             username={element.username}
-            balance={element.balance}
-            friend={element.friend}/>
+            balance={element.cash_position}
+            friend={element.watching_user}/>
         ))}
       </InfiniteScroll>
     </div>
