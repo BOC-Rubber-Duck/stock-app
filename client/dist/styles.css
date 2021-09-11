@@ -39,6 +39,8 @@
 
 .navbar-button-link {
   font-size: 1.4em;
+  text-decoration: inherit;
+  color: inherit;
 }
 .searchbar-container {
   height: 10em;

@@ -2,7 +2,7 @@ import React from 'react';
 import {IconContext} from 'react-icons';
 import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
 
-import {BrowserRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 const Navbar = (props) => {

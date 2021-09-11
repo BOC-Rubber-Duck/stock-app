@@ -21,7 +21,7 @@ class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <div>
+          {/* <div>
             <nav>
               <ul>
                 <li>
@@ -35,8 +35,7 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div>
-          <Searchbar />
+          </div> */}
           <Switch>
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/trade" component={Trade} />
