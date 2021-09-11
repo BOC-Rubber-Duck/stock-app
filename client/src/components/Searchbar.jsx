@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Predictions from './Predictions.jsx'
 import {IconContext} from 'react-icons';
-import {BiSearch} from 'react-icons/Bi';
+import {BiSearch} from 'react-icons/bi';
 
 const Searchbar = () => {
   const [stockPredictions, setStockPredictions] = useState([]);
