@@ -12,27 +12,25 @@ Current expected props w/ example:
     cashbalance: 500000
     stockbalance: 500000
   }
-
-  */
-
+*/
 
 const Usercard = (props) => {
   return (
     <div className='usercard'>
       <div className='profdetail1'>
-        <span>{props.username}</span>
+        <span>{props.user.username}</span>
         <span></span>
-        <span>Rank: {props.rank}</span>
+        <span>Rank: {props.user.rank}</span>
       </div>
       <div className='profdetail1'>
         <span>
           <p>Cash Balance</p>
-          <p>${props.cashbalance}</p>
+          <p>${props.user.cashbalance}</p>
         </span>
         <span></span>
         <span>
           <p>Stonk Value</p>
-          <p>${props.stockbalance}</p>
+          <p>${props.user.stockbalance}</p>
         </span>
       </div>
       <div className='profdetail2'>
@@ -40,7 +38,7 @@ const Usercard = (props) => {
         <span><p className='diamond'>💎</p></span>
         <span>
           <p>Total</p>
-          <p>${props.cashbalance + props.stockbalance}</p>
+          <p>${props.user.cashbalance + props.user.stockbalance}</p>
         </span>
         <span><p className='diamond'>💎</p></span>
         <span></span>
