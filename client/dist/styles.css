@@ -1,11 +1,18 @@
 :root {
   --diamond-blue: #4FB6F5;
   --background-dark: #333333;
+  --background-light: #ebebeb;
   --default-text: #FFFFFF;
 }
 
 /**********BEGIN BASE**********/
-
+.diamond {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 2em;
+}
 
 
 /**********END BASE**********/
@@ -21,7 +28,7 @@
   position: relative;
   width: 50 px;
   height: 100 px;
-  border-bottom: solid 1px #333333;
+  border-bottom: solid 1px var(--background-dark);
   float: left;
   font-size: 30px;
   align-content: center;
@@ -71,6 +78,27 @@
 }
 
 /**********END NAVBAR**********/
+/**********BEGIN USERCARD**********/
+.usercard {
+  background-color: var(--background-light);
+  font-size: 2em;
+  text-align: center;
+}
+
+.profdetail1 {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-content: flex-end;
+}
+
+.profdetail2 {
+  width: 100%;
+  display: inline-grid;
+  grid-template-columns: 30% 10% 20% 10% 35%;
+}
+
+/**********END USERCARD**********/
 
 /*
   DETAILS
