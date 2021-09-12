@@ -5,9 +5,11 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Portfolio from './Portfolio.jsx';
 import Login from './Login.jsx';
-import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
+import Trade from './Trade.jsx';
+import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
 
 class App extends React.Component {
@@ -76,6 +78,8 @@ class App extends React.Component {
           </div>
           <Switch>
             <Route exact path="/leaderboard" component={Leaderboard} />
+            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
           </Switch>
