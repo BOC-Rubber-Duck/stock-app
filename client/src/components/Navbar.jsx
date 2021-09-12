@@ -2,13 +2,13 @@ import React from 'react';
 import {IconContext} from 'react-icons';
 import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
 
-import {BrowserRouter, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 const Navbar = (props) => {
   return (
     <div className='navbar-container'>
-      <Link to="/login" className='navbar-button-link'>
+      <Link to="/portfolio" className='navbar-button-link'>
         <div className='navbar-button'>
           <IconContext.Provider value={{className: 'navbar-button'}} >
             <div>
@@ -18,7 +18,7 @@ const Navbar = (props) => {
           <p className='navbar-button-text'>Portfolio</p>
         </div>
       </Link>
-      <Link to="/trade" className='navbar-button-link'>
+      <Link to="/stock-search" className='navbar-button-link'>
         <div className='navbar-button'>
           <IconContext.Provider value={{className: 'navbar-button'}}>
             <div>

@@ -5,10 +5,13 @@ import {
   Route,
   Link
 } from 'react-router-dom';
+import Portfolio from './Portfolio.jsx';
 import Login from './Login.jsx';
-import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
+import Trade from './Trade.jsx';
+import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
+import StockDetail from './StockDetail.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -68,16 +71,17 @@ class App extends React.Component {
                 <li>
                   <Link to="/trade">Trade</Link>
                 </li>
-                <li>
-                  <Link to="/leaderboard">Leaderboard</Link>
-                </li>
               </ul>
             </nav>
           </div>
           <Switch>
+            <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
+            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/stock-detail" component={StockDetail} />
           </Switch>
           <Navbar />
         </React.Fragment>
