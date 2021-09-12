@@ -2,7 +2,7 @@ import React from 'react';
 import StockInformation from './StockDetailPage/StockInformation.jsx';
 import BuySellMenu from './StockDetailPage/BuySellMenu.jsx';
 import StockTrends from './StockDetailPage/StockTrends.jsx';
-import { sampleData } from '/sampleData/sampleData.js';
+import sampleData from '/sampleData/sampleData.js';
 
 class StockDetailPage extends React.Component {
   constructor(props) {

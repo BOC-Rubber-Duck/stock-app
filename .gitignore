@@ -9,8 +9,5 @@ coverage/
 .env
 bundle.js
 bundle.js.map
-<<<<<<< HEAD
 package-lock.json
-=======
 config.js
->>>>>>> development
