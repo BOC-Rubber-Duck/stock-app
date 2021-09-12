@@ -13,8 +13,48 @@ import Navbar from './Navbar.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      user: {
+        first_name: '',
+        last_name: '',
+        username: '',
+        email: '',
+        cashBalance: 0,
+        rank: null,
+        userPortfolio: [
+          // {
+          //   stockName:
+          //   sharesOwned
+          // }
+        ],
+        friends: [
+          // username, username
+        ]
+      },
+      sessionInfo: {}, // need to be populated with passport
+      selectedFriend: {
+        username: '',
+        rank: 0,
+        portfolioValue: 0,
+        selectedFriendPortfolio: [
+        //  {
+        //     stockName:
+        //     sharesOwned
+        //   },
+        //   {}
+        ]
+      },
+      stockSelected: {
+        name: '',
+        symbol: '',
+        price: null,
+        data: [
+          // {},{}
+        ]
+      }
+    };
   }
+
   render() {
     return (
       <Router>
