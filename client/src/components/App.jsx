@@ -33,7 +33,7 @@ class App extends React.Component {
                   <Link to="/leaderboard">Leaderboard</Link>
                 </li>
                 <li>
-                  <Link to="/stockDetailPage">Stock Detail Page</Link>
+                  <Link to="/stock-detail-page">Stock Detail Page</Link>
                 </li>
               </ul>
             </nav>
@@ -42,7 +42,7 @@ class App extends React.Component {
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/stockDetailPage" component={StockDetailPage} />
+            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
           </Switch>
           <Navbar />
         </React.Fragment>
