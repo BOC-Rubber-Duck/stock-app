@@ -13,6 +13,11 @@ beforeEach(() => {
   render(<BrowserRouter><Navbar /></BrowserRouter>);
 });
 
+afterEach(() => {
+  cleanup();
+});
+
+
 test('Navbar renders correctly', () => {
   const leaderboard = screen.getByText(/Leaderboard/i);
   const portfolio = screen.getByText(/Portfolio/i);
