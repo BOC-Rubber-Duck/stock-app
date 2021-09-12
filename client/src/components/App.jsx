@@ -13,6 +13,8 @@ import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
 import StockDetail from './StockDetail.jsx';
 
+import Searchbar from './Searchbar.jsx';
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -62,7 +64,7 @@ class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          <div>
+          {/* <div>
             <nav>
               <ul>
                 <li>
@@ -73,7 +75,7 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div>
+          </div> */}
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
