@@ -45,9 +45,13 @@ CREATE INDEX ON positions (user_id);
 CREATE INDEX ON positions (ticker_symbol, exchange);
 
 CREATE TABLE IF NOT EXISTS friendships (
-  watching_user uuid PRIMARY KEY references users(id),
-  watched_user uuid references users(id)
+  watching_user uuid references users(id),
+  watched_user uuid references users(id),
+  PRIMARY KEY (watching_user, watched_user)
 );
+
+CREATE INDEX ON friendships (watching_user);
+CREATE INDEX ON friendships (watched_user);
 
 CREATE TABLE IF NOT EXISTS watchlist (
   id uuid NOT NULL PRIMARY KEY,
