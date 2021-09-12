@@ -84,6 +84,72 @@
   text-decoration: inherit;
   color: inherit;
 }
+
+.StockDetailPage {
+  margin: 5%
+}
+
+.StockInformation {
+  display: grid;
+  grid-template-columns: 3;
+  grid-template-rows: 2;
+  margin: 2%;
+}
+
+.StockInformation-Name {
+  grid-column: 1;
+  grid-row: 1;
+  text-align: left;
+  font-size: 3em;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.StockInformation-Symbol {
+  grid-column: 3;
+  grid-row: 1;
+  text-align: right;
+  font-size: 3em;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+.StockInformation-Price {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: center;
+  font-size: 4em;
+  margin-top: 32%;
+  margin-bottom: 0%;
+}
+
+.StockTrends {
+  margin-top: 15%;
+  margin-bottom: 35%;
+}
+
+.BuySellMenu {
+  display: grid;
+  grid-template-columns: 2;
+  grid-template-rows: 1;
+}
+
+.buyButton {
+  grid-column: 1;
+  text-align: center;
+  margin-right: 5%;
+  font-size: 2.5em;
+  height: 2em;
+}
+
+.sellButton {
+  grid-column: 2;
+  text-align: center;
+  margin-left: 5%;
+  font-size: 2.5em;
+  height: 2em;
+}
+
 .searchbar-container {
   height: 10em;
   background-color: var(--search-bar);
