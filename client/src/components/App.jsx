@@ -55,6 +55,20 @@ class App extends React.Component {
     };
   }
 
+
+  getUser() {
+
+  };
+
+  fetchSelectedStock(symbol) {
+    // TODO: ajax calls to external service
+
+    this.setState({
+
+    });
+  };
+
+
   render() {
     return (
       <Router>
