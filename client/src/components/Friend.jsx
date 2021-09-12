@@ -2,11 +2,11 @@ import React from 'react';
 
 const Friend = (props) => {
   return (
-    <section className="friend">
-      <nav>
-        <input type="search" placeholder="Search by username" />
-        <button type="reset"></button>
-        <button type="button">Cancel</button>
+    <section className="fr-page">
+      <nav className="fr-nav">
+        <input type="fr-search-input" placeholder="Search by username" />
+        <button type="fr-button-reset"></button>
+        <button type="fr-button-cancel">Cancel</button>
       </nav>
       <section className="fr-results">
         <ul>
