@@ -11,6 +11,7 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
 import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
+import StockDetail from './StockDetail.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -80,6 +81,7 @@ class App extends React.Component {
             <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/stock-detail" component={StockDetail} />
           </Switch>
           <Navbar />
         </React.Fragment>
