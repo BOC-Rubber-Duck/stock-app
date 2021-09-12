@@ -3,7 +3,7 @@ import React from 'react';
 const Trade = (props) => {
   return (
     <div className="trade-container" id="trade-container">
-      Trade Component
+      Buy/Sell Stocks!
     </div>
   );
 };
