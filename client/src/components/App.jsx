@@ -70,13 +70,11 @@ class App extends React.Component {
                 <li>
                   <Link to="/trade">Trade</Link>
                 </li>
-                <li>
-                  <Link to="/leaderboard">Leaderboard</Link>
-                </li>
               </ul>
             </nav>
           </div>
           <Switch>
+            <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search" component={StockSearch} />
