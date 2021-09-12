@@ -5,11 +5,18 @@
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
 
+import {BrowserRouter} from 'react-router-dom';
+
 import Navbar from '../client/src/components/Navbar.jsx';
 
 beforeEach(() => {
-  render(<Navbar />);
+  render(<BrowserRouter><Navbar /></BrowserRouter>);
 });
+
+afterEach(() => {
+  cleanup();
+});
+
 
 test('Navbar renders correctly', () => {
   const leaderboard = screen.getByText(/Leaderboard/i);
