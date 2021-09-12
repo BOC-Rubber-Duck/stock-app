@@ -9,6 +9,7 @@ import Login from './Login.jsx';
 import Trade from './Trade.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Navbar from './Navbar.jsx';
+import Friend from './Friend.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -78,6 +79,7 @@ class App extends React.Component {
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/friend" component={Friend} />
           </Switch>
           <Navbar />
         </React.Fragment>
