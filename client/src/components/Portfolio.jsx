@@ -3,12 +3,16 @@ import Stockbar from './Stockbar.jsx';
 import Usercard from './Usercard.jsx';
 
 const Portfolio = (props) => {
+  const stocks = props.user.userPortfolio;
+  const stockbars = stocks.map((stockObject) => {
+    return(<Stockbar stock={stockObject} useCase='portfolio'/>);
+  });
+  console.log(stockbars);
+
   return (
     <div>
       <Usercard user={props.user}/>
-      <Stockbar type='stockSearch' symbol='TSLA' name='Tesla, Inc.'/>
-      <Stockbar type='stockSearch' symbol='TSLO' name='Toosla, Inc.'/>
-      <Stockbar type='portfolio' symbol='STKD' name='Stock Ducks, Inc.' value='236.50'/>
+      <div>{stockbars}</div>
     </div>
   );
 };
