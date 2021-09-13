@@ -99,7 +99,6 @@ app.post('/api/postFriend', (req, res) => {
 })
 
 app.post('/api/postWatchSecurity', (req, res) => {
-  console.log('req.body: ', req.body);
   db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)
     .then((data) => {
       res.sendStatus(204);
@@ -110,6 +109,17 @@ app.post('/api/postWatchSecurity', (req, res) => {
     });
 })
 
+app.post('/api/postUser', (req, res) => {
+  let { first_name, last_name, email, username, password } = req.body;
+  db.postUser(first_name, last_name, email, username, password)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during postUser: ', err)
+      res.send(500);
+    });
+})
 app.post('/trade', (req, res) => {
   console.log('trade query:', req.query);
   const stockSymbol = req.query.stockSymbol;
