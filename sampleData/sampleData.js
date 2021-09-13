@@ -1,4 +1,4 @@
-const sampleData = {
+module.exports.sampleData = {
   'pagination': {
     'limit': 100,
     'offset': 0,
@@ -1608,7 +1608,3 @@ const sampleData = {
     }
   ]
 };
-
-module.exports = {
-  sampleData
-}
