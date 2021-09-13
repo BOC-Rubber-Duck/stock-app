@@ -1,3 +1,6 @@
+
+/**********BEGIN BASE**********/
+
 :root {
   --diamond-blue: #4FB6F5;
   --background-dark: #333333;
@@ -11,7 +14,10 @@
   padding: 0px;
 }
 
-/**********BEGIN BASE**********/
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 .diamond {
   display: flex;
   justify-content: center;
@@ -28,6 +34,12 @@ a, a:hover, a:focus, a:active {
 
 /**********END BASE**********/
 /**********BEGIN LAYOUT**********/
+
+#app {
+  max-width: 600px;
+  margin: auto;
+}
+
 .bar {
   display: grid;
   grid-template-areas: 'col col col';
@@ -245,6 +257,149 @@ a, a:hover, a:focus, a:active {
   grid-template-columns: 30% 10% 20% 10% 35%;
 }
 /**********END USERCARD**********/
+/**********BEGIN LEADERBOARD**********/
+.leaderboard-element {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 4fr 4fr 1fr;
+  grid-template-areas:
+    "rank username balance friend"
+}
+
+.leaderboard-rank {
+  grid-area: rank;
+}
+
+.leaderboard-username {
+  grid-area: username;
+}
+
+.leaderboard-balance {
+  grid-area: balance;
+}
+
+.leaderboard-friend {
+  grid-area: friend;
+}
+
+#leaderboard-bottom-nav-space {
+  height: 75px;
+}
+/**********END LEADERBOARD**********/
+/**********BEGIN FRIEND SEARCH**********/
+
+/* Compatibility
+- - - - - - - - - - - - - - - - - - - - - - - - */
+input, textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
+}
+
+/* Search area
+- - - - - - - - - - - - - - - - - - - - - - - - */
+.fr-nav {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  align-items: center;
+}
+
+.fr-page {
+  background-color: #121212;
+  height: 100vh;
+  margin: auto;
+}
+
+.fr-nav {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  border-bottom: 1px solid white;
+  height: 6rem;
+}
+
+.fr-search-input {
+  background: #FFFFFF;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  height: 2.5rem;
+  margin: 1rem;
+  padding: 0.5rem;
+}
+
+.fr-button-cancel {
+  background-color: transparent;
+  height: 2.5rem;
+  width: 4rem;
+  margin-right: 1rem;
+  border: none;
+  box-shadow: none;
+  font-size: 1.1rem;
+  color: var(--diamond-blue);
+}
+
+
+/* Search results
+- - - - - - - - - - - - - - - - - - - - - - - - */
+
+.fr-results {
+  list-style-type: none;
+  color: white;
+  font-size: 1.1rem;
+}
+
+.fr-results ul {
+  list-style-type: none;
+  margin: 1rem;
+  color: white;
+}
+
+.fr-results li {
+  display: grid;
+  grid-template-columns: 1fr min-content;
+  align-items: center;
+}
+
+.fr-results li {
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  min-height: 4rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border-radius: 4px;
+  /* border-bottom: 1px solid gray; */
+}
+
+/* Container for the name and portfolio value */
+.fr-search-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 1rem 0;
+}
+
+.fr-username {
+  font-weight: 400;
+}
+
+.fr-portfolio-value {
+  font-weight: 200;
+}
+
+.fr-username, .fr-portfolio-value {
+  line-height: 1.5rem;
+}
+
+/* .fr-is-friend */
+
+.fr-portfolio-value {
+  margin-left: auto;
+}
+
+.fr-result-nav {
+  width: 2rem;
+  text-align: right;
+  padding: 0.5rem;
+};
+
+/**********END FRIEND SEARCH**********/
 
 /*
   DETAILS
