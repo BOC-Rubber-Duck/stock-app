@@ -32,6 +32,7 @@
     "comma-dangle": ["error", "only-multiline"],
     "max-len": "off",
     "no-var": "off",
-    "object-curly-spacing": "off"
+    "object-curly-spacing": "off",
+    "prop-types": "off"
   }
 }
