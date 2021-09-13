@@ -21,15 +21,31 @@ class App extends React.Component {
       user: {
         first_name: '',
         last_name: '',
-        username: '',
+        username: 'bezos_the_first',
         email: '',
-        cashBalance: 0,
-        rank: null,
+        cashBalance: 200000,
+        rank: 1,
         userPortfolio: [
-          // {
-          //   stockName:
-          //   sharesOwned
-          // }
+          {
+            stockName: 'Amazon.com, Inc.',
+            stockSymbol: 'AMZN',
+            valueOwned: 350000
+          },
+          {
+            stockName: 'Telsa, Inc.',
+            stockSymbol: 'TSLA',
+            valueOwned: 300000
+          },
+          {
+            stockName: 'Apple',
+            stockSymbol: 'AAPL',
+            valueOwned: 200000
+          },
+          {
+            stockName: 'StockDucks, Inc.',
+            stockSymbol: 'STKD',
+            valueOwned: 200000
+          }
         ],
         friends: [
           // username, username
@@ -153,7 +169,10 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
-            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/portfolio"
+              render={() =>
+                <Portfolio user={this.state.user}/>
+              }/>
             <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
