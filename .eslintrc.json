@@ -30,6 +30,9 @@
     "eol-last": ["error", "never"],
     "require-jsdoc" : 0,
     "comma-dangle": ["error", "only-multiline"],
-    "object-curly-spacing": "off"
+    "max-len": "off",
+    "no-var": "off",
+    "object-curly-spacing": "off",
+    "prop-types": "off"
   }
 }
