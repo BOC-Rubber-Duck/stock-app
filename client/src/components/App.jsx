@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Switch,
@@ -57,6 +58,8 @@ class App extends React.Component {
         ]
       }
     };
+
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
   }
 
   selectedUserSearch(username) {
@@ -126,6 +129,15 @@ class App extends React.Component {
     //     ]
     //   },
     // });
+    axios.get('/fetchSelectedStock', {
+      params: {
+        symbol
+      }
+    })
+    .then((res) => {
+      console.log('got response from server with data!', res.data)
+    })
+
   };
 
   render() {
@@ -159,6 +171,7 @@ class App extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/stock-detail-page" component={StockDetailPage}/>
           </Switch>
+          <button className='test-button'onClick={() => this.fetchSelectedStock('AAPL') }>Test click </button>
           <Navbar />
         </React.Fragment>
       </Router>

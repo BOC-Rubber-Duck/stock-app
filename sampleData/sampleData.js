@@ -1,4 +1,4 @@
-export default sampleData = {
+const sampleData = {
   'pagination': {
     'limit': 100,
     'offset': 0,
@@ -1608,3 +1608,7 @@ export default sampleData = {
     }
   ]
 };
+
+module.exports = {
+  sampleData
+}
