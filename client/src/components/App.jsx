@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Switch,
@@ -50,14 +51,15 @@ class App extends React.Component {
         ]
       },
       stockSelected: {
-        name: '',
-        symbol: '',
-        price: null,
+        name: 'Tesla',
+        symbol: 'TSLA',
+        price: 100,
         data: [
           // {},{}
         ]
       }
     };
+    this.handleTrade = this.handleTrade.bind(this);
   }
 
   selectedUserSearch(username) {
@@ -84,8 +86,20 @@ class App extends React.Component {
     // update stock prices?
   };
 
-  handleTrade(stockName, shares, action) {
+  handleTrade(stockSymbol, shares, action) {
+    console.log('handleTrade method called');
     // axios call:
+    axios.post('/trade', {
+      stockSymbol: stockSymbol,
+      shares: shares,
+      action: action
+    })
+      .then((response) => {
+        console.log('response to trade POST query:', response);
+      })
+      .error((err) => {
+        console.log('error in attempting trade', err);
+      });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
   };
@@ -133,7 +147,7 @@ class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          {/* <div>
+          <div>
             <nav>
               <ul>
                 <li>
@@ -150,13 +164,20 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div> */}
+          </div>
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search" component={StockSearch} />
-            <Route exact path="/trade" component={Trade} />
+            <Route exact path="/trade"
+              render={() =>
+                <Trade
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                  handleTrade={this.handleTrade}
+                />}
+            />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
             <Route exact path="/stock-detail-page" component={StockDetailPage}/>
