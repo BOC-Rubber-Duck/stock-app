@@ -134,10 +134,10 @@ class App extends React.Component {
         symbol
       }
     })
-    .then((res) => {
-      console.log('got response from server with data!', res.data)
-    })
-
+      .then((res) => {
+        let stockSelected = res.data
+        console.log('got response from server with data!', res.data)
+      });
   };
 
   render() {

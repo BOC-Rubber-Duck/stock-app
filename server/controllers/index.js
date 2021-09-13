@@ -1,1 +1,2 @@
-module.exports = require('./searchStocks.js')
+exports.searchStocks = require('./searchStocks.js');
+exports.marketStack = require('./marketStack.js');
