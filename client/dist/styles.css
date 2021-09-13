@@ -255,7 +255,7 @@ body {
 .leaderboard-element {
   display: grid;
   grid-template-rows: auto;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 4fr 4fr 1fr;
   grid-template-areas:
     "rank username balance friend"
 }
@@ -274,6 +274,10 @@ body {
 
 .leaderboard-friend {
   grid-area: friend;
+}
+
+#leaderboard-bottom-nav-space {
+  height: 75px;
 }
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/

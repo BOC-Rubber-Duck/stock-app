@@ -11,7 +11,6 @@ app.use(express.static(pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
   const results = filterStockSearch(stockSearch);
@@ -20,13 +19,6 @@ app.get('/userStockSearch', (req, res) => {
   res.status(200);
 });
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(pathname, 'index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err);
-    }
-  });
-});
 
 app.get('/leaders', (req, res) => {
   const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
@@ -72,6 +64,14 @@ app.put('/deletefriend', (req, res) => {
       res.status(502).json(error);
     } else {
       res.status(200).json(data);
+    }
+  });
+});
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(pathname, 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err);
     }
   });
 });

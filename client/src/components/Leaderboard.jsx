@@ -1,5 +1,6 @@
 import React from 'react';
 import LeaderboardList from './LeaderboardList.jsx';
+import Friend from './Friend.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 
@@ -90,6 +91,7 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
+        <Friend />
         <div id="list">
           <div id="list-header">
             <form>
@@ -126,6 +128,8 @@ class Leaderboard extends React.Component {
               <LeaderboardList loggedIn={this.state.user} addFriend={this.addFriend} list={this.state.list}/>
             </InfiniteScroll>
           </div>
+        </div>
+        <div id="leaderboard-bottom-nav-space">
         </div>
       </div>
     );
