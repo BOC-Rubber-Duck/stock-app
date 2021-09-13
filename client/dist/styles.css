@@ -235,6 +235,10 @@ a, a:hover, a:focus, a:active {
 .navbar-button-text{
   margin: 0;
 }
+
+.test-button {
+  font-size: 100px;
+}
 /**********END NAVBAR**********/
 /**********BEGIN USERCARD**********/
 .usercard {

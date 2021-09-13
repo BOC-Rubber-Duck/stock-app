@@ -77,6 +77,8 @@ class App extends React.Component {
         ]
       }
     };
+
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
     this.handleTrade = this.handleTrade.bind(this);
   }
 
@@ -160,6 +162,15 @@ class App extends React.Component {
     //     ]
     //   },
     // });
+    axios.get('/fetchSelectedStock', {
+      params: {
+        symbol
+      }
+    })
+      .then((res) => {
+        let stockSelected = res.data
+        console.log('got response from server with data!', res.data)
+      });
   };
 
   render() {
