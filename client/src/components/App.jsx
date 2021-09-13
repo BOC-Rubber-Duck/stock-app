@@ -132,7 +132,7 @@ class App extends React.Component {
     return (
       <Router>
         <React.Fragment>
-          {/* <div>
+          <div>
             <nav>
               <ul>
                 <li>
@@ -149,13 +149,19 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div> */}
+          </div>
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search" component={StockSearch} />
-            <Route exact path="/trade" component={Trade} />
+            <Route exact path="/trade"
+              render={() =>
+                <Trade
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                />}
+            />
             <Route exact path="/login" component={Login} />
             <Route
               exact path="/stock-detail-page"
