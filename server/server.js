@@ -6,10 +6,23 @@ const db = require('./db/queries.js');
 const bodyParser = require('body-parser');
 
 
+const {filterStockSearch} = require('./controllers/searchStocks.js');
+
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(pathname));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+app.get('/userStockSearch', (req, res) => {
+  const stockSearch = req.query.userStockSearch;
+  const results = filterStockSearch(stockSearch);
+
+  res.send(results);
+  res.status(200);
+});
 
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
