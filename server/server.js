@@ -19,6 +19,28 @@ app.get('/userStockSearch', (req, res) => {
   res.status(200);
 });
 
+app.post('/trade', (req, res) => {
+  console.log('trade query:', req.query);
+  const stockSymbol = req.query.stockSymbol;
+  const shares = req.query.shares;
+  const action = req.query.action;
+  console.log('reported params:', stockSymbol, shares, action);
+  // process trade
+  // make db queries
+  // confirm success
+  const tradeConfirmation = {
+    username: 'testUser',
+    stockSymbol: stockSymbol,
+    shares: shares,
+    marketPrice: 100,
+    saleAmount: 100 * shares,
+    action: action,
+    status: 'success'
+  };
+  res.status(200);
+  res.send(JSON.stringify(tradeConfirmation));
+});
+
 // app.get('/', (req, res) => {
 //   res.status(200);
 //   res.end('request recieved by server:');

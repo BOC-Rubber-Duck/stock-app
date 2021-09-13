@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import {
   BrowserRouter as Router,
   Switch,
@@ -87,6 +88,17 @@ class App extends React.Component {
   handleTrade(stockSymbol, shares, action) {
     console.log('handleTrade method called');
     // axios call:
+    axios.post('/trade', {
+      stockSymbol: stockSymbol,
+      shares: shares,
+      action: action
+    })
+      .then((response) => {
+        console.log('response to trade POST query:', response);
+      })
+      .error((err) => {
+        console.log('error in attempting trade', err);
+      });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
   };
