@@ -1,5 +1,5 @@
 import React from 'react';
-import Searchbar from './Searchbar.jsx'
+import Searchbar from './Searchbar.jsx';
 
 const StockSearch = (props) => {
   return (
