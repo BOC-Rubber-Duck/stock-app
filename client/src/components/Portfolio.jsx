@@ -3,13 +3,7 @@ import Stockbar from './Stockbar.jsx';
 import Usercard from './Usercard.jsx';
 
 const Portfolio = (props) => {
-  const user =
-    {
-      username: 'RubberDuck',
-      rank: 2,
-      cashbalance: 500000,
-      stockbalance: 500000
-    };
+var user = props.user || 'bezos_the_first';
   return (
     <div>
       <Usercard user={user}/>
