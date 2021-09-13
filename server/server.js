@@ -109,7 +109,6 @@ app.post('/api/postWatchSecurity', (req, res) => {
     });
 })
 
-<<<<<<< HEAD
 app.post('/api/postUser', (req, res) => {
   let { first_name, last_name, email, username, password } = req.body;
   db.postUser(first_name, last_name, email, username, password)
@@ -121,7 +120,6 @@ app.post('/api/postUser', (req, res) => {
       res.send(500);
     });
 })
-=======
 app.post('/trade', (req, res) => {
   console.log('trade query:', req.query);
   const stockSymbol = req.query.stockSymbol;
@@ -199,6 +197,5 @@ app.get('/*', function(req, res) {
     }
   });
 });
->>>>>>> development
 
 module.exports = app;
