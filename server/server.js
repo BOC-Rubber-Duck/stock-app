@@ -23,6 +23,7 @@ app.get('/api/getPortfolio', (req, res) => {
       res.send(data)
     })
     .catch((err) => {
+      console.log('Error during getPortfolio: ', err)
       res.send(500);
     });
 })

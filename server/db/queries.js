@@ -13,8 +13,8 @@ const pool = new Pool({
 });
 
 class Db {
-  query(query_text, callback) {
-    pool.query(query_text, (err, res) => {callback(err, res)});
+  query(query_text) {
+    return pool.query(query_text);
   }
 
   getPortfolio(username, cb) {
@@ -25,15 +25,7 @@ class Db {
       WHERE u.username = '${username}';
     `;
     console.log(this);
-    this.query(query, (err, res) => {
-      if (err) {
-        cb(err, null);
-      } else if (!res.rows) {
-        cb(err, 'Didnt find a portfolio for this user.', null);
-      } else {
-        cb(err, res.rows)
-      }
-    })
+    return this.query(query);
   }
 
   getFriends(username, cb) {
