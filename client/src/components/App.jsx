@@ -14,6 +14,7 @@ import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
 import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
+import sampleState from '../../../sampleData/sampleState.js';
 
 class App extends React.Component {
   constructor(props) {
