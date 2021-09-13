@@ -19,6 +19,14 @@ app.get('/userStockSearch', (req, res) => {
   res.status(200);
 });
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(pathname, 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 // app.get('/', (req, res) => {
 //   res.status(200);
 //   res.end('request recieved by server:');
