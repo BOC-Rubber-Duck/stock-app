@@ -243,14 +243,19 @@
 
 /**********BEGIN FRIEND SEARCH**********/
 
+/* body {
+  font-size:16px;
+} */
+
 .fr-page {
   background-color: #121212;
   height: 100vh;
 }
 
 .fr-nav {
-  height: 100vh;
-
+  height: 10rem;
+  border: 1px solid whitesmoke;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
 }
 
 .fr-search-input
