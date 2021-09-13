@@ -24,6 +24,7 @@ class Db {
       ON p.user_id = u.id
       WHERE u.username = '${username}';
     `;
+    console.log(this);
     this.query(query, (err, res) => {
       if (err) {
         cb(err, null);
@@ -129,9 +130,9 @@ class Db {
 
 let db = new Db();
 
-module.exports.getPortfolio = db.getPortfolio;
-module.exports.getFriends = db.getFriends;
-module.exports.getWatchlist = db.getWatchlist;
-module.exports.postUser = db.postUser;
-module.exports.postFriend = db.postFriend;
-module.exports.postWatchSecurity = db.postWatchSecurity;
+module.exports.getPortfolio = db.getPortfolio.bind(db);
+module.exports.getFriends = db.getFriends.bind(db);
+module.exports.getWatchlist = db.getWatchlist.bind(db);
+module.exports.postUser = db.postUser.bind(db);
+module.exports.postFriend = db.postFriend.bind(db);
+module.exports.postWatchSecurity = db.postWatchSecurity.bind(db);
