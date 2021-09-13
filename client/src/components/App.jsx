@@ -15,6 +15,7 @@ import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
+import sampleState from '../../../sampleData/sampleState.js';
 
 class App extends React.Component {
   constructor(props) {
