@@ -1,6 +1,5 @@
 import React from 'react';
 import {ImUserPlus, ImUsers} from 'react-icons/im';
-import './Leaderboard.css';
 
 const LeaderboardListElement = (props) => {
   return (

@@ -1,5 +1,4 @@
 import React from 'react';
-import './Leaderboard.css';
 import LeaderboardList from './LeaderboardList.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
@@ -20,10 +19,9 @@ class Leaderboard extends React.Component {
     this.refreshList = this.refreshList.bind(this);
   }
 
-  addFriend(watched_user, index, friendStatus) {
-    console.log(watched_user, index, friendStatus);
+  addFriend(watchedUser, index, friendStatus) {
     if (friendStatus === null) {
-      axios.put(`${process.env.SERVER}/addfriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.put(`/addfriend`, null, {params: {watching_user: this.state.user, watched_user: watchedUser}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = this.state.user;
@@ -33,7 +31,7 @@ class Leaderboard extends React.Component {
           console.log(error);
         });
     } else {
-      axios.put(`${process.env.SERVER}/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
@@ -50,7 +48,7 @@ class Leaderboard extends React.Component {
     const entries = 2;
     const offset = this.state.page * entries;
     this.setState({page: (this.state.page + 1)});
-    axios.get(`${process.env.SERVER}/${this.state.friendsMode}`, {params: {user: this.state.user, offset: offset, entries: entries}})
+    axios.get(`/${this.state.friendsMode}`, {params: {user: this.state.user, offset: offset, entries: entries}})
       .then((response) => {
         this.setState({list: list.concat(response.data)});
         if (response.data.length === 0) {
