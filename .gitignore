@@ -9,3 +9,5 @@ coverage/
 .env
 bundle.js
 bundle.js.map
+package-lock.json
+config.js
