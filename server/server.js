@@ -20,6 +20,14 @@ app.get('/userStockSearch', (req, res) => {
   res.status(200);
 });
 
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(pathname, 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 app.get('/leaders', (req, res) => {
   const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
   console.log(req.query);
