@@ -44,5 +44,27 @@ app.get('/api/getWatchlist', (req, res) => {
     });
 })
 
+app.post('/api/postFriend', (req, res) => {
+  db.postFriend(req.body.watching_user_id, req.body.watched_username)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during postFriend: ', err)
+      res.send(500);
+    });
+})
+
+app.post('/api/postWatchSecurity', (req, res) => {
+  console.log('req.body: ', req.body);
+  db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during postWatchSecurity: ', err)
+      res.send(500);
+    });
+})
 
 module.exports = app;

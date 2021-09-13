@@ -60,7 +60,8 @@ class Db {
     });
   }
 
-  postFriend(watching_user_id, watched_username, cb) {
+  postFriend(watching_user_id, watched_username) {
+    console.log('watching_user_id', watching_user_id, 'watched_username', watched_username);
     let query = `
       INSERT INTO friendships (watching_user, watched_user)
       SELECT
@@ -71,7 +72,7 @@ class Db {
     return this.query(query);
   }
 
-  postWatchSecurity(user_id, exchange, ticker_symbol, cb) {
+  postWatchSecurity(user_id, exchange, ticker_symbol) {
     let query = `
       INSERT INTO watchlist
       (id, user_id, ticker_symbol, exchange)
