@@ -5,6 +5,7 @@
 .rdb
 
 # folders
+__tests__
 .github/
 coverage/
 node_modules/
@@ -13,3 +14,4 @@ node_modules/
 .env
 .eslintrc.json
 .gitignore
+jest-setup.js
