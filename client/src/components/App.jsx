@@ -17,6 +17,7 @@ import Searchbar from './Searchbar.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.state = {
       user: {
         first_name: '',
@@ -130,6 +131,7 @@ class App extends React.Component {
   };
 
   fetchSelectedStock(symbol) {
+    console.log(`Stock ${symbol} clicked!`);
     // TODO: ajax calls to external service
     // returns 1 year of data, use first response[0] for "up to date" for display purposes
     // this.setState({
@@ -171,7 +173,7 @@ class App extends React.Component {
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio"
               render={() =>
-                <Portfolio user={this.state.user}/>
+                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
               }/>
             <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />

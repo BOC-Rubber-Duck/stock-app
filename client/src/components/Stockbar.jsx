@@ -7,6 +7,7 @@ import React from 'react';
     valueOwned (optional): 13400
   }
   useCase: ['stockSearch', 'portfolio']
+  onClick: should be 'fetchSelectedStock' from top level state
 */
 
 const Stockbar = (props) => {
@@ -18,7 +19,9 @@ const Stockbar = (props) => {
   }
 
   return (
-    <div className='bar' key={props.stock.stockSymbol}>
+    <div className='bar' key={props.stock.stockSymbol} onClick={() => {
+      props.onClick(props.stock.stockSymbol);
+    }}>
       <div className='barColumn'>
         <p>{props.stock.stockSymbol}</p>
         <p>{props.stock.stockName}</p>
