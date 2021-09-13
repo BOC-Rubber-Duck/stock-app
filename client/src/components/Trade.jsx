@@ -8,6 +8,7 @@ class Trade extends React.Component {
       action: 'buy'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInputChange(event) {
@@ -18,6 +19,14 @@ class Trade extends React.Component {
     this.setState({
       [name]: value
     });
+  };
+
+  handleSubmit() {
+    let stockSymbol = this.props.stockSelected.symbol;
+    let shares = this.state.shares;
+    let action = this.state.action;
+    console.log('handleSubmit action confirmed');
+    this.props.handleTrade(stockSymbol, shares, action);
   };
 
   render() {
@@ -53,10 +62,11 @@ class Trade extends React.Component {
             <span id="sale-amt-span">${saleAmount}</span>
           </div>
           <div className="trade-action" id="trade-action">
-
+            <button onClick={this.handleSubmit}>
+              {actionText}
+            </button>
           </div>
         </div>
-
       </div>
     );
   };

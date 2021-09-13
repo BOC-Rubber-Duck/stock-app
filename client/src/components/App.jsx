@@ -57,6 +57,7 @@ class App extends React.Component {
         ]
       }
     };
+    this.handleTrade = this.handleTrade.bind(this);
   }
 
   selectedUserSearch(username) {
@@ -83,7 +84,8 @@ class App extends React.Component {
     // update stock prices?
   };
 
-  handleTrade(stockName, shares, action) {
+  handleTrade(stockSymbol, shares, action) {
+    console.log('handleTrade method called');
     // axios call:
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
@@ -160,6 +162,7 @@ class App extends React.Component {
                 <Trade
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
+                  handleTrade={this.handleTrade}
                 />}
             />
             <Route exact path="/login" component={Login} />
