@@ -1,4 +1,3 @@
-
 /**********BEGIN BASE**********/
 
 :root {
@@ -352,7 +351,7 @@ input, textarea {
 }
 
 .fr-results li {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1))#121212;
   min-height: 4rem;
   margin: 1rem 0;
   padding: 0.5rem;
@@ -381,8 +380,6 @@ input, textarea {
   line-height: 1.5rem;
 }
 
-/* .fr-is-friend */
-
 .fr-portfolio-value {
   margin-left: auto;
 }
@@ -391,9 +388,38 @@ input, textarea {
   width: 2rem;
   text-align: right;
   padding: 0.5rem;
-};
+}
+
+.trade-container {
+  background-color: #121212;
+  height: 100vh;
+  margin: auto;
+  font-size: large;
+  color:orange;
+}
+
 
 /**********END FRIEND SEARCH**********/
+/**********BEGIN TRADE**********/
+
+
+
+.trade-header {
+color: chocolate;
+background-color: var(--diamond-blue);
+}
+
+#action-title {
+
+}
+
+.trade-info {
+  background-color: black;
+  list-style-type: none;
+  color: pink;
+  font-size: 1.1rem;
+}
+/**********END TRADE**********/
 
 /*
   DETAILS
