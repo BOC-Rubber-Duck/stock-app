@@ -1,5 +1,6 @@
 import React from 'react';
 import {ImUserPlus, ImUsers} from 'react-icons/im';
+import {Link} from "react-router-dom";
 
 const LeaderboardListElement = (props) => {
   return (
@@ -8,7 +9,9 @@ const LeaderboardListElement = (props) => {
         <h2>{(props.index + 1)}</h2>
       </div>
       <div className="leaderboard-username">
-        <h2>{props.username}</h2>
+        <Link to="/portfolio">
+          <h2>{props.username}</h2>
+        </Link>
       </div>
       <div className="leaderboard-balance">
         <h2>${Number(props.balance).toFixed(2)}</h2>
