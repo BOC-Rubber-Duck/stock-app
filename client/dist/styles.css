@@ -251,7 +251,31 @@ body {
   grid-template-columns: 30% 10% 20% 10% 35%;
 }
 /**********END USERCARD**********/
+/**********BEGIN LEADERBOARD**********/
+.leaderboard-element {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-areas:
+    "rank username balance friend"
+}
 
+.leaderboard-rank {
+  grid-area: rank;
+}
+
+.leaderboard-username {
+  grid-area: username;
+}
+
+.leaderboard-balance {
+  grid-area: balance;
+}
+
+.leaderboard-friend {
+  grid-area: friend;
+}
+/**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
 
 /* Compatibility
