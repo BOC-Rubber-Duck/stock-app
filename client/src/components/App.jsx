@@ -157,7 +157,14 @@ class App extends React.Component {
             <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
+            <Route
+              exact path="/stock-detail-page"
+              render={() =>
+                <StockDetailPage
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                />}
+            />
           </Switch>
           <Navbar />
         </React.Fragment>
