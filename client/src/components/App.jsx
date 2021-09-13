@@ -49,8 +49,8 @@ class App extends React.Component {
         ]
       },
       stockSelected: {
-        name: '',
-        symbol: '',
+        name: 'Tesla',
+        symbol: 'TSLA',
         price: 100,
         data: [
           // {},{}

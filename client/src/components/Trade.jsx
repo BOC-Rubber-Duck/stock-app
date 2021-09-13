@@ -23,13 +23,16 @@ class Trade extends React.Component {
   render() {
     const { user, stockSelected } = this.props;
     const saleAmount = this.state.shares * stockSelected.price || 0;
+    const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
+
     return (
       <div className="trade-container" id="trade-container">
-        Buy/Sell Stocks!
         <div className="trade-header" id="trade-header">
+          {stockSelected.name}
         </div>
         <div className="action-title" id="action-title">
-
+          <span id="action-title-span">{actionText}</span>
+          <span id="action-title-stock">{stockSelected.symbol}</span>
         </div>
         <div className="trade-info" id="trade-info">
           <div id="shares">
