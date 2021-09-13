@@ -24,7 +24,6 @@ class Db {
       ON p.user_id = u.id
       WHERE u.username = '${username}';
     `;
-    console.log(this);
     return this.query(query);
   }
 
@@ -35,15 +34,7 @@ class Db {
       ON f.watching_user = u.id
       WHERE u.username = '${username}';
     `;
-    this.query(query, (err, res) => {
-      if (err) {
-        cb(err, null);
-      } else if (!res.rows) {
-        cb(err, 'Didnt find friends for this user.');
-      } else {
-        cb(err, res.rows)
-      }
-    })
+    return this.query(query);
   }
 
   getWatchlist(username, cb) {
@@ -53,15 +44,7 @@ class Db {
       ON w.user_id = u.id
       WHERE u.username = '${username}';
     `;
-    this.query(query, (err, res) => {
-      if (err) {
-        cb(err, null);
-      } else if (!res.rows) {
-        cb(err, 'Didnt find any watched items for this user.');
-      } else {
-        cb(err, res.rows)
-      }
-    })
+    return this.query(query);
   }
 
   postUser(user_info) {
@@ -73,10 +56,8 @@ class Db {
         VALUES
         ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', ${username}, ${starting_cash})
       `;
-      this.query(query, (err, res) => {
-        if (err) console.log('Error while inserting a new user: ', err);
-      })
-    })
+      return this.query(query);
+    });
   }
 
   postFriend(watching_user_id, watched_username, cb) {
@@ -87,13 +68,7 @@ class Db {
       FROM users
       WHERE username='${watched_username}';
     `;
-    this.query(query, (err, res) => {
-      if (err) {
-        cb(err, null);
-      } else {
-        cb(err, 200)
-      }
-    })
+    return this.query(query);
   }
 
   postWatchSecurity(user_id, exchange, ticker_symbol, cb) {
@@ -103,13 +78,7 @@ class Db {
       VALUES
       ('${uuidv4()}', '${user_id}', '${ticker_symbol}', '${exchange}');
     `;
-    this.query(query, (err, res) => {
-      if (err) {
-        cb(err, null);
-      } else {
-        cb(err, 200)
-      }
-    })
+    return this.query(query);
   }
 
   // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)

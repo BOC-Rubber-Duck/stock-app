@@ -11,21 +11,38 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(pathname));
 
-app.get('/api/', (req, res) => {
-  res.status(200);
-  res.end('request recieved by server:');
-});
-
 app.get('/api/getPortfolio', (req, res) => {
-  console.log('query passed: ', req.query);
   db.getPortfolio(req.query.username)
     .then((data) => {
-      res.send(data)
+      res.send(data.rows)
     })
     .catch((err) => {
       console.log('Error during getPortfolio: ', err)
       res.send(500);
     });
 })
+
+app.get('/api/getFriends', (req, res) => {
+  db.getFriends(req.query.username)
+    .then((data) => {
+      res.send(data.rows)
+    })
+    .catch((err) => {
+      console.log('Error during getFriends: ', err)
+      res.send(500);
+    });
+})
+
+app.get('/api/getWatchlist', (req, res) => {
+  db.getWatchlist(req.query.username)
+    .then((data) => {
+      res.send(data.rows)
+    })
+    .catch((err) => {
+      console.log('Error during getWatchlist: ', err)
+      res.send(500);
+    });
+})
+
 
 module.exports = app;
