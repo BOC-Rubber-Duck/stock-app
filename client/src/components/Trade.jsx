@@ -31,7 +31,8 @@ class Trade extends React.Component {
 
   render() {
     const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected.price || 0;
+    console.log('these props',this.props)
+    const saleAmount = this.state.shares * stockSelected || 0;
     const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
 
     return (
