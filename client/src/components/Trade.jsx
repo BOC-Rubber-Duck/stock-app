@@ -22,6 +22,7 @@ class Trade extends React.Component {
 
   render() {
     const { user, stockSelected } = this.props;
+    const saleAmount = this.state.shares * stockSelected.price || 0;
     return (
       <div className="trade-container" id="trade-container">
         Buy/Sell Stocks!
@@ -40,6 +41,13 @@ class Trade extends React.Component {
                 value={this.state.shares}
                 onChange={this.handleInputChange} />
             </label>
+          </div>
+          <div id="market-price-container">
+            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">{stockSelected.price}</span>
+          </div>
+          <div id="sale-amount-container">
+            <span id="sale-amt-span-lbl">Sale Amount</span>
+            <span id="sale-amt-span">${saleAmount}</span>
           </div>
           <div className="trade-action" id="trade-action">
 
