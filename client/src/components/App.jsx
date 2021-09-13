@@ -171,7 +171,6 @@ class App extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/stock-detail-page" component={StockDetailPage}/>
           </Switch>
-          <button className='test-button'onClick={() => this.fetchSelectedStock('AAPL') }>Test click </button>
           <Navbar />
         </React.Fragment>
       </Router>
