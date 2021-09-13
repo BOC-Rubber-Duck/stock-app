@@ -25,5 +25,4 @@ const StockDetailPage = (props) => {
   );
 };
 
-
 export default StockDetailPage;
