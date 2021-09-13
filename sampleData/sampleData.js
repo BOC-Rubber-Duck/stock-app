@@ -1,4 +1,4 @@
-export default sampleData = {
+module.exports.sampleData = {
   'pagination': {
     'limit': 100,
     'offset': 0,
