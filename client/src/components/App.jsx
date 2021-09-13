@@ -11,8 +11,7 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
 import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
-import StockDetail from './StockDetail.jsx';
-
+import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -142,6 +141,12 @@ class App extends React.Component {
                 <li>
                   <Link to="/trade">Trade</Link>
                 </li>
+                <li>
+                  <Link to="/leaderboard">Leaderboard</Link>
+                </li>
+                <li>
+                  <Link to="/stock-detail-page">Stock Detail Page</Link>
+                </li>
               </ul>
             </nav>
           </div> */}
@@ -152,7 +157,7 @@ class App extends React.Component {
             <Route exact path="/stock-search" component={StockSearch} />
             <Route exact path="/trade" component={Trade} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/stock-detail" component={StockDetail} />
+            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
           </Switch>
           <Navbar />
         </React.Fragment>
