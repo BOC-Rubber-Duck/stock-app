@@ -32,7 +32,7 @@ class Leaderboard extends React.Component {
           console.log(error);
         });
     } else {
-      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watchedUser}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
