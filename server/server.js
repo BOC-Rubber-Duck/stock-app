@@ -3,9 +3,22 @@ const path = require('path');
 const pathname = path.join(__dirname, '..', 'client', 'dist');
 const db = require('../db/db.js');
 
+const {filterStockSearch} = require('./controllers/searchStocks.js');
+
 const app = express();
 
 app.use(express.static(pathname));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+app.get('/userStockSearch', (req, res) => {
+  const stockSearch = req.query.userStockSearch;
+  const results = filterStockSearch(stockSearch);
+
+  res.send(results);
+  res.status(200);
+});
 
 app.get('/leaders', (req, res) => {
   const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};

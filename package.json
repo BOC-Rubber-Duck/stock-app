@@ -29,13 +29,20 @@
     "@babel/preset-react": "^7.14.5",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.3",
     "axios": "^0.21.4",
+<<<<<<< HEAD
     "babel-loader": "^8.2.2",
+=======
+>>>>>>> development
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "enzyme": "^3.11.0",
     "eslint": "^7.32.0",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "pg-promise": "^10.11.0",
+=======
+    "highcharts-react-official": "^3.0.0",
+>>>>>>> development
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
@@ -55,6 +62,7 @@
     "eslint-config-google": "^0.14.0",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "eslint-plugin-react": "^7.25.1",
+    "highcharts": "^9.2.2",
     "jest": "^27.1.0",
     "style-loader": "^3.2.1",
     "webpack": "^5.51.2",
