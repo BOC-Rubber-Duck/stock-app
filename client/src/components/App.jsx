@@ -149,8 +149,12 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        let stockSelected = res.data
+        const stockSelected = res.data;
         console.log('got response from server with data!', res.data)
+
+        this.setState({
+          stockSelected
+        })
       });
   };
 
@@ -180,7 +184,15 @@ class App extends React.Component {
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio" component={Portfolio} />
-            <Route exact path="/stock-search" component={StockSearch} />
+            <Route exact path="/stock-search"
+              render={() =>
+                <Searchbar
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                  handlePredictionClick={this.fetchSelectedStock}
+                />
+              }
+            />
             <Route exact path="/trade"
               render={() =>
                 <Trade

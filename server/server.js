@@ -28,6 +28,7 @@ app.get('/userStockSearch', (req, res) => {
 
 app.get('/fetchSelectedStock', (req, res) => {
   const symbolSearch = req.query.symbol;
+  console.log('this is the symbol search', symbolSearch)
 
   controllers.marketStack.fetchSelectedStock(symbolSearch, (err, results) => {
     if (err) {

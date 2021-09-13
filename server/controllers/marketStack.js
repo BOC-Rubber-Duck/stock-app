@@ -11,11 +11,11 @@ const fetchSelectedStock = (symbol, callback) => {
       symbols: symbol,
       access_key: ACCESS_KEY,
       limit: 500,
-      sort: 'ASC'
+      sort: 'DESC'
     }
   })
   .then((res) => {
-    let results = res.data;
+    const results = res.data;
     callback(null, results)
   })
   .catch((e) => {
