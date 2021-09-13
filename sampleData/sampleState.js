@@ -8,15 +8,15 @@ module.exports.sampleState = {
     rank: 3,
     userPortfolio: [
       {
-        stockSymbol: AAPL,
+        stockSymbol: 'AAPL',
         sharesOwned: 3
       },
       {
-        stockSymbol: TSLA,
+        stockSymbol: 'TSLA',
         sharesOwned: 100
       },
       {
-        stockSymbol: MMM,
+        stockSymbol: 'MMM',
         sharesOwned: 1
       }
     ],
