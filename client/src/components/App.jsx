@@ -12,6 +12,7 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
 import StockSearch from './StockSearch.jsx';
 import Navbar from './Navbar.jsx';
+import Friend from './Friend.jsx';
 import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
@@ -178,6 +179,8 @@ class App extends React.Component {
                 />}
             />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/friend" component={Friend} />
+            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
             <Route
               exact path="/stock-detail-page"
               render={() =>
