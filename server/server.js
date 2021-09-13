@@ -2,9 +2,22 @@ const express = require('express');
 const path = require('path');
 const pathname = path.join(__dirname, '..', 'client', 'dist');
 
+const {filterStockSearch} = require('./controllers/searchStocks.js');
+
 const app = express();
 
 app.use(express.static(pathname));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+
+
+app.get('/userStockSearch', (req, res) => {
+  const stockSearch = req.query.userStockSearch;
+  const results = filterStockSearch(stockSearch);
+
+  res.send(results);
+  res.status(200);
+});
 
 app.get('/*', function(req, res) {
   res.sendFile(path.join(pathname, 'index.html'), function(err) {
