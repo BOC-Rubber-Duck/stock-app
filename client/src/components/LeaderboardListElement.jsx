@@ -11,12 +11,12 @@ const LeaderboardListElement = (props) => {
         <h2>{props.username}</h2>
       </div>
       <div className="leaderboard-balance">
-        <h2>{props.balance}</h2>
+        <h2>${Number(props.balance).toFixed(2)}</h2>
       </div>
       <div className="leadership-friend" onClick={props.addFriend.bind(this, props.id, props.index, props.watchingUser)}>
         {props.watchingUser === null
-          ? <ImUserPlus />
-          : <ImUsers />
+          ? <div className="leaderboard-not-friend"><ImUserPlus /></div>
+          : <div className="leaderboard-friend"><ImUsers /></div>
         }
       </div>
     </div>
