@@ -47,21 +47,18 @@ class Db {
     return this.query(query);
   }
 
-  postUser(user_info) {
-    let { first_name, last_name, email, username, password } = user_info;
-    bcrypt.hash(password, saltRounds, (err, hash) => {
-      let query = `
-        INSERT INTO users
-        (id, password, first_name, last_name, email, username, cash_position)
-        VALUES
-        ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', ${username}, ${starting_cash})
-      `;
-      return this.query(query);
-    });
+  postUser(first_name, last_name, email, username, password) {
+    const hash = bcrypt.hashSync(password, saltRounds);
+    let query = `
+      INSERT INTO users
+      (id, password, first_name, last_name, email, username, cash_position)
+      VALUES
+      ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash})
+    `;
+    return this.query(query);
   }
 
   postFriend(watching_user_id, watched_username) {
-    console.log('watching_user_id', watching_user_id, 'watched_username', watched_username);
     let query = `
       INSERT INTO friendships (watching_user, watched_user)
       SELECT
