@@ -150,8 +150,6 @@ class App extends React.Component {
     })
       .then((res) => {
         const stockSelected = res.data;
-        console.log('got response from server with data!', res.data)
-
         this.setState({
           stockSelected
         })

@@ -5,7 +5,6 @@ import BuySellMenu from './StockDetailPage/BuySellMenu.jsx';
 import StockTrends from './StockDetailPage/StockTrends.jsx';
 
 const StockDetailPage = (props) => {
-  console.log('data data data',props.stockSelected.data)
   return (
     <div className='StockDetailPage'>
       <StockInformation
