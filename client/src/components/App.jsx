@@ -64,6 +64,10 @@ class App extends React.Component {
     this.handleTrade = this.handleTrade.bind(this);
   }
 
+  componentDidMount() {
+    this.getCurrentUser();
+  }
+
   selectedUserSearch(username) {
     // Tyler?
     // need to get pricing for each stock in their portfolio, check server route/helper functions
@@ -106,29 +110,60 @@ class App extends React.Component {
     // return message;
   };
 
-  getCurrentUser() {
-    // Sam?
+  getCurrentUser(user) {
     // in conjunction with passport auth? Should only be able to fetch own info.
-    this.setState({
-    //   user: {
-    //     first_name: '',
-    //     last_name: '',
-    //     username: '',
-    //     email: '',
-    //     cashBalance: 0,
-    //     rank: null,
-    //     userPortfolio: [
-    //       // {
-    //       //   stockName:
-    //       //   sharesOwned
-    //       // }
-    //     ],
-    //     friends: [
-    //       // username, username
-    //     ]
-    //   }
-    });
-  };
+    let self = true;
+    if (user === undefined) {
+      user = 'the_zuck'
+    } else {
+      self = false;
+    }
+    let portfolio = [];
+    let friends = [];
+    axios.get('/api/getPortfolio?username='+user)
+    .then((results) => {
+      portfolio = results.data;
+      axios.get('/api/getFriends?username='+user)
+      .then((results) => {
+        friends = results.data;
+        axios.get('/api/getUser?username='+user)
+        .then((result) => {
+          let { first_name, last_name, username, email, cash_position } = result.data;
+          if (self) {
+            this.setState({
+              user: {
+                first_name: first_name,
+                last_name: last_name,
+                username: username,
+                email: email,
+                cashBalance: cash_position,
+                userPortfolio: portfolio,
+                friends: friends
+              }
+            });
+          } else {
+            // add to some other user in the state
+            let others = {};
+            if (this.state.others) {
+              others = this.state.others;
+              others[username] = {
+                first_name: first_name,
+                last_name: last_name,
+                username: username,
+                email: email,
+                cashBalance: cash_position,
+                userPortfolio: portfolio,
+                friends: friends
+              };
+              this.setState({
+                others: others
+              })
+            }
+          }
+        });
+      })
+    })
+  }
 
   fetchSelectedStock(symbol) {
     // TODO: ajax calls to external service
