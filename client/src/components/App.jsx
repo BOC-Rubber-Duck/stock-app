@@ -21,66 +21,76 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
-    this.state = {
-      user: {
-        first_name: '',
-        last_name: '',
-        username: 'bezos_the_first',
-        email: '',
-        cashBalance: 200000,
-        rank: 1,
-        userPortfolio: [
-          {
-            stockName: 'Amazon.com, Inc.',
-            stockSymbol: 'AMZN',
-            valueOwned: 350000
-          },
-          {
-            stockName: 'Telsa, Inc.',
-            stockSymbol: 'TSLA',
-            valueOwned: 300000
-          },
-          {
-            stockName: 'Apple',
-            stockSymbol: 'AAPL',
-            valueOwned: 200000
-          },
-          {
-            stockName: 'StockDucks, Inc.',
-            stockSymbol: 'STKD',
-            valueOwned: 200000
-          }
-        ],
-        friends: [
-          // username, username
-        ]
-      },
-      sessionInfo: {}, // need to be populated with passport
-      selectedFriend: {
-        username: '',
-        rank: 0,
-        portfolioValue: 0,
-        selectedFriendPortfolio: [
-        //  {
-        //     stockName:
-        //     sharesOwned
-        //   },
-        //   {}
-        ]
-      },
-      stockSelected: {
-        name: 'Tesla',
-        symbol: 'TSLA',
-        price: 100,
-        data: [
-          // {},{}
-        ]
-      }
-    };
+    this.state = sampleState;
+    // {
+    //   user: {
+    //     first_name: '',
+    //     last_name: '',
+    //     username: 'bezos_the_first',
+    //     email: '',
+    //     cashBalance: 200000,
+    //     rank: 1,
+    //     userPortfolio: [
+    //       {
+    //         stockName: 'Amazon.com, Inc.',
+    //         stockSymbol: 'AMZN',
+    //         valueOwned: 350000
+    //       },
+    //       {
+    //         stockName: 'Telsa, Inc.',
+    //         stockSymbol: 'TSLA',
+    //         valueOwned: 300000
+    //       },
+    //       {
+    //         stockName: 'Apple',
+    //         stockSymbol: 'AAPL',
+    //         valueOwned: 200000
+    //       },
+    //       {
+    //         stockName: 'StockDucks, Inc.',
+    //         stockSymbol: 'STKD',
+    //         valueOwned: 200000
+    //       }
+    //     ],
+    //     friends: [
+    //       // username, username
+    //     ]
+    //   },
+    //   sessionInfo: {}, // need to be populated with passport
+    //   selectedFriend: {
+    //     username: '',
+    //     rank: 0,
+    //     portfolioValue: 0,
+    //     selectedFriendPortfolio: [
+    //     //  {
+    //     //     stockName:
+    //     //     sharesOwned
+    //     //   },
+    //     //   {}
+    //     ]
+    //   },
+    //   stockSelected: {
+    //     name: 'Tesla',
+    //     symbol: 'TSLA',
+    //     price: 100,
+    //     data: [
+    //       // {},{}
+    //     ]
+    //   }
+    // };
 
-    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    // this.initialize();
   }
+
+  initialize() {
+    this.setState({
+      user: sampleState.user,
+      selectedFriend: sampleState.selectedFriend,
+      stockSelected: sampleState.stockSelected,
+    });
+  };
 
   selectedUserSearch(username) {
     // Tyler?
@@ -213,7 +223,7 @@ class App extends React.Component {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
-            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
+            {/* <Route exact path="/stock-detail-page" component={StockDetailPage}/> */}
             <Route
               exact path="/stock-detail-page"
               render={() =>
