@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const starting_cash = 1000000;
+const starting_portfolio_value = 1000000;
 
 const pool = new Pool({
   user: process.env.PG_USER,
@@ -49,11 +50,12 @@ class Db {
 
   postUser(first_name, last_name, email, username, password) {
     const hash = bcrypt.hashSync(password, saltRounds);
+
     let query = `
       INSERT INTO users
-      (id, password, first_name, last_name, email, username, cash_position)
+      (id, password, first_name, last_name, email, username, cash_position, portfolio_value)
       VALUES
-      ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash})
+      ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash}, ${starting_portfolio_value})
     `;
     return this.query(query);
   }
@@ -79,6 +81,15 @@ class Db {
     return this.query(query);
   }
 
+  putPortfolioValue(user_id, portfolio_value) {
+    let query = `
+      UPDATE users
+      SET portfolio_value = ${portfolio_value}
+      WHERE id = '${user_id}'
+    `;
+    return this.query(query);
+  }
+
   // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
@@ -95,3 +106,4 @@ module.exports.getWatchlist = db.getWatchlist.bind(db);
 module.exports.postUser = db.postUser.bind(db);
 module.exports.postFriend = db.postFriend.bind(db);
 module.exports.postWatchSecurity = db.postWatchSecurity.bind(db);
+module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
