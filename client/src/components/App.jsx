@@ -161,8 +161,9 @@ class App extends React.Component {
   render() {
     return (
       <Router>
+
         <React.Fragment>
-          <div>
+          {/* <div>
             <nav>
               <ul>
                 <li>
@@ -179,7 +180,8 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div>
+          </div> */}
+
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />

@@ -28,7 +28,6 @@ app.get('/userStockSearch', (req, res) => {
 
 app.get('/fetchSelectedStock', (req, res) => {
   const symbolSearch = req.query.symbol;
-  console.log('this is the symbol search', symbolSearch)
 
   controllers.marketStack.fetchSelectedStock(symbolSearch, (err, results) => {
     if (err) {
@@ -49,12 +48,8 @@ app.get('/fetchSelectedStock', (req, res) => {
       res.status(200);
     }
   });
-})
+});
 
-// app.get('/', (req, res) => {
-//   res.status(200);
-//   res.end('request recieved by server:');
-// });
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
     .then((data) => {
