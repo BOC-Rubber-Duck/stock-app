@@ -4,6 +4,7 @@
   --diamond-blue: #4FB6F5;
   --background-dark: #333333;
   --background-light: #ebebeb;
+  /* --background-light:#121212;; */
   --default-text: #FFFFFF;
   --search-bar: #AAAAAA;
 }
@@ -262,7 +263,7 @@ a, a:hover, a:focus, a:active {
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
 .container, p {
-  color: white;
+  color: rgb(139, 138, 138);
   text-align: center;
 }
 

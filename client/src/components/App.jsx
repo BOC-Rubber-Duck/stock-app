@@ -15,7 +15,7 @@ import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
-import sampleState from '../../../sampleData/sampleState.js';
+import { sampleState } from '../../../sampleData/sampleState.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -188,7 +188,7 @@ class App extends React.Component {
       <Router>
         <React.Fragment>
           <div>
-            <nav>
+            {/* <nav>
               <ul>
                 <li>
                   <Link to="/login">Login/Signup</Link>
@@ -203,7 +203,7 @@ class App extends React.Component {
                   <Link to="/stock-detail-page">Stock Detail Page</Link>
                 </li>
               </ul>
-            </nav>
+            </nav> */}
           </div>
           <Switch>
             <Route exact path="/" component={Leaderboard} />
