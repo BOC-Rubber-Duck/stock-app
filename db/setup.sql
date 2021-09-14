@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users (
   last_name varchar(64) not null,
   username varchar(64) not null unique,
   email varchar(64) not null unique,
-  cash_position bigint default 1000000
+  cash_position bigint default 1000000,
+  portfolio_value bigint default 1000000
 );
 
 CREATE INDEX ON users (first_name);
@@ -13,6 +14,7 @@ CREATE INDEX ON users (last_name);
 CREATE INDEX ON users (username);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (cash_position);
+CREATE INDEX ON users (portfolio_value);
 
 CREATE TABLE IF NOT EXISTS transactions (
   id uuid NOT NULL PRIMARY KEY,
@@ -66,13 +68,13 @@ CREATE INDEX ON watchlist (ticker_symbol, exchange);
 -- Sample values.
 
 INSERT INTO users
-(id, password, first_name, last_name, email, username, cash_position)
+(id, password, first_name, last_name, email, username, cash_position, portfolio_value)
 VALUES
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'my_secret_password', 'john', 'smith', 'john_smith@example.com', 'jsmith', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'my_secret_password', 'jeffrey', 'bezos', 'jeffrey_bezos@example.com', 'bezos_the_first', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'my_secret_password', 'mark', 'zuckerberg', 'mark_zuckerberg@example.com', 'the_zuck', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'my_secret_password', 'william', 'gates', 'william_gates@example.com', 'billy', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'my_secret_password', 'warren', 'buffett', 'warren_buffett@example.com', 'gramps', 1000000);
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'my_secret_password', 'john', 'smith', 'john_smith@example.com', 'jsmith', 1000000, 1000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'my_secret_password', 'jeffrey', 'bezos', 'jeffrey_bezos@example.com', 'bezos_the_first', 1000000, 1000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'my_secret_password', 'mark', 'zuckerberg', 'mark_zuckerberg@example.com', 'the_zuck', 1000000, 1000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'my_secret_password', 'william', 'gates', 'william_gates@example.com', 'billy', 1000000, 1000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'my_secret_password', 'warren', 'buffett', 'warren_buffett@example.com', 'gramps', 1000000, 1000000);
 
 INSERT INTO positions
 (id, user_id, ticker_symbol, exchange, amount)
