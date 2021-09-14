@@ -4,6 +4,7 @@
   --diamond-blue: #4FB6F5;
   --background-dark: #333333;
   --background-light: #ebebeb;
+  /* --background-light:#121212;; */
   --default-text: #FFFFFF;
   --search-bar: #AAAAAA;
 }
@@ -262,7 +263,7 @@ a, a:hover, a:focus, a:active {
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
 .container, p {
-  color: white;
+  color: rgb(139, 138, 138);
   text-align: center;
 }
 
@@ -530,27 +531,35 @@ input, textarea {
   padding: 0.5rem;
 }
 
+/**********END FRIEND SEARCH**********/
+/**********BEGIN TRADE**********/
+
 .trade-container {
   background-color: #121212;
   height: 100vh;
   margin: auto;
   font-size: large;
-  color:orange;
+  color:white;
 }
-
-
-/**********END FRIEND SEARCH**********/
-/**********BEGIN TRADE**********/
-
-
 
 .trade-header {
-color: chocolate;
-background-color: var(--diamond-blue);
+color: white;
+background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
 }
 
-#action-title {
+.action-title {
+  display:table;
+  margin:0 auto;
+  font-size: large;
+  vertical-align: center;
+  /* border-bottom: 1px solid white; */
+  height: 3rem;
+  align-content: center;
+}
 
+#action-title-span #action-title-stock {
+  display: table-cell;
+  vertical-align: middle;
 }
 
 .trade-info {
@@ -558,6 +567,11 @@ background-color: var(--diamond-blue);
   list-style-type: none;
   color: pink;
   font-size: 1.1rem;
+}
+
+#trade-info {
+  padding-left: 1em;
+  padding-right: 2em;
 }
 /**********END TRADE**********/
 

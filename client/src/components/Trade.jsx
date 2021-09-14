@@ -49,6 +49,8 @@ class Trade extends React.Component {
             Shares to {this.state.action}
               <input
                 name="shares"
+                inputmode="numeric"
+                pattern="[0-9]*"
                 type="number"
                 value={this.state.shares}
                 onChange={this.handleInputChange} />
