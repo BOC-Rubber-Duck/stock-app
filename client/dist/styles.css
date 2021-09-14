@@ -304,21 +304,26 @@ a, a:hover, a:focus, a:active {
 
 .leaderboard-rank {
   grid-area: rank;
+  place-self: center;
 }
 
 .leaderboard-username {
   grid-area: username;
   font-size: 0.6rem;
+  place-self: center;
 }
 
 .leaderboard-balance {
   grid-area: balance;
   font-size: 0.6rem;
+  align-self: center;
+  justify-self: start;
 }
 
 .leaderboard-friend {
   grid-area: friend;
   font-size: 1.4rem;
+  place-self: center;
 }
 
 .leaderboard-not-friend {
@@ -346,7 +351,7 @@ a, a:hover, a:focus, a:active {
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
+  background: #ebb462;
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -362,14 +367,14 @@ a, a:hover, a:focus, a:active {
   margin-top: -14px;
 }
 #friend-slider:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
+  background: #ebb462;
 }
 #friend-slider::-moz-range-track {
   width: 20%;
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
+  background: #ebb462;
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -392,13 +397,13 @@ a, a:hover, a:focus, a:active {
   color: transparent;
 }
 #friend-slider::-ms-fill-lower {
-  background: #2a6495;
+  background: #ebb462;
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 #friend-slider::-ms-fill-upper {
-  background: #3071a9;
+  background: #ebb462;
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -413,10 +418,10 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 #friend-slider:focus::-ms-fill-lower {
-  background: #3071a9;
+  background: #ebb462;
 }
 #friend-slider:focus::-ms-fill-upper {
-  background: #367ebd;
+  background: #ebb462;
 }
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
