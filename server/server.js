@@ -50,10 +50,17 @@ app.get('/fetchSelectedStock', (req, res) => {
   });
 })
 
-// app.get('/', (req, res) => {
-//   res.status(200);
-//   res.end('request recieved by server:');
-// });
+app.get('/api/getUser', (req, res) => {
+  db.getUser(req.query.username)
+    .then((data) => {
+      res.send(data.rows[0])
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err)
+      res.send(500);
+    });
+})
+
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
     .then((data) => {
