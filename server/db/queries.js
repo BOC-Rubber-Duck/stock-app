@@ -17,7 +17,16 @@ class Db {
     return pool.query(query_text);
   }
 
-  getPortfolio(username, cb) {
+  getUser(username) {
+    let query = `
+      SELECT * FROM users
+      WHERE username = '${username}';
+    `;
+    return this.query(query);
+  }
+
+
+  getPortfolio(username) {
     let query = `
       SELECT p.* FROM users AS u
       JOIN positions AS p
@@ -27,7 +36,7 @@ class Db {
     return this.query(query);
   }
 
-  getFriends(username, cb) {
+  getFriends(username) {
     let query = `
       SELECT f.* FROM users AS u
       JOIN friendships AS f
@@ -37,7 +46,7 @@ class Db {
     return this.query(query);
   }
 
-  getWatchlist(username, cb) {
+  getWatchlist(username) {
     let query = `
       SELECT w.* FROM users AS u
       JOIN watchlist AS w
@@ -92,6 +101,7 @@ class Db {
 
 let db = new Db();
 
+module.exports.getUser = db.getUser.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
 module.exports.getFriends = db.getFriends.bind(db);
 module.exports.getWatchlist = db.getWatchlist.bind(db);
