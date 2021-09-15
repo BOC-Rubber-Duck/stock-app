@@ -84,11 +84,9 @@ class App extends React.Component {
     // this.initialize();
   }
 
-<<<<<<< HEAD
   componentDidMount() {
     this.getCurrentUser();
   }
-=======
   initialize() {
     this.setState({
       user: sampleState.user,
@@ -96,7 +94,6 @@ class App extends React.Component {
       stockSelected: sampleState.stockSelected,
     });
   };
->>>>>>> 63eb49acbbc385b2e387d11208bb23c20149f9b8
 
   selectedUserSearch(username) {
     // Tyler?
