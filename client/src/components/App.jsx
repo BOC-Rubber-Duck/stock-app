@@ -19,7 +19,6 @@ import Searchbar from './Searchbar.jsx';
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.state = {
       user: {
         first_name: '',
@@ -77,7 +76,7 @@ class App extends React.Component {
       }
     };
 
-    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
   }
 
@@ -158,6 +157,7 @@ class App extends React.Component {
                       friends: friends
                     }
                   });
+                  console.log(this.state);
                 } else {
                 // add to some other user in the state
                   let others = {};
