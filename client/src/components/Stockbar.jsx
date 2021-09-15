@@ -2,9 +2,11 @@ import React from 'react';
 
 /* Expected props w/ examples:
   stock: {
-    stockSymbol: 'TSLA'
-    stockName: 'Tesla, Inc.'
-    valueOwned (optional): 13400
+    amount: 1000000,
+    exchange: "nasdaq",
+    id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+    ticker_symbol: "fb",
+    user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
   }
   useCase: ['stockSearch', 'portfolio']
   onClick: should be 'fetchSelectedStock' from top level state
@@ -19,12 +21,13 @@ const Stockbar = (props) => {
   }
 
   return (
-    <div className='bar' key={props.stock.stockSymbol} onClick={() => {
-      props.onClick(props.stock.stockSymbol);
+    <div className='bar' key={props.stock.ticker_symbol} onClick={() => {
+      props.onClick(props.stock.ticker_symbol);
     }}>
       <div className='barColumn'>
-        <p>{props.stock.stockSymbol}</p>
-        <p>{props.stock.stockName}</p>
+        <p>{props.stock.ticker_symbol}</p>
+        {/* need to get stock name from API or route
+        <p>{props.stock.stockName}</p>  */}
       </div>
       <div className='barColumn'></div>
       {col3}
