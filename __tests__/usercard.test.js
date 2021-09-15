@@ -18,22 +18,22 @@ beforeEach(() => {
       {
         stockName: 'Amazon.com, Inc.',
         stockSymbol: 'AMZN',
-        valueOwned: 350000
+        amount: 350000
       },
       {
         stockName: 'Telsa, Inc.',
         stockSymbol: 'TSLA',
-        valueOwned: 300000
+        amount: 300000
       },
       {
         stockName: 'Apple',
         stockSymbol: 'AAPL',
-        valueOwned: 200000
+        amount: 200000
       },
       {
         stockName: 'StockDucks, Inc.',
         stockSymbol: 'STKD',
-        valueOwned: 200000
+        amount: 200000
       }
     ],
     friends: [

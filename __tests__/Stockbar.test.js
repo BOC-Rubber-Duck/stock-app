@@ -19,7 +19,7 @@ test('Stockbar renders symbol and name when provided as props', () => {
   const stockData = {
     stockName: 'Tesla, Inc.',
     stockSymbol: 'TSLA',
-    valueOwned: 350000
+    amount: 350000
   };
 
   render(<Stockbar stock={stockData} useCase='portfolio'/>);
@@ -31,7 +31,7 @@ test('Stockbars do not render a value for type stockSearch', () => {
   const stockData = {
     stockName: 'Tesla, Inc.',
     stockSymbol: 'TSLA',
-    valueOwned: 350000
+    amount: 350000
   };
 
   render(<Stockbar stock={stockData} useCase='stockSearch'/>);
@@ -42,7 +42,7 @@ test('Stockbar does render value for type portfolio', () => {
   const stockData = {
     stockName: 'Tesla, Inc.',
     stockSymbol: 'TSLA',
-    valueOwned: 350000
+    amount: 350000
   };
 
   render(<Stockbar stock={stockData} useCase='portfolio'/>);

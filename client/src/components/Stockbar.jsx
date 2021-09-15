@@ -13,7 +13,7 @@ import React from 'react';
 const Stockbar = (props) => {
   let col3 = '';
   if (props.useCase === 'portfolio') {
-    col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
+    col3 = <div className='barColumn'><p>${props.stock.amount}</p></div>;
   } else if (props.useCase === 'stockSearch') {
     col3 = <div className='barColumn'></div>;
   }
