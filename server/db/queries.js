@@ -26,6 +26,13 @@ class Db {
     return this.query(query);
   }
 
+  getUsers(usernameFragment) {
+    let query = `
+      SELECT * FROM users
+      WHERE username LIKE '%${usernameFragment}%';
+    `;
+    return this.query(query);
+  }
 
   getPortfolio(username) {
     let query = `
@@ -110,6 +117,7 @@ class Db {
 let db = new Db();
 
 module.exports.getUser = db.getUser.bind(db);
+module.exports.getUsers = db.getUser.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
 module.exports.getFriends = db.getFriends.bind(db);
 module.exports.getWatchlist = db.getWatchlist.bind(db);
