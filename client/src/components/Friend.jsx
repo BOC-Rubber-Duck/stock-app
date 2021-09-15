@@ -1,14 +1,49 @@
-/* eslint-disable max-len */
-import React from 'react';
+/* eslint-disable padded-blocks */
+import React, {useState} from 'react';
+import axios from 'axios';
 
 const Friend = (props) => {
+
+  const [searchResults, setSearchResults] = useState([]);
+
+  const getUsers = async (parm) => {
+    try {
+      const res = await axios.get(`/api/getUsers?username=${parm}`);
+      return res.data;
+    } catch (error) {
+      console.error('Error searching users', e);
+    }
+  };
+
+  const handleUserInput = async (e) => {
+    e.preventDefault;
+    if (e.target.value) {
+      try {
+        const results = await getUsers(e.target.value);
+        setSearchResults(results);
+      } catch (error) {
+        console.error('Error searching users', e);
+      }
+    }
+  };
+
   return (
     <React.Fragment>
-      <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       <section className="fr-page">
         <nav className="fr-nav">
-          <input className="fr-search-input" type="search" placeholder="Search by username" />
-          <button className="fr-button-cancel" type="button">Cancel</button>
+          <input
+            className="fr-search-input"
+            type="search"
+            placeholder="Search by username"
+            onChange={handleUserInput}
+          />
+          <button
+            className="fr-button-cancel"
+            type="button"
+            // onClick=what? back to something
+          >
+            Cancel
+          </button>
         </nav>
         <section className="fr-results">
           <ul>
