@@ -8,10 +8,37 @@ import Usercard from '../client/src/components/Usercard.jsx';
 
 beforeEach(() => {
   const user = {
+    first_name: '',
+    last_name: '',
     username: 'RubberDuck',
+    email: '',
+    cashBalance: 200000,
     rank: 2,
-    cashbalance: 400000,
-    stockbalance: 500000
+    userPortfolio: [
+      {
+        stockName: 'Amazon.com, Inc.',
+        stockSymbol: 'AMZN',
+        valueOwned: 350000
+      },
+      {
+        stockName: 'Telsa, Inc.',
+        stockSymbol: 'TSLA',
+        valueOwned: 300000
+      },
+      {
+        stockName: 'Apple',
+        stockSymbol: 'AAPL',
+        valueOwned: 200000
+      },
+      {
+        stockName: 'StockDucks, Inc.',
+        stockSymbol: 'STKD',
+        valueOwned: 200000
+      }
+    ],
+    friends: [
+      // username, username
+    ]
   };
   render(<Usercard user={user}/>);
 });
@@ -26,11 +53,10 @@ test('Usercard renders username and rank', () => {
 });
 
 test('Usercard renders cash balance and stock value', () => {
-  expect(screen.getByText('$400000')).toBeInTheDocument();
-  expect(screen.getByText('$500000')).toBeInTheDocument();
+  expect(screen.getByText('$200000')).toBeInTheDocument();
+  expect(screen.getByText('$1050000')).toBeInTheDocument();
 });
 
 test('Usercard renders total portfolio value', () => {
-  expect(screen.getByText('$400000')).toBeInTheDocument();
-  expect(screen.getByText('$900000')).toBeInTheDocument();
+  expect(screen.getByText('$1250000')).toBeInTheDocument();
 });
