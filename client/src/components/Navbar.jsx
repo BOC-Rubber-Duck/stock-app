@@ -1,6 +1,7 @@
 import React from 'react';
 import {IconContext} from 'react-icons';
 import {BiHomeAlt, BiSearch, BiClipboard} from 'react-icons/bi';
+import {FaClipboardList, FaSearch, FaHome, FaUserFriends} from 'react-icons/fa'
 
 import {Link} from 'react-router-dom';
 
@@ -12,7 +13,7 @@ const Navbar = (props) => {
         <div className='navbar-button'>
           <IconContext.Provider value={{className: 'navbar-button'}} >
             <div>
-              <BiHomeAlt/>
+              <FaHome/>
             </div>
           </IconContext.Provider>
           <p className='navbar-button-text'>Portfolio</p>
@@ -22,17 +23,27 @@ const Navbar = (props) => {
         <div className='navbar-button'>
           <IconContext.Provider value={{className: 'navbar-button'}}>
             <div>
-              <BiSearch/>
+              <FaSearch/>
             </div>
           </IconContext.Provider>
           <p className='navbar-button-text'>Find Stocks</p>
+        </div>
+      </Link>
+      <Link to="/friend" className='navbar-button-link'>
+        <div className='navbar-button'>
+          <IconContext.Provider value={{className: 'navbar-button'}}>
+            <div>
+              <FaUserFriends/>
+            </div>
+          </IconContext.Provider>
+          <p className='navbar-button-text'>Friends</p>
         </div>
       </Link>
       <Link to="/leaderboard" className='navbar-button-link'>
         <div className='navbar-button'>
           <IconContext.Provider value={{className: 'navbar-button'}}>
             <div>
-              <BiClipboard/>
+              <FaClipboardList/>
             </div>
           </IconContext.Provider>
           <p className='navbar-button-text'>Leaderboard</p>
