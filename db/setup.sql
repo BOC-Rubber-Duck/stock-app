@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS users (
   last_name varchar(64) not null,
   username varchar(64) not null unique,
   email varchar(64) not null unique,
-  cash_position bigint default 1000000
+  cash_position bigint default 100000000,
+  portfolio_value bigint default 100000000
 );
 
 CREATE INDEX ON users (first_name);
@@ -13,6 +14,7 @@ CREATE INDEX ON users (last_name);
 CREATE INDEX ON users (username);
 CREATE INDEX ON users (email);
 CREATE INDEX ON users (cash_position);
+CREATE INDEX ON users (portfolio_value);
 
 CREATE TABLE IF NOT EXISTS transactions (
   id uuid NOT NULL PRIMARY KEY,
@@ -66,31 +68,31 @@ CREATE INDEX ON watchlist (ticker_symbol, exchange);
 -- Sample values.
 
 INSERT INTO users
-(id, password, first_name, last_name, email, username, cash_position)
+(id, password, first_name, last_name, email, username, cash_position, portfolio_value)
 VALUES
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'my_secret_password', 'john', 'smith', 'john_smith@example.com', 'jsmith', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'my_secret_password', 'jeffrey', 'bezos', 'jeffrey_bezos@example.com', 'bezos_the_first', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'my_secret_password', 'mark', 'zuckerberg', 'mark_zuckerberg@example.com', 'the_zuck', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'my_secret_password', 'william', 'gates', 'william_gates@example.com', 'billy', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'my_secret_password', 'warren', 'buffett', 'warren_buffett@example.com', 'gramps', 1000000);
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'my_secret_password', 'john', 'smith', 'john_smith@example.com', 'jsmith', 100000000, 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'my_secret_password', 'jeffrey', 'bezos', 'jeffrey_bezos@example.com', 'bezos_the_first', 100000000, 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'my_secret_password', 'mark', 'zuckerberg', 'mark_zuckerberg@example.com', 'the_zuck', 100000000, 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'my_secret_password', 'william', 'gates', 'william_gates@example.com', 'billy', 100000000, 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'my_secret_password', 'warren', 'buffett', 'warren_buffett@example.com', 'gramps', 100000000, 100000000);
 
 INSERT INTO positions
 (id, user_id, ticker_symbol, exchange, amount)
 VALUES
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A21', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A22', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A23', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A24', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq', 1000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A25', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse', 1000000);
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A21', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A22', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq', 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A23', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq', 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A24', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq', 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A25', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse', 100000000);
 
 INSERT INTO transactions
 (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price, time_entered)
 VALUES
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A31', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 0, 100, 1000000, '2021-09-08 12:28:25-07'),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A32', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A33', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A34', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A35', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse',  0, 100, 1000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A31', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'aapl', 'nasdaq', 0, 100, 100000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A32', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq',  0, 100, 100000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A33', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq',  0, 100, 100000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A34', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq',  0, 100, 100000000, '2021-09-08 12:28:25-07'),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A35', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse',  0, 100, 100000000, '2021-09-08 12:28:25-07'),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A36', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  0, 66, 660000, '2021-09-08 12:28:25-07'),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A37', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11', 'msft', 'nasdaq',  1, 66, 550000, '2021-09-08 12:28:25-07');
 
