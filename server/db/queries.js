@@ -117,7 +117,7 @@ class Db {
 let db = new Db();
 
 module.exports.getUser = db.getUser.bind(db);
-module.exports.getUsers = db.getUser.bind(db);
+module.exports.getUsers = db.getUsers.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
 module.exports.getFriends = db.getFriends.bind(db);
 module.exports.getWatchlist = db.getWatchlist.bind(db);

@@ -59,6 +59,17 @@ app.get('/api/getUser', (req, res) => {
     });
 });
 
+app.get('/api/getUsers', (req, res) => {
+  db.getUsers(req.query.username)
+    .then((data) => {
+      res.send(data.rows[0]);
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
     .then((data) => {
