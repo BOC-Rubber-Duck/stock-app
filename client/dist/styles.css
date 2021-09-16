@@ -3,14 +3,12 @@
 
 :root {
   --background-dark: #121212;
-  --layer1-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
-  /* --layer2-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #121212;
-  --layer3-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), #121212;
-  --layer4-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #121212; */
-
+  --level1-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
+  --level2-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+  --level3-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.20));
+  --level4-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
   --default-text: #FFF;
   --diamond-blue: #4FB6F5;
-
   --search-bar: #AAA;
   --background-light: #ebebeb;
 }
@@ -314,7 +312,7 @@ input, textarea {
 
 .fr-nav {
   /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212; */
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: var(--level1-lighten), var(--background-dark);
   border-bottom: 1px solid white;
   height: 6rem;
 }
@@ -423,7 +421,9 @@ input, textarea {
   Layout: Styles that divide the page/component into sections. l- or layout-
   Module: Reusable, modular parts of design. Think: callouts, product lists, ratings graphs, etc.
   State: How things look in a particular state. Hidden or expanded? Active or inactive? is-hidden or is-collapse
+
   http://smacss.com/book/categorizing
   https://medium.com/@fuladuf/state-of-the-art-in-css-a-closer-look-at-css-architecture-systems-544339a6c625
   Other, non-reusable CSS may be grouped by component (ex: Navbar)
+
 */
