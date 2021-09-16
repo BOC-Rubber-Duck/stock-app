@@ -185,17 +185,20 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        let stockSelected = res.data
-        console.log('got response from server with data!', res.data)
+        const stockSelected = res.data;
+        this.setState({
+          stockSelected
+        });
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   };
 
   render() {
     return (
       <Router>
+
         <React.Fragment>
-          <div>
+          {/* <div>
             <nav>
               <ul>
                 <li>
@@ -212,12 +215,21 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div>
+          </div> */}
+
           <Switch>
             <Route exact path="/" component={Leaderboard} />
             <Route exact path="/leaderboard" component={Leaderboard} />
             <Route exact path="/portfolio" component={Portfolio} />
-            <Route exact path="/stock-search" component={StockSearch} />
+            <Route exact path="/stock-search"
+              render={() =>
+                <Searchbar
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                  handlePredictionClick={this.fetchSelectedStock}
+                />
+              }
+            />
             <Route exact path="/trade"
               render={() =>
                 <Trade
