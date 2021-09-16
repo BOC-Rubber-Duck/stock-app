@@ -1,12 +1,15 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 
-import Predictions from './Predictions.jsx'
+import Predictions from './Predictions.jsx';
 import {IconContext} from 'react-icons';
 import {BiSearch} from 'react-icons/bi';
 
-const Searchbar = () => {
+import StockDetailPage from './StockDetailPage.jsx';
+
+const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
+  const [displayStockDetails, setDisplayStockDetails] = useState(false);
 
   const handleUserInput = (e) => {
     e.preventDefault;
@@ -31,9 +34,9 @@ const Searchbar = () => {
   };
 
   const handlePredictionClick = (symbol) => {
-    console.log('this is the stock sympbol', symbol)
-    //send api call here?
-    //import api call controller???
+    props.handlePredictionClick(symbol);
+    setStockPredictions([]);
+    setDisplayStockDetails(true)
   }
 
   return (
@@ -56,6 +59,12 @@ const Searchbar = () => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
+      {displayStockDetails &&
+        <StockDetailPage
+          stockSelected={props.stockSelected}
+          user={props.user}
+        />
+      }
     </div>
   );
 };
