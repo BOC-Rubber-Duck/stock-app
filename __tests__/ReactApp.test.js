@@ -39,6 +39,6 @@ test('Top level App components render', async () => {
   expect(shallow(<Login />).is('.login-container')).toBe(true);
   expect(shallow(<Trade stockSelected={stockSelected}/>).is('.trade-container')).toBe(true);
   // TODO: fix this async console.log issue later:
-  // const leaderboardRender = await Promise.resolve(shallow(<Leaderboard />).is('.leaderboard-container'));
-  // expect(leaderboardRender).toBe(true);
+  const leaderboardRender = await Promise.resolve(shallow(<Leaderboard />).is('.leaderboard-container'));
+  expect(leaderboardRender).toBe(true);
 });
