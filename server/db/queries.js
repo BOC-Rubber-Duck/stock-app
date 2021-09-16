@@ -112,6 +112,16 @@ class Db {
     return this.query(query);
   };
 
+  getRank(username) {
+    let query = `
+      SELECT * FROM users AS u
+      ORDER BY u.cash_position
+      WITH ORDINALITY
+      WHERE u.username = ${username};
+    `;
+    return this.query(query);
+  };
+
   getFriendboard(username, offset, entries) {
     let query = `
       SELECT * FROM users AS u
