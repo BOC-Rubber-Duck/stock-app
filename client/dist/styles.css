@@ -399,6 +399,17 @@ input, textarea {
 
 /**********END FRIEND SEARCH**********/
 
+/**********BEGIN LOGIN/REGISTRATION**********/
+.login-header {
+  background-color: #999;
+}
+
+.login-corner-icon {
+  height: 2rem;
+  width: 2rem;
+}
+/**********END LOGIN/REGISTRATION**********/
+
 /*
   DETAILS
   Base: Default styles. Typically applies to native elements: body, form, input, a, a:hover, etc.
