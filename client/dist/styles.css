@@ -2,11 +2,17 @@
 /**********BEGIN BASE**********/
 
 :root {
+  --background-dark: #121212;
+  --layer1-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  /* --layer2-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)), #121212;
+  --layer3-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), #121212;
+  --layer4-dark: linear-gradient(0deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.4)), #121212; */
+
+  --default-text: #FFF;
   --diamond-blue: #4FB6F5;
-  --background-dark: #333333;
+
+  --search-bar: #AAA;
   --background-light: #ebebeb;
-  --default-text: #FFFFFF;
-  --search-bar: #AAAAAA;
 }
 
 * {
@@ -16,6 +22,12 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+/* Compatibility: so safari buttons don't look old and dumb */
+input, textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 .diamond {
@@ -285,12 +297,6 @@ body {
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
 
-/* Compatibility
-- - - - - - - - - - - - - - - - - - - - - - - - */
-input, textarea {
-  -webkit-appearance: none;
-  border-radius: 0;
-}
 
 /* Search area
 - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -307,6 +313,7 @@ input, textarea {
 }
 
 .fr-nav {
+  /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212; */
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
   border-bottom: 1px solid white;
   height: 6rem;
@@ -338,14 +345,14 @@ input, textarea {
 
 .fr-results {
   list-style-type: none;
-  color: white;
+  color: var(--default-text);
   font-size: 1.1rem;
 }
 
 .fr-results ul {
   list-style-type: none;
   margin: 1rem;
-  color: white;
+  color: var(--default-text);
 }
 
 .fr-results li {
@@ -355,6 +362,7 @@ input, textarea {
 }
 
 .fr-results li {
+  /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212; */
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
   min-height: 4rem;
   margin: 1rem 0;
