@@ -299,6 +299,7 @@ input, textarea {
   display: grid;
   grid-template-columns: 1fr min-content;
   align-items: center;
+  border: 1px solid blue;
 }
 
 .fr-page {
