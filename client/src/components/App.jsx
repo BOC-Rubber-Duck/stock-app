@@ -202,18 +202,12 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-<<<<<<< HEAD
-        let stockSelected = res.data;
-        console.log('got response from server with data!', res.data);
-      });
-=======
         const stockSelected = res.data;
         this.setState({
           stockSelected
         });
       })
       .catch((e) => console.log(e));
->>>>>>> development
   };
 
   render() {
