@@ -114,55 +114,56 @@ class App extends React.Component {
     // in conjunction with passport auth? Should only be able to fetch own info.
     let self = true;
     if (user === undefined) {
-      user = 'the_zuck'
+      user = 'the_zuck';
     } else {
       self = false;
     }
     let portfolio = [];
     let friends = [];
     axios.get('/api/getPortfolio?username='+user)
-    .then((results) => {
-      portfolio = results.data;
-      axios.get('/api/getFriends?username='+user)
       .then((results) => {
-        friends = results.data;
-        axios.get('/api/getUser?username='+user)
-        .then((result) => {
-          let { first_name, last_name, username, email, cash_position } = result.data;
-          if (self) {
-            this.setState({
-              user: {
-                first_name: first_name,
-                last_name: last_name,
-                username: username,
-                email: email,
-                cashBalance: cash_position,
-                userPortfolio: portfolio,
-                friends: friends
-              }
-            });
-          } else {
-            // add to some other user in the state
-            let others = {};
-            if (this.state.others) {
-              others = this.state.others;
-              others[username] = {
-                first_name: first_name,
-                last_name: last_name,
-                username: username,
-                email: email,
-                cashBalance: cash_position,
-                userPortfolio: portfolio,
-                friends: friends
-              };
-              this.setState({
-                others: others
-              })
-            }
-          }
-        });
+        portfolio = results.data;
+        axios.get('/api/getFriends?username='+user)
+          .then((results) => {
+            friends = results.data;
+            axios.get('/api/getUser?username='+user)
+              .then((result) => {
+                let { first_name, last_name, username, email, cash_position } = result.data;
+                if (self) {
+                  this.setState({
+                    user: {
+                      first_name: first_name,
+                      last_name: last_name,
+                      username: username,
+                      email: email,
+                      cashBalance: cash_position,
+                      userPortfolio: portfolio,
+                      friends: friends
+                    }
+                  });
+                } else {
+                  // add to some other user in the state
+                  let others = {};
+                  if (this.state.others) {
+                    others = this.state.others;
+                    others[username] = {
+                      first_name: first_name,
+                      last_name: last_name,
+                      username: username,
+                      email: email,
+                      cashBalance: cash_position,
+                      userPortfolio: portfolio,
+                      friends: friends
+                    };
+                    this.setState({
+                      others: others
+                    });
+                  }
+                }
+              });
+          });
       })
-    })
+      .catch((e) => e);
   }
 
   fetchSelectedStock(symbol) {
@@ -187,8 +188,9 @@ class App extends React.Component {
         const stockSelected = res.data;
         this.setState({
           stockSelected
-        })
-      });
+        });
+      })
+      .catch((e) => console.log(e));
   };
 
   render() {

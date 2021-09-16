@@ -14,14 +14,14 @@ const fetchSelectedStock = (symbol, callback) => {
   })
     .then((res) => {
       const results = res.data;
-      callback(null, results)
+      callback(null, results);
     })
     .catch((e) => {
-      console.log('error in fetchSelectedStock controller')
-      callback(e, null)
-    })
-}
+      console.log('error in fetchSelectedStock controller');
+      callback(e, null);
+    });
+};
 
 module.exports = {
   fetchSelectedStock
-}
+};
