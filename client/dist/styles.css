@@ -83,7 +83,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: 2em;
+  font-size: 1.2em;
 }
 
 .navbar-button:hover {
@@ -91,7 +91,6 @@ body {
 }
 
 .navbar-button-link {
-  font-size: 1.4em;
   text-decoration: inherit;
   color: inherit;
 }
@@ -399,6 +398,17 @@ input, textarea {
 };
 
 /**********END FRIEND SEARCH**********/
+
+/**********BEGIN LOGIN/REGISTRATION**********/
+.login-header {
+  background-color: #999;
+}
+
+.login-corner-icon {
+  height: 2rem;
+  width: 2rem;
+}
+/**********END LOGIN/REGISTRATION**********/
 
 /*
   DETAILS

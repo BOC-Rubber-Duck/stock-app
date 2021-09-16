@@ -1,5 +1,7 @@
 import React from 'react';
 
+import {Link} from 'react-router-dom';
+
 const Prediction = (props) => {
   return (
     <div
@@ -19,7 +21,9 @@ const Prediction = (props) => {
 const Predictions = (props) => {
   return props.predictions.map((prediction, i) => {
     return (
-      <Prediction key={i} data={prediction} predictionClick={props.predictionClick}/>
+      //<Link to='/stock-detail-page'>
+        <Prediction key={i} data={prediction} predictionClick={props.predictionClick}/>
+      //</Link>
     );
   });
 };
