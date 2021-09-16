@@ -6,6 +6,16 @@ import {IconContext} from 'react-icons';
 import {FaSearch} from 'react-icons/fa';
 
 import StockDetailPage from './StockDetailPage.jsx';
+import Stockbar from './Stockbar.jsx';
+
+const OwnedStock = () => {
+  return (
+
+    <div>hey</div>
+
+  )
+
+}
 
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
@@ -37,6 +47,15 @@ const Searchbar = (props) => {
     props.handlePredictionClick(symbol);
     setStockPredictions([]);
     setDisplayStockDetails(true)
+  };
+
+  const ownedStocks = () => {
+    props.userPortfolio.map(stock => {
+      return (
+
+        <Stockbar symbol={stock.ticker_symbol} />
+      )
+    })
   }
 
   return (
@@ -59,6 +78,15 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
+      {true &&
+
+        props.userPortfolio.map(stock => {
+          return (
+
+            <Stockbar symbol={stock.ticker_symbol} />
+          )
+        })
+      }
       {displayStockDetails &&
         <StockDetailPage
           stockSelected={props.stockSelected}

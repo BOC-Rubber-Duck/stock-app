@@ -227,6 +227,7 @@ class App extends React.Component {
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handlePredictionClick={this.fetchSelectedStock}
+                  userPortfolio={this.state.user.userPortfolio}
                 />
               }
             />
