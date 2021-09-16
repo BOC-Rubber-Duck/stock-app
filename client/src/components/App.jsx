@@ -95,6 +95,11 @@ class App extends React.Component {
         console.log(e);
       });
 
+    axios.get(//routed to leaderboard,
+      //pull the portfolio value, and rank for leaderboard query
+
+      )
+
       const selectedFriend = {
         username,
         rank: 1,//query all users and filter and sort based on portfolio value, return index?
