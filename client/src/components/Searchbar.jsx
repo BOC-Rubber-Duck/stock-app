@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 
 import Predictions from './Predictions.jsx';
@@ -8,18 +8,32 @@ import {FaSearch} from 'react-icons/fa';
 import StockDetailPage from './StockDetailPage.jsx';
 import Stockbar from './Stockbar.jsx';
 
-const OwnedStock = () => {
-  return (
-
-    <div>hey</div>
-
-  )
-
-}
-
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
   const [displayStockDetails, setDisplayStockDetails] = useState(false);
+  const [ownedStocks, setOwnedStocks] = useState([]);
+
+  useEffect(() => {
+    let stocks = [];
+    props.userPortfolio.map((stock) => {
+      const symbol = stock.ticker_symbol;
+      axios.get('./fetchSelectedStock', {
+        params: {
+          symbol
+        }
+      })
+        .then((res) => {
+          const name = res.data.name;
+          const type = 'stocksearch';
+          //issue here
+          stocks.push({symbol, name, type});
+        })
+        .catch((e) => console.log(e));
+    });
+    console.log(stocks)
+    setOwnedStocks(stocks);
+    console.log(ownedStocks)
+  }, []);
 
   const handleUserInput = (e) => {
     e.preventDefault;
@@ -49,14 +63,6 @@ const Searchbar = (props) => {
     setDisplayStockDetails(true)
   };
 
-  const ownedStocks = () => {
-    props.userPortfolio.map(stock => {
-      return (
-
-        <Stockbar symbol={stock.ticker_symbol} />
-      )
-    })
-  }
 
   return (
     <div className='searcbar-main'>
@@ -78,12 +84,16 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {true &&
+      {ownedStocks &&
 
-        props.userPortfolio.map(stock => {
+        ownedStocks.map(stock => {
+          console.log('this stock', stock)
           return (
-
-            <Stockbar symbol={stock.ticker_symbol} />
+            <Stockbar
+              name={stock.name}
+              symbol={stock.symbol}
+              type={stock.type}
+            />
           )
         })
       }
