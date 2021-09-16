@@ -60,8 +60,9 @@ class App extends React.Component {
       }
     };
 
-    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    this.selectedUserSearch = this.selectedUserSearch.bind(this);
   }
 
   componentDidMount() {
@@ -69,9 +70,43 @@ class App extends React.Component {
   }
 
   selectedUserSearch(username) {
+    console.log('selectedUserSearch clicked: ', username);
+    let selectedFriendPortfolio = [];
+    let portfolioValue= 0;
+    axios.get('/api/getPortfolio', {
+      params: {
+        username
+      }
+    })
+      .then((res) => {
+        const dbPortfolioData = res.data;
+
+        dbPortfolioData.map((stock) => {
+          const stockName = stock.ticker_symbol;
+          const sharesOwned = stock.amount;
+          const reducedData = {
+            stockName,
+            sharesOwned
+          };
+          selectedFriendPortfolio.push(reducedData);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+
+      const selectedFriend = {
+        username,
+        rank: 1,//query all users and filter and sort based on portfolio value, return index?
+        portfolioValue,
+        selectedFriendPortfolio
+      }
     // Tyler?
     // need to get pricing for each stock in their portfolio, check server route/helper functions
+    //for username
+      //get portfolio
     this.setState({
+      selectedFriend
       // selectedFriend: {
       //   username: '',
       //   rank: 0,
@@ -167,18 +202,6 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
-    // TODO: ajax calls to external service
-    // returns 1 year of data, use first response[0] for "up to date" for display purposes
-    // this.setState({
-    //   stockSelected: {
-    //     name: 'Tesla',
-    //     symbol: 'TSLA',
-    //     price: 45.99,
-    //     data: [
-    //       {},{}
-    //     ]
-    //   },
-    // });
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
@@ -250,6 +273,7 @@ class App extends React.Component {
                 />}
             />
           </Switch>
+          <button className='test-button' onClick={() => this.selectedUserSearch('the_zuck')}>Click mee</button>
           <Navbar />
         </React.Fragment>
       </Router>

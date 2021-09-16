@@ -60,6 +60,7 @@ app.get('/api/getUser', (req, res) => {
 });
 
 app.get('/api/getPortfolio', (req, res) => {
+  console.log('hit getpPortfolio route', req.query.username)
   db.getPortfolio(req.query.username)
     .then((data) => {
       res.send(data.rows)
