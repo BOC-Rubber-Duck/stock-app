@@ -3,7 +3,7 @@ import axios from 'axios';
 
 import Predictions from './Predictions.jsx';
 import {IconContext} from 'react-icons';
-import {BiSearch} from 'react-icons/bi';
+import {FaSearch} from 'react-icons/fa';
 
 import StockDetailPage from './StockDetailPage.jsx';
 
@@ -45,7 +45,7 @@ const Searchbar = (props) => {
         <div className='searchbar-display'>
           <IconContext.Provider value={{className: 'searchbar-icon'}}>
             <div className='search-icon-container'>
-              <BiSearch />
+              <FaSearch />
             </div>
           </IconContext.Provider>
           <input
