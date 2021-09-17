@@ -12,37 +12,27 @@ const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
   const [displayStockDetails, setDisplayStockDetails] = useState(false);
   const [ownedStocks, setOwnedStocks] = useState([]);
+  const [showOwnedStocks, setShowOwnedStocks] = useState(true);
 
   useEffect(() => {
+    const stocksToSearch = [];
 
-    async function test() {
-      let stocks = [];
-      props.userPortfolio.map((stock) => {
-        const symbol = stock.ticker_symbol;
+    props.userPortfolio.map((stock) => {
+      const symbol = stock.ticker_symbol;
+      stocksToSearch.push(
         axios.get('./fetchSelectedStock', {
           params: {
             symbol
           }
         })
-          .then((res) => {
-            const name = res.data.name;
-            const type = 'stocksearch';
-            console.log(symbol, name, type)
-            stocks.push({symbol, name, type});
-          })
-          .catch((e) => console.log(e));
+      );
+    });
+    Promise.all(stocksToSearch)
+      .then((res) =>{
+        const stocks = res.map(stock => stock.data);
+        setOwnedStocks(stocks);
       })
-
-      return stocks;
-    }
-    console.log('test',test())
-    // let stocks = [];
-    // props.userPortfolio.map((stock) => {
-    //   const symbol = stock.ticker_symbol;
-    // });
-    // console.log(stocks)
-    // setOwnedStocks(stocks);
-    // console.log(ownedStocks)
+      .catch(e => e)
   }, []);
 
   const handleUserInput = (e) => {
@@ -70,7 +60,8 @@ const Searchbar = (props) => {
   const handlePredictionClick = (symbol) => {
     props.handlePredictionClick(symbol);
     setStockPredictions([]);
-    setDisplayStockDetails(true)
+    setDisplayStockDetails(true);
+    setShowOwnedStocks(false);
   };
 
 
@@ -94,17 +85,16 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {ownedStocks &&
-
-        ownedStocks.map(stock => {
-          console.log('this stock', stock)
+      {showOwnedStocks &&
+        ownedStocks.map((stock) => {
           return (
             <Stockbar
+              key={stock.symbol}
               name={stock.name}
               symbol={stock.symbol}
               type={stock.type}
             />
-          )
+          );
         })
       }
       {displayStockDetails &&
