@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import {useHistory} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 const BuySellMenu = (props) => {
   // check if cash balance is enough to buy at least one stock
@@ -17,30 +17,37 @@ const BuySellMenu = (props) => {
   }
   numStock = numStock || 0;
   const displaySell = numStock > 0 ? true : false;
-  const history = useHistory();
-  const handleClick = () => {
-    history.push('/trade');
+  const handleClick = (event) => {
+    const action = event.target.value;
+    props.updateTradeAction(action);
   };
   return (
     <div className='BuySellMenu'>
       {displayBuy ?
-        <button
-          className='buyButton'
-          onClick={handleClick}
-        >
-            Buy
-        </button> :
-        null}
+        <Link to='/trade'>
+          <button
+            className='buyButton'
+            onClick={handleClick}
+            value='buy'
+          >
+              Buy
+          </button> :
+        </Link> :
+        null
+      }
       {displaySell ?
-        <button
-          className='sellButton'
-          onClick={handleClick}
-        >
-            Sell
-        </button> :
-        null}
+        <Link to='/trade'>
+          <button
+            className='sellButton'
+            onClick={handleClick}
+            value='sell'
+          >
+                Sell
+          </button>
+        </Link> :
+        null
+      }
     </div>
-
   );
 };
 

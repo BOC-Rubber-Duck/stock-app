@@ -20,6 +20,8 @@ const StockDetailPage = (props) => {
         price={props.stockSelected.price}
         cash={props.user.cashBalance}
         stockPortfolio={props.user.userPortfolio}
+        updateTradeAction={props.updateTradeAction}
+        handleTrade={props.handleTrade}
       />
     </div>
   );
