@@ -32,7 +32,7 @@ class Leaderboard extends React.Component {
           console.log(error);
         });
     } else {
-      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watchedUser}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
@@ -92,14 +92,14 @@ class Leaderboard extends React.Component {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
         <Friend />
-        <div id="list">
+        <div id="leaderboard-list">
           <div id="list-header">
             <form>
-              <input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'leaders'
+              Leaderboard&nbsp;&nbsp;<input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'leaders'
                 ? 0
                 : 1
               } step="1" onChange={this.toggleFriendList} />
-              <label htmlFor="friend-slider">Display Friends</label>
+              <label htmlFor="friend-slider">&nbsp;&nbsp;Display Friends</label>
             </form>
           </div>
           <div id="container">
@@ -111,7 +111,7 @@ class Leaderboard extends React.Component {
               loader={<h4>Loading...</h4>}
               endMessage={
                 <p style={{textAlign: 'center'}}>
-                  <b>Yay! You have seen it all</b>
+                  <b>End of List</b>
                 </p>
               }
               // Pull-down-to-refresh Functionality
@@ -119,10 +119,10 @@ class Leaderboard extends React.Component {
               pullDownToRefresh={true}
               pullDownToRefreshThreshold={50}
               pullDownToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
+                <p>&#8595; Pull down to refresh</p>
               }
               releaseToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
+                <p>&#8593; Release to refresh</p>
               }
             >
               <LeaderboardList loggedIn={this.state.user} addFriend={this.addFriend} list={this.state.list}/>
