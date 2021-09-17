@@ -28,7 +28,7 @@ class Db {
 
   getUsers(usernameFragment) {
     let query = `
-      SELECT * FROM users
+      SELECT id, username FROM users
       WHERE username LIKE '%${usernameFragment}%';
     `;
     return this.query(query);
