@@ -29,10 +29,10 @@ const Searchbar = (props) => {
     });
     Promise.all(stocksToSearch)
       .then((res) =>{
-        const stocks = res.map(stock => stock.data);
+        const stocks = res.map((stock) => stock.data);
         setOwnedStocks(stocks);
       })
-      .catch(e => e)
+      .catch((e) => e);
   }, []);
 
   const handleUserInput = (e) => {
@@ -41,6 +41,8 @@ const Searchbar = (props) => {
 
     if (!userStockSearch) {
       setStockPredictions([]);
+      setShowOwnedStocks(true);
+      setDisplayStockDetails(false);
     } else {
       axios.get('/userStockSearch', {
         params: {
@@ -52,7 +54,7 @@ const Searchbar = (props) => {
           setStockPredictions(predictions);
         })
         .catch((e) => {
-          console.log('error getting stock predictions', e)
+          console.log('error getting stock predictions', e);
         });
     }
   };
