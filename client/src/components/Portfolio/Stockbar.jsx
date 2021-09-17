@@ -15,7 +15,7 @@ import React from 'react';
 const Stockbar = (props) => {
   let col3 = '';
   if (props.useCase === 'portfolio') {
-    col3 = <div className='barColumn'><p>${props.stock.amount}</p></div>;
+    col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
   } else if (props.useCase === 'stockSearch') {
     col3 = <div className='barColumn'></div>;
   }
@@ -26,8 +26,7 @@ const Stockbar = (props) => {
     }}>
       <div className='barColumn'>
         <p>{props.stock.ticker_symbol}</p>
-        {/* need to get stock name from API or route
-        <p>{props.stock.stockName}</p>  */}
+        <p>{props.stock.stockName}</p>
       </div>
       <div className='barColumn'></div>
       {col3}

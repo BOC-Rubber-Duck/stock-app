@@ -6,7 +6,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
@@ -29,24 +29,11 @@ class App extends React.Component {
         rank: 1,
         userPortfolio: [
           {
-            stockName: 'Amazon.com, Inc.',
-            stockSymbol: 'AMZN',
-            valueOwned: 350000
-          },
-          {
-            stockName: 'Telsa, Inc.',
-            stockSymbol: 'TSLA',
-            valueOwned: 300000
-          },
-          {
-            stockName: 'Apple',
-            stockSymbol: 'AAPL',
-            valueOwned: 200000
-          },
-          {
-            stockName: 'StockDucks, Inc.',
-            stockSymbol: 'STKD',
-            valueOwned: 200000
+            amount: 1000000,
+            exchange: "nasdaq",
+            id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+            ticker_symbol: "fb",
+            user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
           }
         ],
         friends: [

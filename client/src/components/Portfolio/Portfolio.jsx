@@ -2,9 +2,13 @@ import React from 'react';
 import Stockbar from './Stockbar.jsx';
 import Usercard from './Usercard.jsx';
 import {Link} from 'react-router-dom';
+import getPortfolioData from './helpers/getPortfolioData.js';
 
 const Portfolio = (props) => {
-  const stocks = props.user.userPortfolio;
+  var expandedUser = getPortfolioData(props.user);
+  console.log(expandedUser);
+  const stocks = expandedUser.userPortfolio;
+
   const stockbars = stocks.map((stockObject) => {
     return (
       <Link to="/stock-detail-page">
