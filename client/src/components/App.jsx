@@ -57,7 +57,8 @@ class App extends React.Component {
         data: [
           // {},{}
         ]
-      }
+      },
+      tradeAction: 'buy'
     };
 
     this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
@@ -102,9 +103,11 @@ class App extends React.Component {
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        return response;
       })
       .error((err) => {
         console.log('error in attempting trade', err);
+        return err;
       });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
@@ -233,6 +236,7 @@ class App extends React.Component {
             <Route exact path="/trade"
               render={() =>
                 <Trade
+                  tradeAction={this.state.tradeAction}
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handleTrade={this.handleTrade}

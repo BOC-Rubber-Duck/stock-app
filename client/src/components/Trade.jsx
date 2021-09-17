@@ -11,6 +11,15 @@ class Trade extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // componentDidMount() {
+  //   console.log('trade component mounted', this.props, this.state);
+  //   if (this.props.tradeAction === 'sell') {
+  //     this.setState({
+  //       action: 'sell'
+  //     });
+  //   }
+  // };
+
   handleInputChange(event) {
     const target = event.target;
     const value = target.value;
@@ -22,16 +31,16 @@ class Trade extends React.Component {
   };
 
   handleSubmit() {
-    let stockSymbol = this.props.stockSelected.symbol;
-    let shares = this.state.shares;
-    let action = this.state.action;
-    console.log('handleSubmit action confirmed');
+    const stockSymbol = this.props.stockSelected.symbol;
+    const shares = this.state.shares;
+    const action = this.state.action;
+    console.log('handleSubmit action confirmed', this.state);
     this.props.handleTrade(stockSymbol, shares, action);
   };
 
   render() {
     const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected || 0;
+    const saleAmount = this.state.shares * stockSelected.price || 0;
     const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
 
     return (
