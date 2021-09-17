@@ -6,11 +6,11 @@ const starting_cash = 1000000;
 const starting_portfolio_value = 1000000;
 
 const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 });
 
 class Db {
@@ -106,6 +106,42 @@ class Db {
     return this.query(query);
   }
 
+  getLeaderboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      LEFT OUTER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  getFriendboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      INNER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  deleteFriend(watching_user_id, watched_username) {
+    let query = `
+      DELETE FROM friendships AS f
+      WHERE f.watching_user = ${watching_user_id}
+      AND (SELECT u.username FROM users AS u
+      WHERE f.watched_user = u.id) = ${watched_username};
+    `;
+    return this.query(query);
+  };
+
   // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
@@ -125,3 +161,6 @@ module.exports.postUser = db.postUser.bind(db);
 module.exports.postFriend = db.postFriend.bind(db);
 module.exports.postWatchSecurity = db.postWatchSecurity.bind(db);
 module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
+module.exports.getLeaderboard = db.getLeaderboard.bind(db);
+module.exports.getFriendboard = db.getFriendboard.bind(db);
+module.exports.deleteFriend = db.deleteFriend.bind(db);
