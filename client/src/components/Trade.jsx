@@ -31,7 +31,7 @@ class Trade extends React.Component {
 
   render() {
     const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected || 0;
+    const saleAmount = stockSelected !== undefined ? this.state.shares * stockSelected.price: 0;
     const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
 
     return (
@@ -49,6 +49,8 @@ class Trade extends React.Component {
             Shares to {this.state.action}
               <input
                 name="shares"
+                inputmode="numeric"
+                pattern="[0-9]*"
                 type="number"
                 value={this.state.shares}
                 onChange={this.handleInputChange} />
