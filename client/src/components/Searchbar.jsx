@@ -14,25 +14,35 @@ const Searchbar = (props) => {
   const [ownedStocks, setOwnedStocks] = useState([]);
 
   useEffect(() => {
-    let stocks = [];
-    props.userPortfolio.map((stock) => {
-      const symbol = stock.ticker_symbol;
-      axios.get('./fetchSelectedStock', {
-        params: {
-          symbol
-        }
-      })
-        .then((res) => {
-          const name = res.data.name;
-          const type = 'stocksearch';
-          //issue here
-          stocks.push({symbol, name, type});
+
+    async function test() {
+      let stocks = [];
+      props.userPortfolio.map((stock) => {
+        const symbol = stock.ticker_symbol;
+        axios.get('./fetchSelectedStock', {
+          params: {
+            symbol
+          }
         })
-        .catch((e) => console.log(e));
-    });
-    console.log(stocks)
-    setOwnedStocks(stocks);
-    console.log(ownedStocks)
+          .then((res) => {
+            const name = res.data.name;
+            const type = 'stocksearch';
+            console.log(symbol, name, type)
+            stocks.push({symbol, name, type});
+          })
+          .catch((e) => console.log(e));
+      })
+
+      return stocks;
+    }
+    console.log('test',test())
+    // let stocks = [];
+    // props.userPortfolio.map((stock) => {
+    //   const symbol = stock.ticker_symbol;
+    // });
+    // console.log(stocks)
+    // setOwnedStocks(stocks);
+    // console.log(ownedStocks)
   }, []);
 
   const handleUserInput = (e) => {
