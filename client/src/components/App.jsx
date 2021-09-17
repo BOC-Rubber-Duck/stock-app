@@ -94,9 +94,8 @@ class App extends React.Component {
   };
 
   handleTrade(stockSymbol, shares, action) {
-    console.log('handleTrade method called');
     // axios call:
-    axios.post('/trade', {
+    return axios.post('/api/trade', {
       stockSymbol: stockSymbol,
       shares: shares,
       action: action

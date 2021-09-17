@@ -66,7 +66,7 @@ app.get('/api/getPortfolio', (req, res) => {
       console.log('Error during getPortfolio: ', err)
       res.send(500);
     });
-})
+});
 
 app.get('/api/getFriends', (req, res) => {
   db.getFriends(req.query.username)
@@ -77,7 +77,7 @@ app.get('/api/getFriends', (req, res) => {
       console.log('Error during getFriends: ', err)
       res.send(500);
     });
-})
+});
 
 app.get('/api/getWatchlist', (req, res) => {
   db.getWatchlist(req.query.username)
@@ -88,7 +88,7 @@ app.get('/api/getWatchlist', (req, res) => {
       console.log('Error during getWatchlist: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postFriend', (req, res) => {
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
@@ -99,7 +99,7 @@ app.post('/api/postFriend', (req, res) => {
       console.log('Error during postFriend: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postWatchSecurity', (req, res) => {
   db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)
@@ -110,7 +110,7 @@ app.post('/api/postWatchSecurity', (req, res) => {
       console.log('Error during postWatchSecurity: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postUser', (req, res) => {
   let { first_name, last_name, email, username, password } = req.body;
@@ -122,13 +122,18 @@ app.post('/api/postUser', (req, res) => {
       console.log('Error during postUser: ', err)
       res.send(500);
     });
-})
-app.post('/trade', (req, res) => {
+});
+
+app.post('/api/trade', (req, res) => {
   const stockSymbol = req.query.stockSymbol;
   const shares = req.query.shares;
   const action = req.query.action;
   // process trade
+  // validate user
+  // validate user cash available
+  // validate user ownership of stock
   // make db queries
+  // db.
   // confirm success
   const tradeConfirmation = {
     username: 'testUser',

@@ -135,12 +135,13 @@ class Db {
     return this.query(query);
   };
 
-  // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
+  postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price) {
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
   // INSERT INTO transactions
   // UPDATE or INSERT INTO or DELETE positions
   // COMMIT;
+  };
 }
 
 let db = new Db();

@@ -34,8 +34,8 @@ class Trade extends React.Component {
     const stockSymbol = this.props.stockSelected.symbol;
     const shares = this.state.shares;
     const action = this.state.action;
-    console.log('handleSubmit action confirmed', this.state);
-    this.props.handleTrade(stockSymbol, shares, action);
+    let tradeResponse = this.props.handleTrade(stockSymbol, shares, action);
+    console.log('tradeResponse:', tradeResponse);
   };
 
   render() {
