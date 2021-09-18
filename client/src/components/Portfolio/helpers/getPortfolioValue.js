@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getPortfolioData = (user) => {
+const getPortfolioValue = (user) => {
   const stocks = user.userPortfolio;
   const stockData = stocks.slice();
   user.portfolioValue = 0;
@@ -20,7 +20,11 @@ const getPortfolioData = (user) => {
           stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
           user.portfolioValue += stocks[i].valueOwned;
         }
-        resolve(user);
+        axios.put('/api/portfolioValue', {'user_id': user.userPortfolio[0].user_id, 'portfolio_value': user.portfolioValue}).then((queryResults) => {
+          resolve(user);
+        }).catch((err) => {
+          console.log('error writing portfolioValue to db:', err);
+        });
       }))
       .catch((err) => {
         reject(err);
@@ -28,4 +32,4 @@ const getPortfolioData = (user) => {
   });
 };
 
-export default getPortfolioData;
+export default getPortfolioValue;
