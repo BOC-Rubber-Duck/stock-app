@@ -16,9 +16,8 @@ const Searchbar = (props) => {
 
   useEffect(() => {
     const stocksToSearch = [];
-
     props.userPortfolio.map((stock) => {
-      const symbol = stock.ticker_symbol;
+      const symbol = stock.ticker_symbol || stock.symbol;
       stocksToSearch.push(
         axios.get('./fetchSelectedStock', {
           params: {
