@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 import React from 'react';
 import axios from 'axios';
 import {
@@ -20,6 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: {
+        id: '',
         first_name: '',
         last_name: '',
         username: '',
@@ -56,15 +58,25 @@ class App extends React.Component {
         data: [
           // {},{}
         ]
+      },
+      trade: {
+        action: 'sell'
       }
     };
 
-    this.fetchSelectedStock = this.fetchSelectedStock.bind(this)
+    this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    this.updateTradeAction = this.updateTradeAction.bind(this);
   }
 
   componentDidMount() {
     this.getCurrentUser();
+  }
+
+  updateTradeAction(action) {
+    this.setState({
+      trade: { action }
+    });
   }
 
   selectedUserSearch(username) {
@@ -127,10 +139,11 @@ class App extends React.Component {
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
-                let { first_name, last_name, username, email, cash_position } = result.data;
+                const { id, first_name, last_name, username, email, cash_position } = result.data;
                 if (self) {
                   this.setState({
                     user: {
+                      id: id,
                       first_name: first_name,
                       last_name: last_name,
                       username: username,
@@ -217,8 +230,18 @@ class App extends React.Component {
           </div> */}
 
           <Switch>
-            <Route exact path="/" component={Leaderboard} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
+          <Route exact path="/"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
+            <Route exact path="/leaderboard"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search"
               render={() =>
@@ -227,6 +250,7 @@ class App extends React.Component {
                   user={this.state.user}
                   handlePredictionClick={this.fetchSelectedStock}
                   userPortfolio={this.state.user.userPortfolio}
+                  updateTradeAction={this.updateTradeAction}
                 />
               }
             />
@@ -236,19 +260,11 @@ class App extends React.Component {
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handleTrade={this.handleTrade}
+                  action={this.state.trade.action}
                 />}
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
-            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
-            <Route
-              exact path="/stock-detail-page"
-              render={() =>
-                <StockDetailPage
-                  stockSelected={this.state.stockSelected}
-                  user={this.state.user}
-                />}
-            />
           </Switch>
           <Navbar />
         </React.Fragment>

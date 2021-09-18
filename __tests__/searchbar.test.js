@@ -47,46 +47,18 @@ describe('Test stock search/filter', () => {
 });
 
 test('Displays stocks on user input/handles state chagne', async () => {
-
-  const handleUserInput = (e) => {
-    e.preventDefault;
-    const userStockSearch = e.target.value;
-    console.log(userStockSearch, 'found meee')
-
-    if (!userStockSearch) {
-      setStockPredictions([]);
-      setShowOwnedStocks(true);
-      setDisplayStockDetails(false);
-    } else {
-      axios.get('/userStockSearch', {
-        params: {
-          userStockSearch
-        }
-      })
-        .then((res) => {
-          const predictions = res.data;
-          setStockPredictions(predictions);
-        })
-        .catch((e) => {
-          console.log('error getting stock predictions', e);
-        });
-    }
-  };
-
-
-
   await act(async () => {
     //await axios.get.mockImplementation(() => Promise.resolve({samplePredictions}));
     render(<Searchbar userPortfolio={samplePredictions} />);
+
+
     const searchField = screen.getByPlaceholderText('Search...');
     await expect(searchField).toBeTruthy();
-
-    // userEvent.type(searchField, 'AAPL');
-
-    //await expect(searchField).toHaveValue('AAPL')
-
-
   })
+
+  // userEvent.type(searchField, 'AAPL');
+
+  //await expect(searchField).toHaveValue('AAPL')
 })
 
 test('Searchbar renders correctly with owned stocks', async () => {
