@@ -9,10 +9,18 @@ const source = CancelToken.source();
 class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
-    if (props.user && props.user.id) {
-      var user = props.user.id;
+    if (props.user) {
+      var user = props.user;
     } else {
-      var user = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13';
+      var user = {
+        id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
+        first_name: 'mark',
+        last_name: 'zuckerberg',
+        username: 'the_zuck',
+        email: 'mark_zuckerberg@example.com',
+        cash_position: 1000000,
+        rank: null,
+        portfolioValue: 0
     }
     this.state = {
       list: [],
@@ -30,17 +38,17 @@ class Leaderboard extends React.Component {
   addFriend(watchedUserUsername, index, friendStatus) {
     console.log('friendStatus:', friendStatus);
     if (friendStatus === null) {
-      axios.post(`/api/postFriend`, {watching_user_id: this.state.user, watched_username: watchedUserUsername})
+      axios.post(`/api/postFriend`, {watching_user_id: this.state.user.id, watched_username: watchedUserUsername})
         .then((response) => {
           const friendAdd = this.state.list;
-          friendAdd[index].watching_user = this.state.user;
+          friendAdd[index].watching_user = this.state.user.id;
           this.setState({list: friendAdd});
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.state.user, watched_username: watchedUserUsername}})
+      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.state.user.id, watched_username: watchedUserUsername}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
@@ -56,9 +64,9 @@ class Leaderboard extends React.Component {
     var list = this.state.list;
     const entries = 2;
     const offset = this.state.page * entries;
-    if (this.state.user.length > 0) {
+    if (this.state.user.id.length > 0) {
       this.setState({page: (this.state.page + 1)});
-      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user, offset: offset, entries: entries}, cancelToken: source.token})
+      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user.id, offset: offset, entries: entries}, cancelToken: source.token})
         .then((response) => {
           if (typeof(response.data) === 'object') {
             this.setState({list: list.concat(response.data)});
@@ -115,6 +123,7 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
+        <Usercard user={this.state.user} />
         <div id="leaderboard-list">
           <div id="list-header">
             <form>
