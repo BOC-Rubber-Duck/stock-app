@@ -404,16 +404,11 @@ input, textarea {
   width: 2rem;
   text-align: right;
   padding: 0.5rem;
-};
+}
 
 /**********END FRIEND SEARCH**********/
 
 /**********BEGIN LOGIN/REGISTRATION**********/
-.column-container {
-  display: flex;
-  flex-direction: row;
-}
-
 .login-header {
   background-color: #999;
 }
@@ -421,6 +416,11 @@ input, textarea {
 .login-corner-icon {
   height: 3rem;
   width: 3rem;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: row;
 }
 
 .login-side-spacer {
