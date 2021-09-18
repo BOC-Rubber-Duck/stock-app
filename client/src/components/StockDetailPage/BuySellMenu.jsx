@@ -10,7 +10,6 @@ const BuySellMenu = (props) => {
   let numStock = null;
   for (let i = 0; i < length; i++) {
     const stock = props.user.userPortfolio[i];
-    console.log(stock);
     if (stock.stockName === props.stockSelected.name) {
       numStock = stock.sharesOwned;
     }
