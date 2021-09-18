@@ -27,8 +27,8 @@ import '@testing-library/jest-dom/extend-expect';
 import Leaderboard from '../client/src/components/Leaderboard.jsx';
 
 const server = setupServer(
-  rest.get('/greeting', (req, res, ctx) => {
-    return res(ctx.json({greeting: 'hello there'}));
+  rest.get('http://localhost/api/getLeaderboard', (req, res, ctx) => {
+    return res(ctx.json([]));
   }),
 );
 
@@ -46,6 +46,6 @@ afterEach(() => {
 
 
 test('Leaderboard renders', async () => {
-  await waitFor(() => screen.getByRole('heading'));
-  expect(screen.getByRole('heading')).toHaveTextContent('hello there');
+  await waitFor(() => screen.getByText('Leaderboard'));
+  expect(screen.getByText('Leaderboard')).toHaveTextContent('Leaderboard');
 });

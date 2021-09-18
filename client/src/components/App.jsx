@@ -21,6 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: {
+        id: '',
         first_name: '',
         last_name: '',
         username: '',
@@ -128,10 +129,11 @@ class App extends React.Component {
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
-                let { first_name, last_name, username, email, cash_position } = result.data;
+                let { id, first_name, last_name, username, email, cash_position } = result.data;
                 if (self) {
                   this.setState({
                     user: {
+                      id: id,
                       first_name: first_name,
                       last_name: last_name,
                       username: username,

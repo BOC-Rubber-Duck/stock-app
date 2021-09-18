@@ -3,17 +3,23 @@ import LeaderboardList from './LeaderboardList.jsx';
 import Friend from './Friend.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
+    if (props.user && props.user.id) {
+      var user = props.user.id;
+    } else {
+      var user = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13';
+    }
     this.state = {
       list: [],
       page: 0,
-      user: props.user.username,
+      user: user,
       hasMore: true,
-      friendsMode: 'Leaderboard',
-      something: props
+      friendsMode: 'Leaderboard'
     };
     this.addFriend = this.addFriend.bind(this);
     this.fetchList = this.fetchList.bind(this);
@@ -52,12 +58,10 @@ class Leaderboard extends React.Component {
     const offset = this.state.page * entries;
     if (this.state.user.length > 0) {
       this.setState({page: (this.state.page + 1)});
-      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user, offset: offset, entries: entries}})
+      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user, offset: offset, entries: entries}, cancelToken: source.token})
         .then((response) => {
           if (typeof(response.data) === 'object') {
             this.setState({list: list.concat(response.data)});
-            console.log('response:', response.data);
-            console.log('typeof:', typeof(response.data));
             if (response.data.length === 0) {
               this.setState({hasMore: false});
             }
@@ -95,10 +99,19 @@ class Leaderboard extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const container = document.getElementById("container");
-    if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.list !== prevState.list)) {
-      this.fetchList();
+    if (this.props.user !== prevProps.user) {
+      this.refreshList();
+    } else {
+      if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.list !== prevState.list)) {
+        this.fetchList();
+      }
     }
   }
+
+  componentWillUnmount() {
+    source.cancel('Operation canceled by the user.');
+  }
+
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
