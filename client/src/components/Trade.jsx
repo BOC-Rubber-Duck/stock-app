@@ -4,8 +4,7 @@ class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shares: 0,
-      action: 'buy'
+      shares: 0
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,7 +56,7 @@ class Trade extends React.Component {
         <div className="trade-info" id="trade-info">
           <div id="shares">
             <label>
-            Shares to {this.state.action}
+            Shares to {this.props.action}
               <input
                 name="shares"
                 type="number"
