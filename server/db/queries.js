@@ -104,7 +104,7 @@ class Db {
       SELECT * FROM users AS u
       LEFT OUTER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = ${username}
+      AND f.watching_user = '${username}'
       ORDER BY u.cash_position
       OFFSET ${offset}
       LIMIT ${entries};
@@ -117,7 +117,7 @@ class Db {
       SELECT * FROM users AS u
       INNER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = ${username}
+      AND f.watching_user = '${username}'
       ORDER BY u.cash_position
       OFFSET ${offset}
       LIMIT ${entries};
@@ -128,9 +128,9 @@ class Db {
   deleteFriend(watching_user_id, watched_username) {
     let query = `
       DELETE FROM friendships AS f
-      WHERE f.watching_user = ${watching_user_id}
+      WHERE f.watching_user = '${watching_user_id}'
       AND (SELECT u.username FROM users AS u
-      WHERE f.watched_user = u.id) = ${watched_username};
+      WHERE f.watched_user = u.id) = '${watched_username}';
     `;
     return this.query(query);
   };

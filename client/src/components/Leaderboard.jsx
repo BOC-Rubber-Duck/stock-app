@@ -12,7 +12,7 @@ class Leaderboard extends React.Component {
       page: 0,
       user: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12',
       hasMore: true,
-      friendsMode: 'leaders'
+      friendsMode: 'Leaderboard'
     };
     this.addFriend = this.addFriend.bind(this);
     this.fetchList = this.fetchList.bind(this);
@@ -49,11 +49,18 @@ class Leaderboard extends React.Component {
     const entries = 2;
     const offset = this.state.page * entries;
     this.setState({page: (this.state.page + 1)});
-    axios.get(`/${this.state.friendsMode}`, {params: {user: this.state.user, offset: offset, entries: entries}})
+    axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user, offset: offset, entries: entries}})
       .then((response) => {
-        this.setState({list: list.concat(response.data)});
-        if (response.data.length === 0) {
+        if (typeof(response.data) === 'object') {
+          this.setState({list: list.concat(response.data)});
+          console.log('response:', response.data);
+          console.log('typeof:', typeof(response.data));
+          if (response.data.length === 0) {
+            this.setState({hasMore: false});
+          }
+        } else {
           this.setState({hasMore: false});
+          console.log('Array not returned as response for Leaderboard list.');
         }
       })
       .catch((error) => {
@@ -62,10 +69,10 @@ class Leaderboard extends React.Component {
   }
 
   toggleFriendList() {
-    if (this.state.friendsMode === 'leaders') {
-      this.setState({friendsMode: 'friends'});
+    if (this.state.friendsMode === 'Leaderboard') {
+      this.setState({friendsMode: 'Friendboard'});
     } else {
-      this.setState({friendsMode: 'leaders'});
+      this.setState({friendsMode: 'Leaderboard'});
     }
     this.setState({list: [], page: 0, hasMore: true});
   }
