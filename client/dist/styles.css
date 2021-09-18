@@ -549,7 +549,7 @@ input, textarea {
   width: 2rem;
   text-align: right;
   padding: 0.5rem;
-};
+}
 
 /**********END FRIEND SEARCH**********/
 
@@ -559,8 +559,21 @@ input, textarea {
 }
 
 .login-corner-icon {
-  height: 2rem;
-  width: 2rem;
+  height: 3rem;
+  width: 3rem;
+}
+
+.column-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-side-spacer {
+  width: 10%;
+}
+
+.login-body-column {
+  width: 80%;
 }
 /**********END LOGIN/REGISTRATION**********/
 
