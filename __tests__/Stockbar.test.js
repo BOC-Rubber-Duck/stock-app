@@ -5,7 +5,7 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
-import Stockbar from '../client/src/components/Stockbar.jsx';
+import Stockbar from '../client/src/components/Portfolio/Stockbar.jsx';
 
 // beforeEach(() => {
 
@@ -19,7 +19,8 @@ test('Stockbar renders stock symbol when provided as props', () => {
   const stockData = {
     stockName: 'Tesla, Inc.',
     ticker_symbol: 'TSLA',
-    amount: 350000
+    amount: 1,
+    valueOwned: 350000
   };
 
   render(<Stockbar stock={stockData} useCase='portfolio'/>);
@@ -52,7 +53,8 @@ test('Stockbar does render value for type portfolio', () => {
   const stockData = {
     stockName: 'Tesla, Inc.',
     stockSymbol: 'TSLA',
-    amount: 350000
+    amount: 1,
+    valueOwned: 350000
   };
 
   render(<Stockbar stock={stockData} useCase='portfolio'/>);

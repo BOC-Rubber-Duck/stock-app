@@ -24,6 +24,7 @@ const getPortfolioValue = (user) => {
           resolve(user);
         }).catch((err) => {
           console.log('error writing portfolioValue to db:', err);
+          resolve(user);
         });
       }))
       .catch((err) => {

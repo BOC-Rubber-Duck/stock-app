@@ -8,17 +8,7 @@ class Portfolio extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {
-        cashBalance: "0",
-        username: "",
-        portfolioValue: 0,
-        userPortfolio: [{
-          amount: 0,
-          stockName: "",
-          ticker_symbol: "",
-          valueOwned: 0,
-        }]
-      }
+      user: this.props.user
     };
   }
 

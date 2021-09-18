@@ -4,7 +4,7 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
-import Portfolio from '../client/src/components/Portfolio.jsx';
+import Portfolio from '../client/src/components/Portfolio/Portfolio.jsx';
 import {BrowserRouter} from 'react-router-dom';
 
 beforeEach(() => {
@@ -17,24 +17,25 @@ beforeEach(() => {
     rank: 2,
     userPortfolio: [
       {
-        stockName: 'Amazon.com, Inc.',
-        stockSymbol: 'AMZN',
-        amount: 350000
+        amount: 100000000,
+        exchange: "nasdaq",
+        id: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A21",
+        ticker_symbol: "aapl",
+        user_id: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
       },
       {
-        stockName: 'Telsa, Inc.',
-        stockSymbol: 'TSLA',
-        amount: 300000
+        amount: 100000000,
+        exchange: "nasdaq",
+        id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+        ticker_symbol: "fb",
+        user_id: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
       },
       {
-        stockName: 'Apple',
-        stockSymbol: 'AAPL',
-        amount: 200000
-      },
-      {
-        stockName: 'StockDucks, Inc.',
-        stockSymbol: 'STKD',
-        amount: 200000
+        amount: 100000000,
+        exchange: "nasdaq",
+        id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+        ticker_symbol: "amzn",
+        user_id: "A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11"
       }
     ],
     friends: [
@@ -55,5 +56,5 @@ test('Portfolio renders a single usercard', () => {
 
 test('Portfolio renders a stockbar for each stock in the portfolio', () => {
   var stockbars = document.getElementsByClassName('bar');
-  expect(stockbars.length).toEqual(4);
+  expect(stockbars.length).toEqual(3);
 });
