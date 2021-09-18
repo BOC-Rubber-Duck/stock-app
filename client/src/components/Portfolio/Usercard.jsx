@@ -1,26 +1,10 @@
 import React from 'react';
 
 /*
-Will likely need to be refactored based on routes.
-May potentially be refactored to take in username and make request within the component.
-
-Current expected props w/ example:
-
-amount: 1000000
-exchange: "nasdaq"
-id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23"
-ticker_symbol: "fb"
-user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
+Still need to pull in Rank
 */
 
 const Usercard = (props) => {
-  // let stockbalance = 0;
-  // const stocks = props.user.userPortfolio;
-  // stocks.forEach((stock) => {
-  //   //will need to eventually be amount X current price
-  //   stockbalance += stock.amount;
-  // });
-
   return (
     <div className='usercard'>
       <div className='profdetail1'>
