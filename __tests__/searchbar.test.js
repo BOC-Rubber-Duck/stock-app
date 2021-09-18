@@ -4,6 +4,7 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { act } from "react-dom/test-utils";
 import axios from 'axios';
 
@@ -45,6 +46,21 @@ describe('Test stock search/filter', () => {
   });
 });
 
+test('Displays stocks on user input/handles state chagne', async () => {
+  await act(async () => {
+    //await axios.get.mockImplementation(() => Promise.resolve({symbol: 'AAPL'}));
+    render(<Searchbar userPortfolio={[]} />);
+    const searchField = screen.getByPlaceholderText('Search...');
+    //await expect(searchField).toBeTruthy()
+
+    // userEvent.type(searchField, 'AAPL');
+
+    //await expect(searchField).toHaveValue('AAPL')
+
+
+  })
+})
+
 test('Searchbar renders correctly with owned stocks', async () => {
   const fakeData = [
     {
@@ -56,7 +72,6 @@ test('Searchbar renders correctly with owned stocks', async () => {
       "symbol": "AAPL"
     },
   ];
-
 
   await act(async () => {
     await axios.get.mockImplementationOnce(() => Promise.resolve(fakeData));
@@ -71,4 +86,3 @@ test('Predictions render correctly', () => {
   expect(AAPL).toBeTruthy();
 });
 
-//need to add mock user functionality, jest.mock?
