@@ -57,6 +57,17 @@ app.get('/api/getUser', (req, res) => {
     });
 });
 
+app.get('/api/getUsers', (req, res) => {
+  db.getUsers(req.query.username)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
     .then((data) => {
@@ -99,7 +110,7 @@ app.post('/api/postFriend', (req, res) => {
       console.log('Error during postFriend: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postWatchSecurity', (req, res) => {
   db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)

@@ -4,8 +4,7 @@ class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shares: 0,
-      action: 'buy'
+      shares: 0
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -24,7 +23,7 @@ class Trade extends React.Component {
   handleSubmit() {
     let stockSymbol = this.props.stockSelected.symbol;
     let shares = this.state.shares;
-    let action = this.state.action;
+    let action = this.props.action;
     console.log('handleSubmit action confirmed');
     this.props.handleTrade(stockSymbol, shares, action);
   };
@@ -32,7 +31,7 @@ class Trade extends React.Component {
   render() {
     const { user, stockSelected } = this.props;
     const saleAmount = this.state.shares * stockSelected || 0;
-    const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
+    const actionText = this.props.action === 'buy' ? 'Buy': 'Sell';
 
     return (
       <div className="trade-container" id="trade-container">
@@ -46,7 +45,7 @@ class Trade extends React.Component {
         <div className="trade-info" id="trade-info">
           <div id="shares">
             <label>
-            Shares to {this.state.action}
+            Shares to {this.props.action}
               <input
                 name="shares"
                 type="number"

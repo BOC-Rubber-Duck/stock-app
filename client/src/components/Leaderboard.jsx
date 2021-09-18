@@ -1,18 +1,34 @@
 import React from 'react';
 import LeaderboardList from './LeaderboardList.jsx';
-import Friend from './Friend.jsx';
+import Usercard from './Portfolio/Usercard.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
+const CancelToken = axios.CancelToken;
+const source = CancelToken.source();
 
 class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
+    if (props.user) {
+      var user = props.user;
+    } else {
+      var user = {
+        id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
+        first_name: 'mark',
+        last_name: 'zuckerberg',
+        username: 'the_zuck',
+        email: 'mark_zuckerberg@example.com',
+        cash_position: 1000000,
+        rank: null,
+        portfolioValue: 0
+      };
+    }
     this.state = {
       list: [],
       page: 0,
-      user: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12',
+      user: user,
       hasMore: true,
-      friendsMode: 'leaders'
+      friendsMode: 'Leaderboard'
     };
     this.addFriend = this.addFriend.bind(this);
     this.fetchList = this.fetchList.bind(this);
@@ -20,19 +36,19 @@ class Leaderboard extends React.Component {
     this.refreshList = this.refreshList.bind(this);
   }
 
-  addFriend(watchedUser, index, friendStatus) {
+  addFriend(watchedUserUsername, index, friendStatus) {
     if (friendStatus === null) {
-      axios.put(`/addfriend`, null, {params: {watching_user: this.state.user, watched_user: watchedUser}})
+      axios.post(`/api/postFriend`, {watching_user_id: this.state.user.id, watched_username: watchedUserUsername})
         .then((response) => {
           const friendAdd = this.state.list;
-          friendAdd[index].watching_user = this.state.user;
+          friendAdd[index].watching_user = this.state.user.id;
           this.setState({list: friendAdd});
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
-      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.state.user.id, watched_username: watchedUserUsername}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
@@ -48,24 +64,31 @@ class Leaderboard extends React.Component {
     var list = this.state.list;
     const entries = 2;
     const offset = this.state.page * entries;
-    this.setState({page: (this.state.page + 1)});
-    axios.get(`/${this.state.friendsMode}`, {params: {user: this.state.user, offset: offset, entries: entries}})
-      .then((response) => {
-        this.setState({list: list.concat(response.data)});
-        if (response.data.length === 0) {
-          this.setState({hasMore: false});
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (this.state.user.id.length > 0) {
+      this.setState({page: (this.state.page + 1)});
+      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user.id, offset: offset, entries: entries}, cancelToken: source.token})
+        .then((response) => {
+          if (typeof(response.data) === 'object') {
+            this.setState({list: list.concat(response.data)});
+            if (response.data.length === 0) {
+              this.setState({hasMore: false});
+            }
+          } else {
+            this.setState({hasMore: false});
+            console.log('Array not returned as response for Leaderboard list.');
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   toggleFriendList() {
-    if (this.state.friendsMode === 'leaders') {
-      this.setState({friendsMode: 'friends'});
+    if (this.state.friendsMode === 'Leaderboard') {
+      this.setState({friendsMode: 'Friendboard'});
     } else {
-      this.setState({friendsMode: 'leaders'});
+      this.setState({friendsMode: 'Leaderboard'});
     }
     this.setState({list: [], page: 0, hasMore: true});
   }
@@ -84,22 +107,31 @@ class Leaderboard extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     const container = document.getElementById("container");
-    if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.list !== prevState.list)) {
-      this.fetchList();
+    if (this.props.user !== prevProps.user) {
+      this.refreshList();
+    } else {
+      if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.list !== prevState.list)) {
+        this.fetchList();
+      }
     }
   }
+
+  componentWillUnmount() {
+    source.cancel('Operation canceled by the user.');
+  }
+
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
-        <Friend />
-        <div id="list">
+        <Usercard user={this.state.user} />
+        <div id="leaderboard-list">
           <div id="list-header">
             <form>
-              <input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'leaders'
+              Leaderboard&nbsp;&nbsp;<input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'Leaderboard'
                 ? 0
                 : 1
               } step="1" onChange={this.toggleFriendList} />
-              <label htmlFor="friend-slider">Display Friends</label>
+              <label htmlFor="friend-slider">&nbsp;&nbsp;Display Friends</label>
             </form>
           </div>
           <div id="container">
@@ -111,7 +143,7 @@ class Leaderboard extends React.Component {
               loader={<h4>Loading...</h4>}
               endMessage={
                 <p style={{textAlign: 'center'}}>
-                  <b>Yay! You have seen it all</b>
+                  <b>End of List</b>
                 </p>
               }
               // Pull-down-to-refresh Functionality
@@ -119,13 +151,13 @@ class Leaderboard extends React.Component {
               pullDownToRefresh={true}
               pullDownToRefreshThreshold={50}
               pullDownToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8595; Pull down to refresh</h3>
+                <p>&#8595; Pull down to refresh</p>
               }
               releaseToRefreshContent={
-                <h3 style={{textAlign: 'center'}}>&#8593; Release to refresh</h3>
+                <p>&#8593; Release to refresh</p>
               }
             >
-              <LeaderboardList loggedIn={this.state.user} addFriend={this.addFriend} list={this.state.list}/>
+              <LeaderboardList addFriend={this.addFriend} list={this.state.list}/>
             </InfiniteScroll>
           </div>
         </div>
