@@ -1,15 +1,23 @@
 require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const flash = require("connect-flash");
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const pathname = path.join(__dirname, '..', 'client', 'dist');
-
 const controllers = require('./controllers');
 const db = require('./db/queries.js');
 const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(cookieParser());
+app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(express.static(pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
