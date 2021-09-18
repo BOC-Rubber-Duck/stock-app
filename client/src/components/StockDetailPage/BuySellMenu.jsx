@@ -4,21 +4,23 @@ import {useHistory} from 'react-router-dom';
 
 const BuySellMenu = (props) => {
   // check if cash balance is enough to buy at least one stock
-  const displayBuy = props.cash >= props.price ? true : false;
+  const displayBuy = props.user.cashBalance >= props.stockSelected.price ? true : false;
   // check if stock is in portfolio
-  const length = props.stockPortfolio.length;
+  const length = props.user.userPortfolio.length;
   let numStock = null;
   for (let i = 0; i < length; i++) {
-    const stock = props.stockPortfolio[i];
-    console.log(stock);
-    if (stock.stockName === props.name) {
+    const stock = props.user.userPortfolio[i];
+    if (stock.stockName === props.stockSelected.name) {
       numStock = stock.sharesOwned;
     }
   }
   numStock = numStock || 0;
   const displaySell = numStock > 0 ? true : false;
+  let action = null;
   const history = useHistory();
-  const handleClick = () => {
+  const handleClick = (event) => {
+    action = event.target.value;
+    props.updateTradeAction(action);
     history.push('/trade');
   };
   return (
@@ -27,20 +29,23 @@ const BuySellMenu = (props) => {
         <button
           className='buyButton'
           onClick={handleClick}
+          value='buy'
         >
-            Buy
+          Buy
         </button> :
-        null}
+        null
+      }
       {displaySell ?
         <button
           className='sellButton'
           onClick={handleClick}
+          value='sell'
         >
-            Sell
+          Sell
         </button> :
-        null}
+        null
+      }
     </div>
-
   );
 };
 
