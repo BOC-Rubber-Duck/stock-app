@@ -18,6 +18,7 @@ app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 app.use(express.static(pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
