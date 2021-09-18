@@ -21,6 +21,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: {
+        id: '',
         first_name: '',
         last_name: '',
         username: '',
@@ -138,10 +139,11 @@ class App extends React.Component {
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
-                const { first_name, last_name, username, email, cash_position } = result.data;
+                const { id, first_name, last_name, username, email, cash_position } = result.data;
                 if (self) {
                   this.setState({
                     user: {
+                      id: id,
                       first_name: first_name,
                       last_name: last_name,
                       username: username,
@@ -228,8 +230,18 @@ class App extends React.Component {
           </div> */}
 
           <Switch>
-            <Route exact path="/" component={Leaderboard} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
+          <Route exact path="/"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
+            <Route exact path="/leaderboard"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search"
               render={() =>

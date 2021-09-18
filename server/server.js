@@ -110,7 +110,7 @@ app.post('/api/postFriend', (req, res) => {
       console.log('Error during postFriend: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postWatchSecurity', (req, res) => {
   db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)
