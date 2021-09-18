@@ -93,7 +93,7 @@ class App extends React.Component {
     // update stock prices?
   };
 
-  handleTrade(stockSymbol, shares, action) {
+  handleTrade(currentUser, stockSymbol, shares, action) {
     // axios call:
     return axios.post('/api/trade', {
       stockSymbol: stockSymbol,

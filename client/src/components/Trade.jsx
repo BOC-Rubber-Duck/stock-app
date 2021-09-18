@@ -31,10 +31,12 @@ class Trade extends React.Component {
   };
 
   handleSubmit() {
+    const currentUser = this.props.user.username;
     const stockSymbol = this.props.stockSelected.symbol;
     const shares = this.state.shares;
     const action = this.state.action;
-    let tradeResponse = this.props.handleTrade(stockSymbol, shares, action);
+
+    let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
     console.log('tradeResponse:', tradeResponse);
   };
 
