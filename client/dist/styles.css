@@ -52,6 +52,7 @@ input, textarea {
 #app {
   max-width: 600px;
   margin: auto;
+  /* background-color: black; */
 }
 
 .bar {
@@ -115,8 +116,12 @@ input, textarea {
   color: inherit;
 }
 
+/**********END NAVBAR**********/
+/**********BEGIN STOCK DETAIL PAGE**********/
+
 .StockDetailPage {
-  margin: 5%
+  margin: 5%;
+  /* background-color: black; */
 }
 
 .StockInformation {
@@ -124,13 +129,14 @@ input, textarea {
   grid-template-columns: 3;
   grid-template-rows: 2;
   margin: 2%;
+  grid-auto-columns: 33.3%;
 }
 
 .StockInformation-Name {
   grid-column: 1;
   grid-row: 1;
   text-align: left;
-  font-size: 3em;
+  font-size: 1.25em;
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -139,7 +145,7 @@ input, textarea {
   grid-column: 3;
   grid-row: 1;
   text-align: right;
-  font-size: 3em;
+  font-size: 1.25em;
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -148,40 +154,44 @@ input, textarea {
   grid-column: 2;
   grid-row: 2;
   text-align: center;
-  font-size: 4em;
+  font-size: 2em;
   margin-top: 32%;
   margin-bottom: 0%;
 }
 
 .StockTrends {
-  margin-top: 15%;
-  margin-bottom: 35%;
+  margin-top: 3%;
+  margin-bottom: 5%;
 }
 
 .BuySellMenu {
   display: grid;
   grid-template-columns: 2;
   grid-template-rows: 1;
+  grid-auto-columns: 50%;
 }
 
 .buyButton {
   grid-column: 1;
   text-align: center;
   margin-right: 5%;
-  font-size: 2.5em;
-  height: 2em;
+  font-size: 1em;
+  height: 1.5em;
 }
 
 .sellButton {
   grid-column: 2;
   text-align: center;
   margin-left: 5%;
-  font-size: 2.5em;
-  height: 2em;
+  font-size: 1em;
+  height: 1.5em;
 }
 
+/**********END STOCK DETAIL PAGE **********/
+/**********BEGIN SEARCHBAR**********/
+
 .searchbar-container {
-  height: 10em;
+  height: 4rem;
   background-color: var(--search-bar);
   display: flex;
   flex-direction: column;
@@ -190,8 +200,8 @@ input, textarea {
 .searchbar-display {
   display: flex;
   flex-direction: row;
-  height: 50%;
-  padding: 1em;
+  height: 2.75rem;
+  padding: 0.5rem;
 }
 .searchbar-icon {
   display: flex;
@@ -204,7 +214,7 @@ input, textarea {
 .searchbar-input {
   width: 100%;
   border: none;
-  font-size: 50px;
+  font-size: 1.5rem;
 }
 .search-icon-container {
   height: 100%;
@@ -230,13 +240,13 @@ input, textarea {
 
 .searchbar-prediction-symbol {
   margin: 0px;
-  font-size: 75px;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: .2em 0px;
 }
 .searchbar-prediction-title {
   margin: 0px;
-  font-size: 60px;
+  font-size: 1rem;
   font-style: italic;
   margin-bottom: .2em;
 }
