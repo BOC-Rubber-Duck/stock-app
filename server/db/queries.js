@@ -26,6 +26,13 @@ class Db {
     return this.query(query);
   }
 
+  getUsers(usernameFragment) {
+    let query = `
+      SELECT id, username FROM users
+      WHERE username LIKE '%${usernameFragment}%';
+    `;
+    return this.query(query);
+  }
 
   getPortfolio(username) {
     let query = `
@@ -99,6 +106,42 @@ class Db {
     return this.query(query);
   }
 
+  getLeaderboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      LEFT OUTER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  getFriendboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      INNER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  deleteFriend(watching_user_id, watched_username) {
+    let query = `
+      DELETE FROM friendships AS f
+      WHERE f.watching_user = ${watching_user_id}
+      AND (SELECT u.username FROM users AS u
+      WHERE f.watched_user = u.id) = ${watched_username};
+    `;
+    return this.query(query);
+  };
+
   // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
@@ -110,6 +153,7 @@ class Db {
 let db = new Db();
 
 module.exports.getUser = db.getUser.bind(db);
+module.exports.getUsers = db.getUsers.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
 module.exports.getFriends = db.getFriends.bind(db);
 module.exports.getWatchlist = db.getWatchlist.bind(db);
@@ -117,3 +161,6 @@ module.exports.postUser = db.postUser.bind(db);
 module.exports.postFriend = db.postFriend.bind(db);
 module.exports.postWatchSecurity = db.postWatchSecurity.bind(db);
 module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
+module.exports.getLeaderboard = db.getLeaderboard.bind(db);
+module.exports.getFriendboard = db.getFriendboard.bind(db);
+module.exports.deleteFriend = db.deleteFriend.bind(db);
