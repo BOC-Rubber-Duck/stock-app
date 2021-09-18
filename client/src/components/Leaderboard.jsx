@@ -20,9 +20,9 @@ class Leaderboard extends React.Component {
     this.refreshList = this.refreshList.bind(this);
   }
 
-  addFriend(watchedUser, index, friendStatus) {
+  addFriend(watchedUserUsername, index, friendStatus) {
     if (friendStatus === null) {
-      axios.put(`/addfriend`, null, {params: {watching_user: this.state.user, watched_user: watchedUser}})
+      axios.post(`/api/postFriend`, {data: {watching_user_id: this.state.user, watched_username: watchedUserUsername}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = this.state.user;
@@ -32,7 +32,7 @@ class Leaderboard extends React.Component {
           console.log(error);
         });
     } else {
-      axios.put(`/deletefriend`, null, {params: {watching_user: this.state.user, watched_user: watched_user}})
+      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.state.user, watched_username: watchedUserUsername}})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
@@ -132,7 +132,7 @@ class Leaderboard extends React.Component {
                 <p>&#8593; Release to refresh</p>
               }
             >
-              <LeaderboardList loggedIn={this.state.user} addFriend={this.addFriend} list={this.state.list}/>
+              <LeaderboardList addFriend={this.addFriend} list={this.state.list}/>
             </InfiniteScroll>
           </div>
         </div>
