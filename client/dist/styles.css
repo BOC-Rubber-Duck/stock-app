@@ -409,26 +409,13 @@ input, textarea {
 /**********END FRIEND SEARCH**********/
 
 /**********BEGIN LOGIN/REGISTRATION**********/
-.column-container {
-  display: flex;
-  flex-direction: row;
-}
-
 .login-header {
   background-color: #999;
 }
 
 .login-corner-icon {
-  height: 3rem;
-  width: 3rem;
-}
-
-.login-side-spacer {
-  width: 10%;
-}
-
-.login-body-column {
-  width: 80%;
+  height: 2rem;
+  width: 2rem;
 }
 /**********END LOGIN/REGISTRATION**********/
 
