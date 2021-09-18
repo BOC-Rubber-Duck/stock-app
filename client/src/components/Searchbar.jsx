@@ -63,6 +63,7 @@ const Searchbar = (props) => {
         <StockDetailPage
           stockSelected={props.stockSelected}
           user={props.user}
+          updateTradeAction={props.updateTradeAction}
         />
       }
     </div>
