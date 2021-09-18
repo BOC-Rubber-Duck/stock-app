@@ -2,12 +2,26 @@
 /**********BEGIN BASE**********/
 
 :root {
+  --background-dark: #121212;
+  --level1-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
+  --level2-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+  --level3-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.20));
+  --level4-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
+  --default-text: #FFF;
   --diamond-blue: #4FB6F5;
-  --background-dark: #333333;
+  --search-bar: #AAA;
   --background-light: #ebebeb;
-  --default-text: #FFFFFF;
-  --search-bar: #AAAAAA;
 }
+
+/*
+  Using Dark Mode (aka "Black Diamond"):
+  - Background on the overall approach is in the arch doc https://bit.ly/399i1WL
+  - You can skip that, of course, and just use it on your styles right now
+  - For anything "above" the base layer, combine a "lighten" level with the background color
+  - For example, your rule would look like this:
+       background: var(--level1-lighten), var(--background-dark);
+  - Items that are on the same layer/plane will have the same lightness
+*/
 
 * {
   margin: 0px;
@@ -16,6 +30,12 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+/* Compatibility: so safari buttons don't look old and dumb */
+input, textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 .diamond {
@@ -295,13 +315,6 @@ body {
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
 
-/* Compatibility
-- - - - - - - - - - - - - - - - - - - - - - - - */
-input, textarea {
-  -webkit-appearance: none;
-  border-radius: 0;
-}
-
 /* Search area
 - - - - - - - - - - - - - - - - - - - - - - - - */
 .fr-nav {
@@ -311,19 +324,19 @@ input, textarea {
 }
 
 .fr-page {
-  background-color: #121212;
+  background-color: var(--background-dark);
   height: 100vh;
   margin: auto;
 }
 
 .fr-nav {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: var(--level1-lighten), var(--background-dark);
   border-bottom: 1px solid white;
   height: 6rem;
 }
 
 .fr-search-input {
-  background: #FFFFFF;
+  background: #FFF;
   border-radius: 4px;
   font-size: 1.1rem;
   height: 2.5rem;
@@ -348,14 +361,14 @@ input, textarea {
 
 .fr-results {
   list-style-type: none;
-  color: white;
+  color: var(--default-text);
   font-size: 1.1rem;
 }
 
 .fr-results ul {
   list-style-type: none;
   margin: 1rem;
-  color: white;
+  color: var(--default-text);
 }
 
 .fr-results li {
@@ -365,13 +378,12 @@ input, textarea {
 }
 
 .fr-results li {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: var(--level1-lighten), var(--background-dark);
   min-height: 4rem;
   margin: 1rem 0;
   padding: 0.5rem;
   padding-left: 1rem;
   border-radius: 4px;
-  /* border-bottom: 1px solid gray; */
 }
 
 /* Container for the name and portfolio value */
@@ -393,8 +405,6 @@ input, textarea {
 .fr-username, .fr-portfolio-value {
   line-height: 1.5rem;
 }
-
-/* .fr-is-friend */
 
 .fr-portfolio-value {
   margin-left: auto;
