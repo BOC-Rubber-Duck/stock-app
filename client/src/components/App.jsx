@@ -238,7 +238,6 @@ class App extends React.Component {
                   user={this.state.user}
                   handlePredictionClick={this.fetchSelectedStock}
                   updateTradeAction={this.updateTradeAction}
-                  handleTrade={this.handleTrade}
                 />
               }
             />
@@ -253,16 +252,6 @@ class App extends React.Component {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
-            <Route exact path="/stock-detail-page" component={StockDetailPage}/>
-            <Route
-              exact path="/stock-detail-page"
-              render={() =>
-                <StockDetailPage
-                  stockSelected={this.state.stockSelected}
-                  user={this.state.user}
-                  updateTradeAction={this.updateTradeAction}
-                />}
-            />
           </Switch>
           <Navbar />
         </React.Fragment>
