@@ -7,8 +7,6 @@ const controllers = require('./controllers');
 const db = require('./db/queries.js');
 const bodyParser = require('body-parser');
 
-const dbOld = require('../db/db.js');
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -59,6 +57,17 @@ app.get('/api/getUser', (req, res) => {
     });
 });
 
+app.get('/api/getUsers', (req, res) => {
+  db.getUsers(req.query.username)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getPortfolio', (req, res) => {
   console.log('hit getpPortfolio route', req.query.username)
   db.getPortfolio(req.query.username)
@@ -102,7 +111,7 @@ app.post('/api/postFriend', (req, res) => {
       console.log('Error during postFriend: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postWatchSecurity', (req, res) => {
   db.postWatchSecurity(req.body.user_id, req.body.exchange, req.body.ticker_symbol)
@@ -146,48 +155,37 @@ app.post('/trade', (req, res) => {
   res.send(JSON.stringify(tradeConfirmation));
 });
 
-app.get('/leaders', (req, res) => {
-  const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
-  dbOld.getLeaders(leaderboard, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.get('/api/getLeaderboard', (req, res) => {
+  db.getLeaderboard(req.query.username, req.query.offset, req.query.entries)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getLeaderboard: ', err);
+      res.send(500);
+    });
 });
 
-app.get('/friends', (req, res) => {
-  const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
-  dbOld.getFriends(leaderboard, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.get('/api/getFriendboard', (req, res) => {
+  db.getFriendboard(req.query.username, req.query.offset, req.query.entries)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getFriendboard: ', err);
+      res.send(500);
+    });
 });
 
-app.put('/addfriend', (req, res) => {
-  const users = {users: {watching_user: req.query.watching_user, watched_user: req.query.watched_user}};
-  dbOld.addFriend(users, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
-});
-
-app.put('/deletefriend', (req, res) => {
-  const users = {users: {watching_user: req.query.watching_user, watched_user: req.query.watched_user}};
-  dbOld.deleteFriend(users, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.delete('/api/deleteFriend', (req, res) => {
+  db.deleteFriend(req.body.watching_user_id, req.body.watched_username)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during deleteFriend: ', err);
+      res.send(500);
+    });
 });
 
 app.put('/api/portfolioValue', (req, res) => {

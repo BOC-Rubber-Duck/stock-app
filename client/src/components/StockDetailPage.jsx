@@ -16,10 +16,10 @@ const StockDetailPage = (props) => {
         trendData={props.stockSelected.data}
       />
       <BuySellMenu
-        name={props.stockSelected.name}
-        price={props.stockSelected.price}
-        cash={props.user.cashBalance}
-        stockPortfolio={props.user.userPortfolio}
+        stockSelected={props.stockSelected}
+        user={props.user}
+        updateTradeAction={props.updateTradeAction}
+        handleTrade={props.handleTrade}
       />
     </div>
   );

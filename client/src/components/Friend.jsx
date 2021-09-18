@@ -1,65 +1,69 @@
-/* eslint-disable max-len */
-import React from 'react';
+import React, {useState} from 'react';
+import axios from 'axios';
 
 const Friend = (props) => {
+  const [searchResults, setSearchResults] = useState([]);
+
+  const getUsers = (param) => {
+    return axios.get(`/api/getUsers?username=${param}`)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        console.error('Error searching users via api', e);
+      });
+  };
+
+  const handleUserInput = (e) => {
+    if (!e.target.value) {
+      setSearchResults([]);
+    } else {
+      getUsers(e.target.value)
+        .then((results) => {
+          setSearchResults(results);
+        })
+        .catch((error) => {
+          console.error('Error searching users ', e);
+        });
+    };
+  };
+
+  const renderSearchResults = () => {
+    const results = searchResults.map((result) => {
+      return (
+        <li key={result.id}>
+          <div className="fr-search-result">
+            <p className="fr-username fr-is-friend">{result.username}</p>
+            <p className="fr-portfolio-value">$need to calc</p>
+          </div>
+          <nav className="fr-result-nav">
+            <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
+          </nav>
+        </li>
+      );
+    });
+    return (
+      <section className="fr-results">
+        <ul>
+          {results}
+        </ul>
+      </section>
+    );
+  };
+
   return (
     <React.Fragment>
-      <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
       <section className="fr-page">
         <nav className="fr-nav">
-          <input className="fr-search-input" type="search" placeholder="Search by username" />
-          <button className="fr-button-cancel" type="button">Cancel</button>
+          <input
+            className="fr-search-input"
+            type="search"
+            placeholder="Search by username"
+            onChange={handleUserInput}
+          />
+          {/* <button className="fr-button-cancel" type="button" onClick=do_what?>Cancel</button> */}
         </nav>
-        <section className="fr-results">
-          <ul>
-            <li>
-              <div className="fr-search-result">
-                <p className="fr-username fr-is-friend">Rubber Duck</p>
-                <p className="fr-portfolio-value">$5</p>
-              </div>
-              <nav className="fr-result-nav">
-                <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-              </nav>
-            </li>
-            <li>
-              <div className="fr-search-result">
-                <p className="fr-username">Wood Duck</p>
-                <p className="fr-portfolio-value">$5,467</p>
-              </div>
-              <nav className="fr-result-nav">
-                <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-              </nav>
-            </li>
-            <li>
-              <div className="fr-search-result">
-                <p className="fr-username">Platinum Duck</p>
-                <p className="fr-portfolio-value">$685,423</p>
-              </div>
-              <nav className="fr-result-nav">
-                <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-              </nav>
-            </li>
-            <li>
-              <div className="fr-search-result">
-                <p className="fr-username">Diamond Duck</p>
-                <p className="fr-portfolio-value">$1,523,678</p>
-              </div>
-              <nav className="fr-result-nav">
-                <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-              </nav>
-            </li>
-            <li>
-              <div className="fr-search-result">
-                <p className="fr-username">This is a really super-long user name and what happens when it gets longer</p>
-                <p className="fr-portfolio-value">$242,523,543,678</p>
-              </div>
-              <nav className="fr-result-nav">
-                <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-              </nav>
-            </li>
-
-          </ul>
-        </section>
+        { renderSearchResults() }
       </section>
     </React.Fragment>
   );
