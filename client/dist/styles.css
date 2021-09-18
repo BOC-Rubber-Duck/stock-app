@@ -2,12 +2,26 @@
 /**********BEGIN BASE**********/
 
 :root {
+  --background-dark: #121212;
+  --level1-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
+  --level2-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
+  --level3-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.20));
+  --level4-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
+  --default-text: #FFF;
   --diamond-blue: #4FB6F5;
-  --background-dark: #333333;
+  --search-bar: #AAA;
   --background-light: #ebebeb;
-  --default-text: #FFFFFF;
-  --search-bar: #AAAAAA;
 }
+
+/*
+  Using Dark Mode (aka "Black Diamond"):
+  - Background on the overall approach is in the arch doc https://bit.ly/399i1WL
+  - You can skip that, of course, and just use it on your styles right now
+  - For anything "above" the base layer, combine a "lighten" level with the background color
+  - For example, your rule would look like this:
+       background: var(--level1-lighten), var(--background-dark);
+  - Items that are on the same layer/plane will have the same lightness
+*/
 
 * {
   margin: 0px;
@@ -16,6 +30,12 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+}
+
+/* Compatibility: so safari buttons don't look old and dumb */
+input, textarea {
+  -webkit-appearance: none;
+  border-radius: 0;
 }
 
 .diamond {
@@ -32,6 +52,7 @@ body {
 #app {
   max-width: 600px;
   margin: auto;
+  /* background-color: black; */
 }
 
 .bar {
@@ -95,8 +116,12 @@ body {
   color: inherit;
 }
 
+/**********END NAVBAR**********/
+/**********BEGIN STOCK DETAIL PAGE**********/
+
 .StockDetailPage {
-  margin: 5%
+  margin: 5%;
+  /* background-color: black; */
 }
 
 .StockInformation {
@@ -104,13 +129,14 @@ body {
   grid-template-columns: 3;
   grid-template-rows: 2;
   margin: 2%;
+  grid-auto-columns: 33.3%;
 }
 
 .StockInformation-Name {
   grid-column: 1;
   grid-row: 1;
   text-align: left;
-  font-size: 3em;
+  font-size: 1.25em;
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -119,7 +145,7 @@ body {
   grid-column: 3;
   grid-row: 1;
   text-align: right;
-  font-size: 3em;
+  font-size: 1.25em;
   margin-top: 3%;
   margin-bottom: 3%;
 }
@@ -128,40 +154,44 @@ body {
   grid-column: 2;
   grid-row: 2;
   text-align: center;
-  font-size: 4em;
+  font-size: 2em;
   margin-top: 32%;
   margin-bottom: 0%;
 }
 
 .StockTrends {
-  margin-top: 15%;
-  margin-bottom: 35%;
+  margin-top: 3%;
+  margin-bottom: 5%;
 }
 
 .BuySellMenu {
   display: grid;
   grid-template-columns: 2;
   grid-template-rows: 1;
+  grid-auto-columns: 50%;
 }
 
 .buyButton {
   grid-column: 1;
   text-align: center;
   margin-right: 5%;
-  font-size: 2.5em;
-  height: 2em;
+  font-size: 1em;
+  height: 1.5em;
 }
 
 .sellButton {
   grid-column: 2;
   text-align: center;
   margin-left: 5%;
-  font-size: 2.5em;
-  height: 2em;
+  font-size: 1em;
+  height: 1.5em;
 }
 
+/**********END STOCK DETAIL PAGE **********/
+/**********BEGIN SEARCHBAR**********/
+
 .searchbar-container {
-  height: 10em;
+  height: 4rem;
   background-color: var(--search-bar);
   display: flex;
   flex-direction: column;
@@ -170,8 +200,8 @@ body {
 .searchbar-display {
   display: flex;
   flex-direction: row;
-  height: 50%;
-  padding: 1em;
+  height: 2.75rem;
+  padding: 0.5rem;
 }
 .searchbar-icon {
   display: flex;
@@ -184,7 +214,7 @@ body {
 .searchbar-input {
   width: 100%;
   border: none;
-  font-size: 50px;
+  font-size: 1.5rem;
 }
 .search-icon-container {
   height: 100%;
@@ -210,13 +240,13 @@ body {
 
 .searchbar-prediction-symbol {
   margin: 0px;
-  font-size: 75px;
+  font-size: 1.5rem;
   font-weight: bold;
   margin: .2em 0px;
 }
 .searchbar-prediction-title {
   margin: 0px;
-  font-size: 60px;
+  font-size: 1rem;
   font-style: italic;
   margin-bottom: .2em;
 }
@@ -420,13 +450,6 @@ body {
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
 
-/* Compatibility
-- - - - - - - - - - - - - - - - - - - - - - - - */
-input, textarea {
-  -webkit-appearance: none;
-  border-radius: 0;
-}
-
 /* Search area
 - - - - - - - - - - - - - - - - - - - - - - - - */
 .fr-nav {
@@ -436,19 +459,19 @@ input, textarea {
 }
 
 .fr-page {
-  background-color: #121212;
+  background-color: var(--background-dark);
   height: 100vh;
   margin: auto;
 }
 
 .fr-nav {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: var(--level1-lighten), var(--background-dark);
   border-bottom: 1px solid white;
   height: 6rem;
 }
 
 .fr-search-input {
-  background: #FFFFFF;
+  background: #FFF;
   border-radius: 4px;
   font-size: 1.1rem;
   height: 2.5rem;
@@ -473,14 +496,14 @@ input, textarea {
 
 .fr-results {
   list-style-type: none;
-  color: white;
+  color: var(--default-text);
   font-size: 1.1rem;
 }
 
 .fr-results ul {
   list-style-type: none;
   margin: 1rem;
-  color: white;
+  color: var(--default-text);
 }
 
 .fr-results li {
@@ -490,13 +513,12 @@ input, textarea {
 }
 
 .fr-results li {
-  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
+  background: var(--level1-lighten), var(--background-dark);
   min-height: 4rem;
   margin: 1rem 0;
   padding: 0.5rem;
   padding-left: 1rem;
   border-radius: 4px;
-  /* border-bottom: 1px solid gray; */
 }
 
 /* Container for the name and portfolio value */
@@ -518,8 +540,6 @@ input, textarea {
 .fr-username, .fr-portfolio-value {
   line-height: 1.5rem;
 }
-
-/* .fr-is-friend */
 
 .fr-portfolio-value {
   margin-left: auto;
