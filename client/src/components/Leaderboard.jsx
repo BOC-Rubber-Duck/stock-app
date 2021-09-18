@@ -1,6 +1,6 @@
 import React from 'react';
 import LeaderboardList from './LeaderboardList.jsx';
-import Friend from './Friend.jsx';
+import Usercard from './Usercard.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
@@ -21,6 +21,7 @@ class Leaderboard extends React.Component {
         cash_position: 1000000,
         rank: null,
         portfolioValue: 0
+      };
     }
     this.state = {
       list: [],
@@ -36,7 +37,6 @@ class Leaderboard extends React.Component {
   }
 
   addFriend(watchedUserUsername, index, friendStatus) {
-    console.log('friendStatus:', friendStatus);
     if (friendStatus === null) {
       axios.post(`/api/postFriend`, {watching_user_id: this.state.user.id, watched_username: watchedUserUsername})
         .then((response) => {

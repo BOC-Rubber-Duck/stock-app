@@ -102,8 +102,6 @@ app.get('/api/getWatchlist', (req, res) => {
 })
 
 app.post('/api/postFriend', (req, res) => {
-  console.log('hi there');
-  console.log('req.body', req.body);
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
     .then((data) => {
       res.sendStatus(204);
