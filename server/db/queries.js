@@ -3,13 +3,14 @@ const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt');
 const saltRounds = 12;
 const starting_cash = 1000000;
+const starting_portfolio_value = 1000000;
 
 const pool = new Pool({
-  user: process.env.PG_USER,
-  host: process.env.PG_HOST,
-  database: process.env.PG_DATABASE,
-  password: process.env.PG_PASSWORD,
-  port: process.env.PG_PORT
+  user: process.env.DB_USER,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
+  port: process.env.DB_PORT
 });
 
 class Db {
@@ -25,6 +26,13 @@ class Db {
     return this.query(query);
   }
 
+  getUsers(usernameFragment) {
+    let query = `
+      SELECT id, username FROM users
+      WHERE username LIKE '%${usernameFragment}%';
+    `;
+    return this.query(query);
+  }
 
   getPortfolio(username) {
     let query = `
@@ -58,11 +66,12 @@ class Db {
 
   postUser(first_name, last_name, email, username, password) {
     const hash = bcrypt.hashSync(password, saltRounds);
+
     let query = `
       INSERT INTO users
-      (id, password, first_name, last_name, email, username, cash_position)
+      (id, password, first_name, last_name, email, username, cash_position, portfolio_value)
       VALUES
-      ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash})
+      ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash}, ${starting_portfolio_value})
     `;
     return this.query(query);
   }
@@ -88,6 +97,51 @@ class Db {
     return this.query(query);
   }
 
+  putPortfolioValue(user_id, portfolio_value) {
+    let query = `
+      UPDATE users
+      SET portfolio_value = ${portfolio_value}
+      WHERE id = '${user_id}'
+    `;
+    return this.query(query);
+  }
+
+  getLeaderboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      LEFT OUTER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  getFriendboard(username, offset, entries) {
+    let query = `
+      SELECT * FROM users AS u
+      INNER JOIN friendships AS f
+      ON u.id = f.watched_user
+      AND f.watching_user = ${username}
+      ORDER BY u.cash_position
+      OFFSET ${offset}
+      LIMIT ${entries};
+    `;
+    return this.query(query);
+  };
+
+  deleteFriend(watching_user_id, watched_username) {
+    let query = `
+      DELETE FROM friendships AS f
+      WHERE f.watching_user = ${watching_user_id}
+      AND (SELECT u.username FROM users AS u
+      WHERE f.watched_user = u.id) = ${watched_username};
+    `;
+    return this.query(query);
+  };
+
   // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
@@ -99,9 +153,14 @@ class Db {
 let db = new Db();
 
 module.exports.getUser = db.getUser.bind(db);
+module.exports.getUsers = db.getUsers.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
 module.exports.getFriends = db.getFriends.bind(db);
 module.exports.getWatchlist = db.getWatchlist.bind(db);
 module.exports.postUser = db.postUser.bind(db);
 module.exports.postFriend = db.postFriend.bind(db);
 module.exports.postWatchSecurity = db.postWatchSecurity.bind(db);
+module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
+module.exports.getLeaderboard = db.getLeaderboard.bind(db);
+module.exports.getFriendboard = db.getFriendboard.bind(db);
+module.exports.deleteFriend = db.deleteFriend.bind(db);

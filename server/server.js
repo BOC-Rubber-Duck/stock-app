@@ -7,10 +7,6 @@ const controllers = require('./controllers');
 const db = require('./db/queries.js');
 const bodyParser = require('body-parser');
 
-const dbOld = require('../db/db.js');
-
-const {filterStockSearch} = require('./controllers/searchStocks.js');
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -48,18 +44,29 @@ app.get('/fetchSelectedStock', (req, res) => {
       res.status(200);
     }
   });
-})
+});
 
 app.get('/api/getUser', (req, res) => {
   db.getUser(req.query.username)
     .then((data) => {
-      res.send(data.rows[0])
+      res.send(data.rows[0]);
     })
     .catch((err) => {
-      console.log('Error during getUser: ', err)
+      console.log('Error during getUser: ', err);
       res.send(500);
     });
-})
+});
+
+app.get('/api/getUsers', (req, res) => {
+  db.getUsers(req.query.username)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err);
+      res.send(500);
+    });
+});
 
 app.get('/api/getPortfolio', (req, res) => {
   db.getPortfolio(req.query.username)
@@ -128,11 +135,9 @@ app.post('/api/postUser', (req, res) => {
     });
 })
 app.post('/trade', (req, res) => {
-  console.log('trade query:', req.query);
   const stockSymbol = req.query.stockSymbol;
   const shares = req.query.shares;
   const action = req.query.action;
-  console.log('reported params:', stockSymbol, shares, action);
   // process trade
   // make db queries
   // confirm success
@@ -149,52 +154,50 @@ app.post('/trade', (req, res) => {
   res.send(JSON.stringify(tradeConfirmation));
 });
 
-app.get('/leaders', (req, res) => {
-  const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
-  console.log(req.query);
-  dbOld.getLeaders(leaderboard, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.get('/api/getLeaderboard', (req, res) => {
+  db.getLeaderboard(req.query.username, req.query.offset, req.query.entries)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getLeaderboard: ', err);
+      res.send(500);
+    });
 });
 
-app.get('/friends', (req, res) => {
-  const leaderboard = {leaderboard: {user: req.query.user, offset: req.query.offset, entries: req.query.entries}};
-  console.log(req.query);
-  dbOld.getFriends(leaderboard, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.get('/api/getFriendboard', (req, res) => {
+  db.getFriendboard(req.query.username, req.query.offset, req.query.entries)
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getFriendboard: ', err);
+      res.send(500);
+    });
 });
 
-app.put('/addfriend', (req, res) => {
-  const users = {users: {watching_user: req.query.watching_user, watched_user: req.query.watched_user}};
-  console.log(req.query);
-  dbOld.addFriend(users, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.delete('/api/deleteFriend', (req, res) => {
+  db.deleteFriend(req.body.watching_user_id, req.body.watched_username)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during deleteFriend: ', err);
+      res.send(500);
+    });
 });
 
-app.put('/deletefriend', (req, res) => {
-  const users = {users: {watching_user: req.query.watching_user, watched_user: req.query.watched_user}};
-  console.log(req.query);
-  dbOld.deleteFriend(users, (error, data) => {
-    if (error) {
-      res.status(502).json(error);
-    } else {
-      res.status(200).json(data);
-    }
-  });
+app.put('/api/portfolioValue', (req, res) => {
+  let { user_id, portfolio_value } = req.body;
+  console.log('user_id: ', user_id, 'portfolio_value: ', portfolio_value);
+  db.putPortfolioValue(user_id, portfolio_value)
+    .then((data) => {
+      res.sendStatus(204);
+    })
+    .catch((err) => {
+      console.log('Error during putPortfolioValue: ', err)
+      res.send(500);
+    });
 });
 
 app.get('/*', function(req, res) {
