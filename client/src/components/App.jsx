@@ -218,8 +218,18 @@ class App extends React.Component {
           </div> */}
 
           <Switch>
-            <Route exact path="/" component={Leaderboard} />
-            <Route exact path="/leaderboard" component={Leaderboard} />
+          <Route exact path="/"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
+            <Route exact path="/leaderboard"
+              render={() =>
+                <Leaderboard
+                  user={this.state.user}
+                />
+              }/>
             <Route exact path="/portfolio" component={Portfolio} />
             <Route exact path="/stock-search"
               render={() =>
