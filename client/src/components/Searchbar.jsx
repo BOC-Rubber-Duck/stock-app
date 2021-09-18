@@ -88,16 +88,20 @@ const Searchbar = (props) => {
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
       {showOwnedStocks &&
-        ownedStocks.map((stock) => {
-          return (
-            <Stockbar
-              key={stock.symbol}
-              name={stock.name}
-              symbol={stock.symbol}
-              type={stock.type}
-            />
-          );
-        })
+      <div>Stocks you own
+        {
+          ownedStocks.map((stock) => {
+            return (
+              <Stockbar
+                key={stock.symbol}
+                name={stock.name}
+                symbol={stock.symbol}
+                type={stock.type}
+              />
+            );
+          })
+        }
+      </div>
       }
       {displayStockDetails &&
         <StockDetailPage
