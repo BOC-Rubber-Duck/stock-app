@@ -9,26 +9,15 @@ const source = CancelToken.source();
 class Leaderboard extends React.Component {
   constructor(props) {
     super(props);
-    if (props.user) {
-      var user = props.user;
-    } else {
-      var user = {
-        id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
-        first_name: 'mark',
-        last_name: 'zuckerberg',
-        username: 'the_zuck',
-        email: 'mark_zuckerberg@example.com',
-        cash_position: 1000000,
-        rank: null,
-        portfolioValue: 0
-      };
-    }
+    this.scrollContainer = React.createRef();
     this.state = {
       list: [],
       page: 0,
-      user: user,
+      user: props.user,
       hasMore: true,
-      friendsMode: 'Leaderboard'
+      friendsMode: 'Leaderboard',
+      entries: 2,
+      previousList: []
     };
     this.addFriend = this.addFriend.bind(this);
     this.fetchList = this.fetchList.bind(this);
@@ -62,14 +51,19 @@ class Leaderboard extends React.Component {
 
   fetchList() {
     var list = this.state.list;
-    const entries = 2;
+    const entries = this.state.entries;
     const offset = this.state.page * entries;
     if (this.state.user.id.length > 0) {
       this.setState({page: (this.state.page + 1)});
-      axios.get(`/api/get${this.state.friendsMode}`, {params: {username: this.state.user.id, offset: offset, entries: entries}, cancelToken: source.token})
+      axios.get(`/api/get${this.state.friendsMode}`, {params: {userId: this.state.user.id, offset: offset, entries: entries}, cancelToken: source.token})
         .then((response) => {
           if (typeof(response.data) === 'object') {
-            this.setState({list: list.concat(response.data)});
+            if (response.data === this.state.previousList) {
+              this.setState({hasMore: false});
+            } else {
+              this.setState({list: list.concat(response.data), previousList: response.data});
+            }
+            console.log(this.state.list);
             if (response.data.length === 0) {
               this.setState({hasMore: false});
             }
@@ -99,20 +93,16 @@ class Leaderboard extends React.Component {
   }
 
   componentDidMount() {
-    const container = document.getElementById("container");
+    const container = this.scrollContainer;
     if ((container.scrollHeight === container.offsetHeight) && this.state.hasMore === true) {
       this.fetchList();
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
-    const container = document.getElementById("container");
-    if (this.props.user !== prevProps.user) {
-      this.refreshList();
-    } else {
-      if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.list !== prevState.list)) {
-        this.fetchList();
-      }
+    const container = this.scrollContainer;
+    if ((container.scrollHeight === container.offsetHeight) && (this.state.hasMore === true) && (this.state.previousList !== prevState.previousList)) {
+      this.fetchList();
     }
   }
 
@@ -134,7 +124,7 @@ class Leaderboard extends React.Component {
               <label htmlFor="friend-slider">&nbsp;&nbsp;Display Friends</label>
             </form>
           </div>
-          <div id="container">
+          <div id="container" ref={this.scrollContainer}>
             <InfiniteScroll
               scrollableTarget={'container'}
               dataLength={this.state.list.length}

@@ -106,12 +106,12 @@ class Db {
     return this.query(query);
   }
 
-  getLeaderboard(username, offset, entries) {
+  getLeaderboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
       LEFT OUTER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = '${username}'
+      AND f.watching_user = '${userId}'
       ORDER BY u.cash_position
       OFFSET ${offset}
       LIMIT ${entries};
@@ -119,12 +119,12 @@ class Db {
     return this.query(query);
   };
 
-  getFriendboard(username, offset, entries) {
+  getFriendboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
       INNER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = '${username}'
+      AND f.watching_user = '${userId}'
       ORDER BY u.cash_position
       OFFSET ${offset}
       LIMIT ${entries};
