@@ -4,6 +4,9 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { act } from "react-dom/test-utils";
+import axios from 'axios';
 
 import Searchbar from '../client/src/components/Searchbar.jsx';
 import Predictions from '../client/src/components/Predictions.jsx';
@@ -17,13 +20,15 @@ const samplePredictions = [
   }
 ];
 
+jest.mock('axios');
+
 beforeEach(() => {
-  render(<Searchbar />);
   render(<Predictions predictions={samplePredictions}/>);
 });
 
 afterEach(() => {
   cleanup();
+  jest.clearAllMocks();
 });
 
 describe('Test stock search/filter', () => {
@@ -41,9 +46,39 @@ describe('Test stock search/filter', () => {
   });
 });
 
-test('Searchbar renders correctly', () => {
-  const placeholder = screen.getByPlaceholderText('Search...');
-  expect(placeholder).toBeTruthy();
+test('Displays stocks on user input/handles state chagne', async () => {
+  await act(async () => {
+    //await axios.get.mockImplementation(() => Promise.resolve({samplePredictions}));
+    render(<Searchbar userPortfolio={samplePredictions} />);
+
+
+    const searchField = screen.getByPlaceholderText('Search...');
+    await expect(searchField).toBeTruthy();
+  })
+
+  // userEvent.type(searchField, 'AAPL');
+
+  //await expect(searchField).toHaveValue('AAPL')
+})
+
+test('Searchbar renders correctly with owned stocks', async () => {
+  const fakeData = [
+    {
+      "name": "AAON, Inc.",
+      "symbol": "AAON"
+    },
+    {
+      "name": "Apple Inc.",
+      "symbol": "AAPL"
+    },
+  ];
+
+  await act(async () => {
+    await axios.get.mockImplementationOnce(() => Promise.resolve(fakeData));
+    render(<Searchbar userPortfolio={fakeData}/>);
+  });
+
+  await expect(axios.get).toHaveBeenCalledTimes(2);
 });
 
 test('Predictions render correctly', () => {
@@ -51,4 +86,3 @@ test('Predictions render correctly', () => {
   expect(AAPL).toBeTruthy();
 });
 
-//need to add mock user functionality, jest.mock?
