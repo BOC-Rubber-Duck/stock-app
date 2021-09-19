@@ -19,7 +19,7 @@ const apiMockResults = [
 const server = setupServer(
   rest.get('/api/getUsers', (req, res, ctx) => {
     const searchParam = req.url.searchParams.get('username');
-    const responseData = apiMockResults;
+    let responseData = apiMockResults;
 
     if (searchParam === 'gr') {
       responseData = apiMockResults.slice(0, 2);
