@@ -11,7 +11,7 @@ const Portfolio = (props) => {
       stockbalance: 500000
     };
   return (
-    <div>
+    <div className="portfolio-container">
       <Usercard user={user}/>
       <Stockbar type='stockSearch' symbol='TSLA' name='Tesla, Inc.'/>
       <Stockbar type='stockSearch' symbol='TSLO' name='Toosla, Inc.'/>
