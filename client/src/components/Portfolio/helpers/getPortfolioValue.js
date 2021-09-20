@@ -15,7 +15,6 @@ const getPortfolioValue = (user) => {
     ))
       .then(axios.spread((...responses) => {
         for (var i = 0; i < responses.length; i++) {
-          console.log(responses[i]);
           stocks[i].stockName = responses[i].data.name;
           stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
           user.portfolioValue += stocks[i].valueOwned;
