@@ -4,7 +4,6 @@
 
 import React from 'react';
 import {BrowserRouter, MemoryRouter, Router, Route} from 'react-router-dom';
-import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 
 //Enzyme
 import '@testing-library/jest-dom';
@@ -15,43 +14,6 @@ import sinon from 'sinon';
 
 Enzyme.configure({ adapter: new Adapter() });
 
-//Wrap Mount
-var initialProps = {
-  user: {
-    id: '',
-    first_name: '',
-    last_name: '',
-    username: '',
-    email: '',
-    cash_position: 1000000,
-    rank: null,
-    portfolioValue: 0
-  }
-};
-import { shape } from 'prop-types';
-const router = {
-  history: new BrowserRouter().history,
-  route: {
-    location: {},
-    match: {},
-  },
-};
-
-var createContext = () => {
-  return ({
-    context: { router },
-    childContextTypes: { router: shape({}) },
-    wrappingComponentProps: initialProps
-  });
-};
-
-var mountWrap = (node) => {
-  return mount(node, createContext());
-};
-
-var shallowWrap = (node) => {
-  return shallow(node, createContext());
-};
 
 // import API mocking utilities from Mock Service Worker
 import { rest } from 'msw';
@@ -67,10 +29,22 @@ import '@testing-library/jest-dom/extend-expect';
 // the component to test
 import Leaderboard from '../client/src/components/Leaderboard.jsx';
 
+var initialProps = {
+  user: {
+    id: '',
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    cash_position: 1000000,
+    rank: null,
+    portfolioValue: 0
+  }
+};
+
 var count = 0;
 
 var sampleList = [].concat([{"id":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11","password":"my_secret_password","first_name":"john","last_name":"smith","username":"jsmith","email":"john_smith@example.com","cash_position":"1000000","watching_user":null,"watched_user":null},{"id":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12","password":"my_secret_password","first_name":"jeffrey","last_name":"bezos","username":"bezos_the_first","email":"jeffrey_bezos@example.com","cash_position":"1000000","watching_user":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13","watched_user":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"}]);
-
 
 var initialState = {
   list: sampleList,
@@ -119,43 +93,19 @@ afterEach(() => {
 afterAll(() => server.close());
 
 test('Leaderboard mounts.', () => {
-  /*   var wrapper = mount(
-      <MemoryRouter initialEntries={["/leaderboard"]}>
-        <Leaderboard user={initialState.user}/>
-      </MemoryRouter>
-    ); */
   sinon.spy(Leaderboard.prototype, 'componentDidMount');
   var wrapper = mount(<Leaderboard user={initialProps.user} />);
   expect(Leaderboard.prototype.componentDidMount).toHaveProperty('callCount', 1);
 });
 
 test('Leaderboard renders text to screen.', () => {
-/*   var wrapper = mount(
-    <MemoryRouter initialEntries={["/leaderboard"]}>
-      <Leaderboard user={initialState.user}/>
-    </MemoryRouter>
-  ); */
   var wrapper = mount(<Leaderboard user={initialProps.user} />);
   expect(wrapper.find('#list-header').text()).toMatch(/Leaderboard/);
 });
 
 test('Two Leaderboard entries render state change.', () => {
-/*    var wrapper = mount(
-    <BrowserRouter>
-      <Route path="/leaderboard"
-        render={() =>
-          <Leaderboard
-            user={initialState.user}
-          />
-        }/>
-    </BrowserRouter>); */
-  //const options = new ReactRouterEnzymeContext();
-  //var wrapper = mount(<Leaderboard user={initialProps.user} />, options.get());
-  //var wrapper = mountWrap(<Leaderboard user={initialProps.user} />);
   var wrapper = mount(<Leaderboard user={initialProps.user} />);
   wrapper.setState(initialState, () => {
-    //wrapper.update();
-    //console.log(wrapper.html());
     expect(wrapper.find('.leaderboard-element').map((node) => node.text())).toHaveLength(2);
   });
 });
@@ -170,16 +120,6 @@ test('Add friend results in API call.', () => {
 });
 
 test('Clicking leaderboard toggle changes mode.', () => {
-  const onButtonClick = sinon.spy();
-  var wrapper = mount(<Leaderboard user={initialProps.user} />);
-  wrapper.setState(initialState, async () => {
-    wrapper.find('#friend-slider').simulate('click');
-    await waitFor(() => expect(wrapper.state().friendsMode).toEqual('Friendboard'));
-  });
-});
-
-test('Clicking leaderboard toggle changes mode.', () => {
-  const onButtonClick = sinon.spy();
   var wrapper = mount(<Leaderboard user={initialProps.user} />);
   wrapper.setState(initialState, async () => {
     wrapper.find('#friend-slider').simulate('click');

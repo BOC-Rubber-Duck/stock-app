@@ -33,7 +33,7 @@ class Leaderboard extends React.Component {
           this.setState({list: friendAdd});
         })
         .catch((error) => {
-          // Would like to put a console.log in here, but it's throwing my Jest tests.
+          // Would like to put a console.log in here, but it's throwing the Jest tests.
         });
     } else {
       axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.props.user.id, watched_username: watchedUserUsername}, cancelToken: source.token})
@@ -43,7 +43,6 @@ class Leaderboard extends React.Component {
           this.setState({list: friendAdd});
         })
         .catch((error) => {
-          // Would like to put a console.log in here, but it's throwing my Jest tests.
         });
     }
   }
@@ -140,7 +139,7 @@ class Leaderboard extends React.Component {
               pullDownToRefresh={true}
               pullDownToRefreshThreshold={50}
               pullDownToRefreshContent={
-                <p>&#8595; Pull down to refresh</p>
+                <p id="leaderboard-pull-down">&#8595; Pull down to refresh</p>
               }
               releaseToRefreshContent={
                 <p>&#8593; Release to refresh</p>
