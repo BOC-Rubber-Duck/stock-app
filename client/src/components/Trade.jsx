@@ -29,9 +29,9 @@ class Trade extends React.Component {
   };
 
   render() {
-    const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected || 0;
-    const actionText = this.props.action === 'buy' ? 'Buy': 'Sell';
+    const { user, stockSelected, action } = this.props;
+    const saleAmount = this.state.shares * stockSelected.price || 0;
+    const actionText = action === 'buy' ? 'Buy': 'Sell';
 
     return (
       <div className="trade-container" id="trade-container">

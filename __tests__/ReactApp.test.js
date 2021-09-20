@@ -19,14 +19,18 @@ import Leaderboard from '../client/src/components/Leaderboard.jsx';
 import Searchbar from '../client/src/components/Searchbar.jsx';
 import Friend from '../client/src/components/Friend.jsx';
 
-const stockSelected = {
-  name: 'Tesla',
-  symbol: 'TSLA',
-  price: 100,
-  data: [
-    // {},{}
-  ]
-};
+const { sampleState } = require('../sampleData/sampleState.js');
+
+const { stockSelected, user, action } = sampleState;
+
+// const stockSelected = {
+//   name: 'Tesla',
+//   symbol: 'TSLA',
+//   price: 100,
+//   data: [
+//     // {},{}
+//   ]
+// };
 
 
 beforeEach(() => {
