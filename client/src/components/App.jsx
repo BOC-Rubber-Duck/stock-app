@@ -231,7 +231,7 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div> */}
+          </div>*/}
 
           <Switch>
             <Route exact path="/"
