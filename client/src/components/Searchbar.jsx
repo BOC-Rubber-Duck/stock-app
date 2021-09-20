@@ -19,7 +19,7 @@ const Searchbar = (props) => {
     props.userPortfolio.map((stock) => {
       const symbol = stock.ticker_symbol || stock.symbol;
       stocksToSearch.push(
-        axios.get('./fetchSelectedStock', {
+        axios.get('/fetchSelectedStock', {
           params: {
             symbol
           }
