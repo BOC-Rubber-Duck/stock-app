@@ -3,6 +3,8 @@
  */
 
 import React from 'react';
+import {BrowserRouter, MemoryRouter, Router, Route} from 'react-router-dom';
+import ReactRouterEnzymeContext from 'react-router-enzyme-context';
 
 //Enzyme
 import '@testing-library/jest-dom';
@@ -13,6 +15,44 @@ import sinon from 'sinon';
 
 Enzyme.configure({ adapter: new Adapter() });
 
+//Wrap Mount
+var initialProps = {
+  user: {
+    id: '',
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    cash_position: 1000000,
+    rank: null,
+    portfolioValue: 0
+  }
+};
+import { shape } from 'prop-types';
+const router = {
+  history: new BrowserRouter().history,
+  route: {
+    location: {},
+    match: {},
+  },
+};
+
+var createContext = () => {
+  return ({
+    context: { router },
+    childContextTypes: { router: shape({}) },
+    wrappingComponentProps: initialProps
+  });
+};
+
+var mountWrap = (node) => {
+  return mount(node, createContext());
+};
+
+var shallowWrap = (node) => {
+  return shallow(node, createContext());
+};
+
 // import API mocking utilities from Mock Service Worker
 import { rest } from 'msw';
 import { setupServer } from 'msw/node';
@@ -20,7 +60,6 @@ import { setupServer } from 'msw/node';
 // import react-testing methods
 import {render, fireEvent, waitFor, screen, cleanup} from '@testing-library/react';
 
-import {BrowserRouter, MemoryRouter, Route} from 'react-router-dom';
 
 // add custom jest matchers from jest-dom
 import '@testing-library/jest-dom/extend-expect';
@@ -32,24 +71,17 @@ var count = 0;
 
 var sampleList = [].concat([{"id":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11","password":"my_secret_password","first_name":"john","last_name":"smith","username":"jsmith","email":"john_smith@example.com","cash_position":"1000000","watching_user":null,"watched_user":null},{"id":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12","password":"my_secret_password","first_name":"jeffrey","last_name":"bezos","username":"bezos_the_first","email":"jeffrey_bezos@example.com","cash_position":"1000000","watching_user":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13","watched_user":"a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a12"}]);
 
-var sampleState = {
+
+var initialState = {
   list: sampleList,
   page: 1,
-  user: {
-    id: 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13',
-    first_name: 'mark',
-    last_name: 'zuckerberg',
-    username: 'the_zuck',
-    email: 'mark_zuckerberg@example.com',
-    cash_position: 1000000,
-    rank: null,
-    portfolioValue: 0
-  },
   hasMore: true,
   friendsMode: 'Leaderboard',
   entries: 2,
   previousList: sampleList
 };
+
+var postFriend = 0;
 
 const server = setupServer(
   rest.get('/api/getLeaderboard', (req, res, ctx) => {
@@ -70,8 +102,10 @@ const server = setupServer(
 
 beforeAll(() => {
   server.listen();
-  server.events.on('request:start', (req) => {
-    console.log('new request:', req.url.href);
+  server.events.on('request:end', (req) => {
+    if (req.url.href.slice((req.url.href.length - 10), (req.url.href.length)) === 'postFriend') {
+      postFriend++;
+    }
   });
 });
 beforeEach(() => {
@@ -79,36 +113,86 @@ beforeEach(() => {
 });
 afterEach(() => {
   server.resetHandlers();
+  postFriend = 0;
   cleanup();
 });
 afterAll(() => server.close());
 
+test('Leaderboard mounts.', () => {
+  /*   var wrapper = mount(
+      <MemoryRouter initialEntries={["/leaderboard"]}>
+        <Leaderboard user={initialState.user}/>
+      </MemoryRouter>
+    ); */
+  sinon.spy(Leaderboard.prototype, 'componentDidMount');
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  expect(Leaderboard.prototype.componentDidMount).toHaveProperty('callCount', 1);
+});
 
-test('Leaderboard renders.', () => {
-  var wrapper = mount(<BrowserRouter><Leaderboard /></BrowserRouter>);
+test('Leaderboard renders text to screen.', () => {
+/*   var wrapper = mount(
+    <MemoryRouter initialEntries={["/leaderboard"]}>
+      <Leaderboard user={initialState.user}/>
+    </MemoryRouter>
+  ); */
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
   expect(wrapper.find('#list-header').text()).toMatch(/Leaderboard/);
 });
 
-test('Two Leaderboard entries render upon a mocked API call.', () => {
-/*   var wrapper = mount(
-    <MemoryRouter>
-      <Route render={props => <Leaderboard {...props} />} />
-    </MemoryRouter>); */
-  var wrapper = mount(<Leaderboard />);
-  wrapper.setState(sampleState, () => {
-    wrapper.update();
-    console.log(wrapper.html());
+test('Two Leaderboard entries render state change.', () => {
+/*    var wrapper = mount(
+    <BrowserRouter>
+      <Route path="/leaderboard"
+        render={() =>
+          <Leaderboard
+            user={initialState.user}
+          />
+        }/>
+    </BrowserRouter>); */
+  //const options = new ReactRouterEnzymeContext();
+  //var wrapper = mount(<Leaderboard user={initialProps.user} />, options.get());
+  //var wrapper = mountWrap(<Leaderboard user={initialProps.user} />);
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  wrapper.setState(initialState, () => {
+    //wrapper.update();
+    //console.log(wrapper.html());
     expect(wrapper.find('.leaderboard-element').map((node) => node.text())).toHaveLength(2);
   });
 });
 
-/* test('Add friend results in API call.', async () => {
-  await screen.findByText('leaderboard-not-friend');
-  fireEvent(
-    screen.getByText('leaderboard-not-friend'),
-    new MouseEvent('click', {
-      bubbles: true,
-      cancelable: true,
-    }),
-  );
-}); */
+test('Add friend results in API call.', () => {
+  const onButtonClick = sinon.spy();
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  wrapper.setState(initialState, async () => {
+    wrapper.find('.leaderboard-not-friend').simulate('click');
+    await waitFor(() => expect(postFriend).toEqual(1));
+  });
+});
+
+test('Clicking leaderboard toggle changes mode.', () => {
+  const onButtonClick = sinon.spy();
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  wrapper.setState(initialState, async () => {
+    wrapper.find('#friend-slider').simulate('click');
+    await waitFor(() => expect(wrapper.state().friendsMode).toEqual('Friendboard'));
+  });
+});
+
+test('Clicking leaderboard toggle changes mode.', () => {
+  const onButtonClick = sinon.spy();
+  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  wrapper.setState(initialState, async () => {
+    wrapper.find('#friend-slider').simulate('click');
+    await waitFor(() => expect(wrapper.state().friendsMode).toEqual('Friendboard'));
+  });
+});
+
+test('Leaderboard fetches data through API.', () => {
+  render(<Leaderboard user={initialProps.user}/>);
+  expect(screen.findByText('2'));
+});
+
+test('Leaderboard loads usercard.', () => {
+  render(<Leaderboard user={initialProps.user}/>);
+  expect(screen.findByText('profdetail1'));
+});

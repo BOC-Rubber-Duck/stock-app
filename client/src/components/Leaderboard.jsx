@@ -13,7 +13,6 @@ class Leaderboard extends React.Component {
     this.state = {
       list: [],
       page: 0,
-      user: props.user,
       hasMore: true,
       friendsMode: 'Leaderboard',
       entries: 2,
@@ -27,24 +26,24 @@ class Leaderboard extends React.Component {
 
   addFriend(watchedUserUsername, index, friendStatus) {
     if (friendStatus === null) {
-      axios.post(`/api/postFriend`, {watching_user_id: this.state.user.id, watched_username: watchedUserUsername})
+      axios.post(`/api/postFriend`, {watching_user_id: this.props.user.id, watched_username: watchedUserUsername}, {cancelToken: source.token})
         .then((response) => {
           const friendAdd = this.state.list;
-          friendAdd[index].watching_user = this.state.user.id;
+          friendAdd[index].watching_user = this.props.user.id;
           this.setState({list: friendAdd});
         })
         .catch((error) => {
-          console.log(error);
+          // Would like to put a console.log in here, but it's throwing my Jest tests.
         });
     } else {
-      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.state.user.id, watched_username: watchedUserUsername}})
+      axios.delete(`/api/deleteFriend`, {data: {watching_user_id: this.props.user.id, watched_username: watchedUserUsername}, cancelToken: source.token})
         .then((response) => {
           const friendAdd = this.state.list;
           friendAdd[index].watching_user = null;
           this.setState({list: friendAdd});
         })
         .catch((error) => {
-          console.log(error);
+          // Would like to put a console.log in here, but it's throwing my Jest tests.
         });
     }
   }
@@ -53,9 +52,9 @@ class Leaderboard extends React.Component {
     var list = this.state.list;
     const entries = this.state.entries;
     const offset = this.state.page * entries;
-    if (this.state.user.id.length > 0) {
+    if (this.props.user && this.props.user.id.length > 0) {
       this.setState({page: (this.state.page + 1)});
-      axios.get(`/api/get${this.state.friendsMode}`, {params: {userId: this.state.user.id, offset: offset, entries: entries}, cancelToken: source.token})
+      axios.get(`/api/get${this.state.friendsMode}`, {params: {userId: this.props.user.id, offset: offset, entries: entries}, cancelToken: source.token})
         .then((response) => {
           if (typeof(response.data) === 'object') {
             if (response.data === this.state.previousList) {
@@ -113,7 +112,7 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
-        <Usercard user={this.state.user} />
+        <Usercard user={this.props.user} />
         <div id="leaderboard-list">
           <div id="list-header">
             <form>

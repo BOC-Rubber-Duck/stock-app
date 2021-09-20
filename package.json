@@ -67,6 +67,8 @@
     "jest": "^27.1.0",
     "jsdom": "^16.7.0",
     "msw": "^0.35.0",
+    "prop-types": "^15.7.2",
+    "react-router-enzyme-context": "^1.2.0",
     "sinon": "^11.1.2",
     "style-loader": "^3.2.1",
     "webpack": "^5.51.2",
