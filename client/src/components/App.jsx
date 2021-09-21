@@ -45,8 +45,8 @@ class App extends React.Component {
         portfolioValue: 0,
         selectedFriendPortfolio: [
         //  {
-        //     stockName:
-        //     sharesOwned
+        //     name:
+        //     symbol
         //   },
         //   {}
         ]
@@ -81,79 +81,50 @@ class App extends React.Component {
   }
 
   selectedUserSearch(username) {
-    console.log('selectedUserSearch clicked: ', username);
-    let portfolioValue= 0;
+    // this is temp
+    const portfolioValue= Math.floor(Math.random() * 10000000);
+    // this is temp
+    const rank = Math.ceil(Math.random() * 100);
     axios.get('/api/getPortfolio', {
       params: {
         username
       }
     })
       .then((res) => {
-        let selectedFriendPortfolio = [];
-
+        const portfolio = [];
         const dbPortfolioData = res.data;
         dbPortfolioData.map((stock) => {
           const tickerSymbol = stock.ticker_symbol;
-          axios.get('/userStockSearch', {
-            params: {
-              userStockSearch: tickerSymbol
-            }
-          })
-            .then((res) => {
-              let stockName = res.data[0].name;
-              const sharesOwned = stock.amount;
-              const reducedData = {
-                stockName,
-                sharesOwned,
-                tickerSymbol
-              };
-              selectedFriendPortfolio.push(reducedData);
+          portfolio.push(
+            axios.get('/userStockSearch', {
+              params: {
+                userStockSearch: tickerSymbol
+              }
             })
-            .catch(e => e)
-          });
-          console.log(selectedFriendPortfolio)
-          return selectedFriendPortfolio
+          );
+        });
+        Promise.all(portfolio)
+          .then((res) => {
+            const selectedFriendPortfolio = res.map((r) => {
+              return r.data[0];
+            });
+            return selectedFriendPortfolio;
+          })
+          .then((selectedFriendPortfolio) => {
+            const selectedFriend = {
+              username,
+              rank,
+              portfolioValue,
+              selectedFriendPortfolio
+            };
+            this.setState({
+              selectedFriend
+            });
+          })
+          .catch((e) => e);
       })
-      .then(selectedFriendPortfolio => {
-        const selectedFriend = {
-          username,
-          rank: 0,
-          portfolioValue,
-          selectedFriendPortfolio
-        }
-
-        console.log(selectedFriend, 'please')
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-
-    // axios.get(//routed to leaderboard,
-    //   //pull the portfolio value, and rank for leaderboard query
-
-    //   )
-
-
-    // Tyler?
-    // need to get pricing for each stock in their portfolio, check server route/helper functions
-    //for username
-      //get portfolio
-    this.setState({
-      selectedFriend
-      // selectedFriend: {
-      //   username: '',
-      //   rank: 0,
-      //   portfolioValue: 0,
-      //   selectedFriendPortfolio: [
-      //   //  {
-      //   //     stockName:
-      //   //     sharesOwned
-      //   //   },
-      //   //   {}
-      //   ]
-      // },
-    }, console.log(this.state));
-  };
+      .catch((e) => e);
+  }
 
   getLeaderboard() {
     // get most recent users
@@ -310,7 +281,6 @@ class App extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
           </Switch>
-          <button className='test-button' onClick={() => this.selectedUserSearch('jsmith')}>Click mee</button>
           <Navbar />
         </React.Fragment>
       </Router>
