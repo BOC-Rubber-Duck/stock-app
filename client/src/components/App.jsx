@@ -82,7 +82,6 @@ class App extends React.Component {
 
   selectedUserSearch(username) {
     console.log('selectedUserSearch clicked: ', username);
-    let selectedFriendPortfolio = [];
     let portfolioValue= 0;
     axios.get('/api/getPortfolio', {
       params: {
@@ -90,37 +89,51 @@ class App extends React.Component {
       }
     })
       .then((res) => {
-        const dbPortfolioData = res.data;
+        let selectedFriendPortfolio = [];
 
+        const dbPortfolioData = res.data;
         dbPortfolioData.map((stock) => {
-          const stockName = stock.ticker_symbol;
           const tickerSymbol = stock.ticker_symbol;
-          //needs name
-          //does not need shares owned
-          const sharesOwned = stock.amount;
-          const reducedData = {
-            stockName,
-            sharesOwned,
-            tickerSymbol
-          };
-          selectedFriendPortfolio.push(reducedData);
-        });
+          axios.get('/userStockSearch', {
+            params: {
+              userStockSearch: tickerSymbol
+            }
+          })
+            .then((res) => {
+              let stockName = res.data[0].name;
+              const sharesOwned = stock.amount;
+              const reducedData = {
+                stockName,
+                sharesOwned,
+                tickerSymbol
+              };
+              selectedFriendPortfolio.push(reducedData);
+            })
+            .catch(e => e)
+          });
+          console.log(selectedFriendPortfolio)
+          return selectedFriendPortfolio
+      })
+      .then(selectedFriendPortfolio => {
+        const selectedFriend = {
+          username,
+          rank: 0,
+          portfolioValue,
+          selectedFriendPortfolio
+        }
+
+        console.log(selectedFriend, 'please')
       })
       .catch((e) => {
         console.log(e);
       });
 
-    axios.get(//routed to leaderboard,
-      //pull the portfolio value, and rank for leaderboard query
+    // axios.get(//routed to leaderboard,
+    //   //pull the portfolio value, and rank for leaderboard query
 
-      )
+    //   )
 
-      const selectedFriend = {
-        username,
-        rank: 1,//query all users and filter and sort based on portfolio value, return index?
-        portfolioValue,
-        selectedFriendPortfolio
-      }
+
     // Tyler?
     // need to get pricing for each stock in their portfolio, check server route/helper functions
     //for username
@@ -297,7 +310,7 @@ class App extends React.Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
           </Switch>
-          <button className='test-button' onClick={() => this.selectedUserSearch('the_zuck')}>Click mee</button>
+          <button className='test-button' onClick={() => this.selectedUserSearch('jsmith')}>Click mee</button>
           <Navbar />
         </React.Fragment>
       </Router>
