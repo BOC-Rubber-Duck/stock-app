@@ -8,6 +8,21 @@ import {FaSearch} from 'react-icons/fa';
 import StockDetailPage from './StockDetailPage.jsx';
 import Stockbar from './Stockbar.jsx';
 
+const OwnedStockDisplay = (props) => {
+  return (
+    props.stocks.map((stock) => {
+      return (
+        <Stockbar
+          key={stock.symbol}
+          name={stock.name}
+          symbol={stock.symbol}
+          type={stock.type}
+        />
+      );
+    })
+  );
+};
+
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
   const [displayStockDetails, setDisplayStockDetails] = useState(false);
@@ -87,20 +102,7 @@ const Searchbar = (props) => {
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
       {showOwnedStocks &&
-      <div>Stocks you own
-        {
-          ownedStocks.map((stock) => {
-            return (
-              <Stockbar
-                key={stock.symbol}
-                name={stock.name}
-                symbol={stock.symbol}
-                type={stock.type}
-              />
-            );
-          })
-        }
-      </div>
+        <OwnedStockDisplay stocks={ownedStocks} />
       }
       {displayStockDetails &&
         <StockDetailPage

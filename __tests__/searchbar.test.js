@@ -27,18 +27,16 @@ const server = setupServer(
     return res(
       ctx.status(200),
       ctx.json(samplePredictions)
-    )
+    );
   }),
   rest.get('/userStockSearch', (req, res, ctx) => {
-    console.log('userStockSearch hit')
     return res(
       ctx.status(200),
       ctx.json(samplePredictions)
-    )
+    );
   })
-)
+);
 
-//mock axios and at least make sure it has been called the appropriate number of times
 beforeAll(() => server.listen());
 beforeEach(() => {
   server.resetHandlers();
@@ -53,20 +51,9 @@ describe('Renders Searchbar component', () => {
     render(<Searchbar userPortfolio={samplePredictions} />);
     let searchBox = screen.getByPlaceholderText('Search...');
     expect(searchBox).toBeTruthy();
-    userEvent.type(searchBox, 'AAPL')
-    expect(searchBox.value).toBe('AAPL')
+    userEvent.type(searchBox, 'AAPL');
+    expect(searchBox.value).toBe('AAPL');
     let results = await screen.findByText('AAPL');
     expect(results).toBeTruthy();
-
-  })
-
-    //   render(<Searchbar userPortfolio={samplePredictions} />);
-    //   await act(async() => {
-    //       await userEvent.type(screen.getByPlaceholderText('Search...'), 'A');
-    //     const results = await screen.getByText('Apple');
-    //   });
-    //
-    //   //console.log(screen)
-    // })
-})
-
+  });
+});
