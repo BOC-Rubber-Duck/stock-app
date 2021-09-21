@@ -14,32 +14,58 @@ import Searchbar from '../client/src/components/Searchbar.jsx';
 import Predictions from '../client/src/components/Predictions.jsx';
 
 
-
-const server = setupServer(
-  rest.get('/fetchSelectedStock', (req, res, ctx) => {
-    console.log('fetchSelectedStock')
-  }),
-  rest.get('/userStockSearch', (req, res, ctx) => {
-    console.log('userStockSearch')
-  })
-)
-
-
 const samplePredictions = [
   {
     "name": "Apple Inc.",
-    "symbol": "AAPL"
+    "symbol": "AAPL",
+    "type": 'stockSearch'
   }
 ];
 
+const server = setupServer(
+  rest.get('/fetchSelectedStock', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json(samplePredictions)
+    )
+  }),
+  rest.get('/userStockSearch', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json(samplePredictions)
+    )
+  })
+)
 
+//mock axios and at least make sure it has been called the appropriate number of times
 beforeAll(() => server.listen());
 beforeEach(() => {
-  render(<Searchbar userPortfolio={[]} />);
   server.resetHandlers();
 });
 afterEach(() => {
   cleanup();
 });
 afterAll(() => server.close());
+
+describe('Renders Searchbar component', () => {
+  it('Mock test', async () => {
+    render(<Searchbar userPortfolio={samplePredictions} />);
+    let searchBox = screen.getByPlaceholderText('Search...');
+    expect(searchBox).toBeTruthy();
+    userEvent.type(searchBox, 'AAPL')
+
+    console.log(searchBox.value)
+    expect(searchBox.value).toBe('AAPL')
+
+  })
+
+    //   render(<Searchbar userPortfolio={samplePredictions} />);
+    //   await act(async() => {
+    //       await userEvent.type(screen.getByPlaceholderText('Search...'), 'A');
+    //     const results = await screen.getByText('Apple');
+    //   });
+    //
+    //   //console.log(screen)
+    // })
+})
 
