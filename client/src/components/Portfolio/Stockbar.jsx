@@ -21,9 +21,9 @@ const Stockbar = (props) => {
   }
 
   return (
-    <div className='bar' key={props.stock.ticker_symbol} onClick={() => {
+    <div className='bar' key={props.stock.ticker_symbol} /*onClick={() => {
       props.onClick(props.stock.ticker_symbol);
-    }}>
+    }}*/>
       <div className='barColumn'>
         <p>{props.stock.ticker_symbol}</p>
         <p>{props.stock.stockName}</p>
