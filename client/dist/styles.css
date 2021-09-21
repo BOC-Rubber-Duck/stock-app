@@ -70,6 +70,8 @@ input, textarea {
   float: left;
   font-size: 30px;
   align-content: center;
+  display: flex;
+  flex-direction: column;
 }
 /**********END LAYOUT**********/
 /**********BEGIN MODULE**********/

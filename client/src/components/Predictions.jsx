@@ -8,12 +8,12 @@ const Prediction = (props) => {
       className='searchbar-prediction-display'
       value={props.data.symbol}
       onClick={() => props.predictionClick(props.data.symbol)}>
-      <h3 className='searchbar-prediction-symbol'>
+      <span className='searchbar-prediction-symbol'>
         {props.data.symbol}
-      </h3>
-      <p className='searchbar-prediction-title'>
+      </span>
+      <span className='searchbar-prediction-title'>
         {props.data.name}
-      </p>
+      </span>
     </div>
   );
 };

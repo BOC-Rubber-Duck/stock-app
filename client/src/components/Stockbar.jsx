@@ -17,8 +17,8 @@ const Stockbar = (props) => {
   return (
     <div className='bar' key={props.symbol}>
       <div className='barColumn'>
-        <p>{props.symbol}</p>
-        <p>{props.name}</p>
+        <span>{props.symbol}</span>
+        <span>{props.name}</span>
       </div>
       <div className='barColumn'></div>
       {col3}
