@@ -14,25 +14,25 @@ const Searchbar = (props) => {
   const [ownedStocks, setOwnedStocks] = useState([]);
   const [showOwnedStocks, setShowOwnedStocks] = useState(true);
 
-  // useEffect(() => {
-  //   const stocksToSearch = [];
-  //   props.userPortfolio.map((stock) => {
-  //     const symbol = stock.ticker_symbol || stock.symbol;
-  //     stocksToSearch.push(
-  //       axios.get('/fetchSelectedStock', {
-  //         params: {
-  //           symbol
-  //         }
-  //       })
-  //     );
-  //   });
-  //   Promise.all(stocksToSearch)
-  //     .then((res) =>{
-  //       const stocks = res.map((stock) => stock.data);
-  //       setOwnedStocks(stocks);
-  //     })
-  //     .catch((e) => e);
-  // }, []);
+  useEffect(() => {
+    const stocksToSearch = [];
+    props.userPortfolio.map((stock) => {
+      const symbol = stock.ticker_symbol || stock.symbol;
+      stocksToSearch.push(
+        axios.get('/fetchSelectedStock', {
+          params: {
+            symbol
+          }
+        })
+      );
+    });
+    Promise.all(stocksToSearch)
+      .then((res) =>{
+        const stocks = res.map((stock) => stock.data);
+        setOwnedStocks(stocks);
+      })
+      .catch((e) => e);
+  }, []);
 
   const handleUserInput = (e) => {
     e.preventDefault;
