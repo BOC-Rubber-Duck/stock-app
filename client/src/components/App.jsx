@@ -94,10 +94,14 @@ class App extends React.Component {
 
         dbPortfolioData.map((stock) => {
           const stockName = stock.ticker_symbol;
+          const tickerSymbol = stock.ticker_symbol;
+          //needs name
+          //does not need shares owned
           const sharesOwned = stock.amount;
           const reducedData = {
             stockName,
-            sharesOwned
+            sharesOwned,
+            tickerSymbol
           };
           selectedFriendPortfolio.push(reducedData);
         });
