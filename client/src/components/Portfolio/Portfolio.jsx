@@ -19,7 +19,7 @@ class Portfolio extends React.Component {
         'user': expandedUser
       });
     }).catch((err) => {
-      console.log('error fetching addtl portfolio data', err);
+      return err;
     });
   }
 

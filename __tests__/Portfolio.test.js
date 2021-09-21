@@ -7,7 +7,7 @@ import {render, screen, cleanup} from '@testing-library/react';
 import Portfolio from '../client/src/components/Portfolio/Portfolio.jsx';
 import {BrowserRouter} from 'react-router-dom';
 
-beforeEach(() => {
+beforeEach(async () => {
   const user = {
     first_name: '',
     last_name: '',
@@ -42,7 +42,7 @@ beforeEach(() => {
       // username, username
     ]
   };
-  render(<BrowserRouter><Portfolio user={user}/></BrowserRouter>);
+  await render(<BrowserRouter><Portfolio user={user}/></BrowserRouter>);
 });
 
 afterEach(() => {
