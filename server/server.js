@@ -16,9 +16,7 @@ app.use(express.urlencoded({extended: true}));
 
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
-  console.log('stocksearch',stockSearch)
   const results = controllers.searchStocks.filterStockSearch(stockSearch);
-  console.log('restulst from sfasdfa', results)
   res.send(results);
   res.status(200);
 });
@@ -70,7 +68,6 @@ app.get('/api/getUsers', (req, res) => {
 });
 
 app.get('/api/getPortfolio', (req, res) => {
-  console.log('hit getpPortfolio route', req.query.username)
   db.getPortfolio(req.query.username)
     .then((data) => {
       res.send(data.rows)
