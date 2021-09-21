@@ -30,6 +30,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-color: var(--background-dark);
 }
 
 /* Compatibility: so safari buttons don't look old and dumb */
