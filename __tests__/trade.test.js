@@ -46,10 +46,7 @@ test('Trade component should render and correctly handle props', async () => {
 
 test('Display number of stocks to be traded', async () => {
   await act(async () => {
-    let appMock = new App;
-    const handleTrade = appMock.handleTrade;
-
-    render(<Trade stockSelected={stockSelected} user={user} action={action} handleTrade={handleTrade} />);
+    render(<Trade stockSelected={stockSelected} user={user} action={action} />);
     let numberField = screen.getByTestId('shares');
     expect(numberField).toBeTruthy();
     await userEvent.type(numberField, '6');
@@ -64,27 +61,27 @@ test('Display number of stocks to be traded', async () => {
 //   };
 // });
 
-describe('MockComponentEnzyme', ()=>{
-  it('should get data', (done) => {
-    const axios = require('axios');
-    jest.spyOn(axios, 'default').mockResolvedValue({
-      name: 'abc'
-    });
+// describe('MockComponentEnzyme', ()=>{
+//   it('should get data', (done) => {
+//     const axios = require('axios');
+//     jest.spyOn(axios, 'default').mockResolvedValue({
+//       name: 'abc'
+//     });
 
-    let appMock = new App;
-    const handleTrade = appMock.handleTrade;
+//     let appMock = new App;
+//     const handleTrade = appMock.handleTrade;
 
-    const wrapper = shallow(<Trade stockSelected={stockSelected} user={user} action={action} handleTrade={handleTrade} />, {
-      disableLifecycleMethods: true
-    });
-    wrapper.instance().handleSubmit();
-    process.nextTick(()=>{
-      expect(wrapper.state('error')).toBeFalsy();
-      expect(wrapper.state().name).toEqual('abc');
-      done();
-    });
-  });
-});
+//     const wrapper = shallow(<Trade stockSelected={stockSelected} user={user} action={action} handleTrade={handleTrade} />, {
+//       disableLifecycleMethods: true
+//     });
+//     wrapper.instance().handleSubmit();
+//     process.nextTick(()=>{
+//       expect(wrapper.state('error')).toBeFalsy();
+//       expect(wrapper.state().name).toEqual('abc');
+//       done();
+//     });
+//   });
+// });
 
   // it('should handle error data', (done) => {
   //   const axios = require('axios');
