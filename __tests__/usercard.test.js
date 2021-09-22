@@ -34,6 +34,6 @@ test('Usercard renders cash balance and stock value', () => {
   expect(screen.getByText('$1050000')).toBeInTheDocument();
 });
 
-test('Usercard renders total portfolio value', () => {
-  expect(screen.getByText('$1250000')).toBeInTheDocument();
+test('Usercard renders total net gain/loss', () => {
+  expect(screen.getByText('25.00%')).toBeInTheDocument();
 });
