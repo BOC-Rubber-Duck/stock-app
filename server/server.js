@@ -154,8 +154,22 @@ app.post('/trade', (req, res) => {
   res.send(JSON.stringify(tradeConfirmation));
 });
 
+app.get('/api/getRank', (req, res) => {
+  db.assignRanking()
+    .then((data) => {
+      return db.getRank(req.query.username);
+    })
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getRank: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getLeaderboard', (req, res) => {
-  db.getLeaderboard(req.query.username, req.query.offset, req.query.entries)
+  db.getLeaderboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
@@ -166,7 +180,7 @@ app.get('/api/getLeaderboard', (req, res) => {
 });
 
 app.get('/api/getFriendboard', (req, res) => {
-  db.getFriendboard(req.query.username, req.query.offset, req.query.entries)
+  db.getFriendboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
