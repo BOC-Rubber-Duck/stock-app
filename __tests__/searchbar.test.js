@@ -46,7 +46,7 @@ describe('Test stock search/filter', () => {
   });
 });
 
-test('Displays stocks on user input/handles state chagne', async () => {
+test('Displays stocks on user input/handles state change', async () => {
   await act(async () => {
     //await axios.get.mockImplementation(() => Promise.resolve({samplePredictions}));
     render(<Searchbar userPortfolio={samplePredictions} />);
@@ -54,12 +54,12 @@ test('Displays stocks on user input/handles state chagne', async () => {
 
     const searchField = screen.getByPlaceholderText('Search...');
     await expect(searchField).toBeTruthy();
-  })
+  });
 
   // userEvent.type(searchField, 'AAPL');
 
   //await expect(searchField).toHaveValue('AAPL')
-})
+});
 
 test('Searchbar renders correctly with owned stocks', async () => {
   const fakeData = [
@@ -85,4 +85,3 @@ test('Predictions render correctly', () => {
   const AAPL = screen.getByText(/AAPL/);
   expect(AAPL).toBeTruthy();
 });
-
