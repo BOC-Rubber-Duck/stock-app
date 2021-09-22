@@ -5,28 +5,58 @@
 
 import React from 'react';
 import {render, screen, cleanup} from '@testing-library/react';
-import Stockbar from '../client/src/components/Stockbar.jsx';
+import Stockbar from '../client/src/components/Portfolio/Stockbar.jsx';
 
 // beforeEach(() => {
-//   render(<Portfolio />);
+
 // });
 
 afterEach(() => {
   cleanup();
 });
 
-test('Stockbar renders symbol and name when provided as props', () => {
-  render(<Stockbar type='stockSearch' symbol='TSLA' name='Tesla, Inc.'/>);
+test('Stockbar renders stock symbol when provided as props', () => {
+  const stockData = {
+    stockName: 'Tesla, Inc.',
+    ticker_symbol: 'TSLA',
+    amount: 1,
+    valueOwned: 350000
+  };
+
+  render(<Stockbar stock={stockData} useCase='portfolio'/>);
   expect(screen.getByText('TSLA')).toBeInTheDocument();
-  expect(screen.getByText('Tesla, Inc.')).toBeInTheDocument();
 });
 
+// test('Stockbar renders stock name when provided as props', () => {
+//   const stockData = {
+//     stockName: 'Tesla, Inc.',
+//     stockSymbol: 'TSLA',
+//     amount: 350000
+//   };
+
+//   render(<Stockbar stock={stockData} useCase='portfolio'/>);
+//   expect(screen.getByText('Tesla, Inc.')).toBeInTheDocument();
+// });
+
 test('Stockbars do not render a value for type stockSearch', () => {
-  render(<Stockbar type='stockSearch' symbol='TSLA' name='Tesla, Inc.'/>);
+  const stockData = {
+    stockName: 'Tesla, Inc.',
+    stockSymbol: 'TSLA',
+    amount: 350000
+  };
+
+  render(<Stockbar stock={stockData} useCase='stockSearch'/>);
   expect(screen.queryByText('$')).not.toBeInTheDocument();
 });
 
 test('Stockbar does render value for type portfolio', () => {
-  render(<Stockbar type='portfolio' symbol='STKD' name='Stock Ducks, Inc.' value='236.50'/>);
-  expect(screen.getByText('$236.50')).toBeInTheDocument();
+  const stockData = {
+    stockName: 'Tesla, Inc.',
+    stockSymbol: 'TSLA',
+    amount: 1,
+    valueOwned: 350000
+  };
+
+  render(<Stockbar stock={stockData} useCase='portfolio'/>);
+  expect(screen.getByText('$350000')).toBeInTheDocument();
 });
