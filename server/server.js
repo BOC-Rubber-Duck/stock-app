@@ -136,31 +136,77 @@ app.post('/api/postUser', (req, res) => {
 });
 
 app.post('/api/trade', (req, res) => {
-  const stockSymbol = req.query.stockSymbol;
-  const shares = req.query.shares;
-  const action = req.query.action;
+  const user = req.body.user;
+  const stockSymbol = req.body.stockSymbol;
+  const shares = req.body.shares;
+  const action = req.body.action;
+  console.log('here are the trade req details: ', user, stockSymbol, shares, action);
   // process trade
-  // validate user
-  // validate user cash available
-  // validate user ownership of stock
-  // make db queries
-  // db.
-  // confirm success
-  const tradeConfirmation = {
-    username: 'testUser',
+  // TODO: validate user*
+  let positionConfirmation = {
+    username: user,
+    cashBalance: null,
+    stockSymbol: stockSymbol,
+    sharesOwned: null,
+    marketPrice: null,
+  };
+  let tradeConfirmation = {
+    username: '',
     stockSymbol: stockSymbol,
     shares: shares,
     marketPrice: 100,
     saleAmount: 100 * shares,
     action: action,
-    status: 'success'
+    status: 'failed'
   };
+  // validate user cash available
+  db.getUser(user)
+    .then((data) => {
+      let confirmedUsername = data.rows[0].username;
+      let confirmedCash = data.rows[0].cash_position;
+
+      console.log('db user return: ', confirmedUsername, confirmedCash);
+      // populate position confirmation
+      positionConfirmation.username = confirmedUsername;
+      positionConfirmation.cashBalance = confirmedCash;
+      return confirmedUsername;
+    })
+    .then((user) => {
+      db.getPortfolio(user)
+        .then((portfolio) => {
+          console.log('portfolio data: ', data.rows);
+          // search portfolio
+        });
+    })
+    .catch((err) => {
+      console.log('Error during getUser: ', err);
+      res.send(500);
+    });
+  // validate user ownership of stock
+  // make db queries
+  // db.
+  // confirm success
+
   res.status(200);
   res.send(JSON.stringify(tradeConfirmation));
 });
 
+app.get('/api/getRank', (req, res) => {
+  db.assignRanking()
+    .then((data) => {
+      return db.getRank(req.query.username);
+    })
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getRank: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getLeaderboard', (req, res) => {
-  db.getLeaderboard(req.query.username, req.query.offset, req.query.entries)
+  db.getLeaderboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
@@ -171,7 +217,7 @@ app.get('/api/getLeaderboard', (req, res) => {
 });
 
 app.get('/api/getFriendboard', (req, res) => {
-  db.getFriendboard(req.query.username, req.query.offset, req.query.entries)
+  db.getFriendboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
