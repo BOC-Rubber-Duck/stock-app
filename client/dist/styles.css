@@ -569,6 +569,10 @@ input, textarea {
   text-align: left;
 }
 
+.ra {
+  text-align: right;
+}
+
 .login-corner-icon {
   height: 3rem;
   width: 3rem;
