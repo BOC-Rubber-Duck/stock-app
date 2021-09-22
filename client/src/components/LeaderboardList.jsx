@@ -3,7 +3,7 @@ import LeaderboardListElement from './LeaderboardListElement.jsx';
 
 const LeaderboardList = (props) => {
   return (
-    <div>
+    <div className="leaderboard-map">
       {props.list.map((element, index) => (
         <LeaderboardListElement
           key={element.id}
