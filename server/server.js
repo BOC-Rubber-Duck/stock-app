@@ -23,6 +23,38 @@ app.use(express.static(pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
+passport.serializeUser(function(user, done) {
+  done(null, user.id);
+});
+
+passport.deserializeUser(function(id, done) {
+  controllers.user.findById(id, function(err, user) {
+    done(err, user);
+  });
+});
+
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+      console.log('Attempting localstrategy.');
+      db.getUser(username, function(err, user) {
+        if (err) {
+          console.log('findUser returned an error: ', err);
+          return done(err);
+        }
+        if (!user) {
+          console.log("findUser didn't find that user.");
+          return done(null, false, { message: 'Incorrect username. '});
+        }
+        if (!bcrypt.compareSync(password, this.password)) {
+          console.log('Invalid password.', err);
+          return done(null, false, { message: 'Incorrect password.'});
+        }
+        console.log('Looks like login succeeded.')
+        return done(null, user); // Successful login? Return the userID to the done callback, so it can stored in the session key.
+      });
+  }
+));
+
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
   const results = controllers.searchStocks.filterStockSearch(stockSearch);

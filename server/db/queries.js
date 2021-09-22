@@ -18,12 +18,20 @@ class Db {
     return pool.query(query_text);
   }
 
-  getUser(username) {
+  // Normally with the callback left undefined, except by passport.
+  getUser(username, cb) {
     let query = `
       SELECT * FROM users
       WHERE username = '${username}';
     `;
-    return this.query(query);
+    if (cb) {
+      // Callback form is expected by passport
+      this.query(query, cb);
+    } else {
+      // The rest of our app uses promises.
+      return this.query(query);
+    }
+
   }
 
   getUsers(usernameFragment) {
@@ -142,12 +150,9 @@ class Db {
     return this.query(query);
   };
 
-  // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
-  // This one's going to be a transaction: Posting to both transactions and positions.
-  // BEGIN;
-  // INSERT INTO transactions
-  // UPDATE or INSERT INTO or DELETE positions
-  // COMMIT;
+  validPassword(password) {
+    return bcrypt.compareSync(password, this.password);
+  }
 }
 
 let db = new Db();
@@ -164,3 +169,4 @@ module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
 module.exports.getLeaderboard = db.getLeaderboard.bind(db);
 module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
+module.exports.validPassword = db.validPassword.bind(db);
