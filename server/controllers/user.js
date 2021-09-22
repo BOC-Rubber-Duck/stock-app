@@ -18,11 +18,11 @@ class User {
   findOne(username, cb) {
     console.log('In User.findOne, username passed in: ', username);
     db.getUser(username)
-    .then((user) => {
+    .then((res) => {
       let returnedUser = new User(res.rows[0]);
-      cb(err, returnedUser);
+      cb(null, returnedUser);
     })
-    .catch((error) => { cb(err, null); });
+    .catch((error) => { cb(error, null); });
     /*
     , (err, res) => {
       console.log('query returned result rows: ', res.rows)

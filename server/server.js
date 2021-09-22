@@ -241,6 +241,14 @@ app.put('/api/portfolioValue', (req, res) => {
     });
 });
 
+app.get('/testUser', (req, res) => {
+  controllers.user.findOne('jsmith', (err, value) => {
+    if (err) { console.log('error: ', err); }
+    else { console.log('Value returned from user: ', value); }
+  });
+  res.send('Testing User FOo Bar Baz');
+});
+
 app.get('/*', function(req, res) {
   res.sendFile(path.join(pathname, 'index.html'), function(err) {
     if (err) {
