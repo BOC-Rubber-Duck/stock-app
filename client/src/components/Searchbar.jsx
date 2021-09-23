@@ -14,9 +14,8 @@ const OwnedStockDisplay = (props) => {
       return (
         <Stockbar
           key={stock.symbol}
-          name={stock.name}
-          symbol={stock.symbol}
-          type={stock.type}
+          stock={stock}
+          useCase={'stockSearch'}
         />
       );
     })
@@ -32,6 +31,7 @@ const Searchbar = (props) => {
   useEffect(() => {
     const stocksToSearch = [];
     props.userPortfolio.map((stock) => {
+      console.log('this stock', stock)
       const symbol = stock.ticker_symbol || stock.symbol;
       stocksToSearch.push(
         axios.get('/fetchSelectedStock', {
