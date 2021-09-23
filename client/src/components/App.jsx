@@ -119,6 +119,7 @@ class App extends React.Component {
             })
               .then((res) => {
                 const rank = res.data[0].rank;
+                const portfolioValue = res.data[0].portfolio_value;
                 const selectedFriend = {
                   username,
                   rank,
@@ -296,8 +297,6 @@ class App extends React.Component {
             <Route exact path="/friend" component={Friend} />
 
           </Switch>
-          <button onClick={() => this.selectedUserSearch('the_zuck')}>TEST CLICK</button>
-          <button onClick={() => console.log(this.state.selectedFriend)}>TICK</button>
           <Navbar />
         </React.Fragment>
       </Router>
