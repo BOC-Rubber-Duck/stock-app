@@ -48,13 +48,13 @@ afterAll(() => server.close());
 
 describe('Renders Searchbar component', () => {
   it('Mock test', async () => {
-    act(() => {
-      render(<Searchbar userPortfolio={samplePredictions} />);
+    await act(async () => {
+      await render(<Searchbar userPortfolio={samplePredictions} />);
     });
     let searchBox = screen.getByPlaceholderText('Search...');
     expect(searchBox).toBeTruthy();
-    act(() => {
-      userEvent.type(searchBox, 'AAPL');
+    await act(async () => {
+      await userEvent.type(searchBox, 'AAPL');
     });
     expect(searchBox.value).toBe('AAPL');
     let results = await screen.findByText('AAPL');
