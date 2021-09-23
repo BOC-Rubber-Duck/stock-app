@@ -53,7 +53,9 @@ describe('Renders Searchbar component', () => {
     });
     let searchBox = screen.getByPlaceholderText('Search...');
     expect(searchBox).toBeTruthy();
-    userEvent.type(searchBox, 'AAPL');
+    act(() => {
+      userEvent.type(searchBox, 'AAPL');
+    });
     expect(searchBox.value).toBe('AAPL');
     let results = await screen.findByText('AAPL');
     expect(results).toBeTruthy();

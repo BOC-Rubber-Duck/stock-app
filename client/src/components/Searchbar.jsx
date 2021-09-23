@@ -10,7 +10,7 @@ import Stockbar from './Portfolio/Stockbar.jsx';
 
 const OwnedStockDisplay = (props) => {
   return (
-    props.stocks.map((stock) => {
+    props.stocks.map((stock, i) => {
       return (
         <Stockbar
           key={stock.symbol}
