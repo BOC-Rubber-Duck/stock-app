@@ -6,7 +6,7 @@ import {IconContext} from 'react-icons';
 import {FaSearch} from 'react-icons/fa';
 
 import StockDetailPage from './StockDetailPage.jsx';
-import Stockbar from './Stockbar.jsx';
+import Stockbar from './Portfolio/Stockbar.jsx';
 
 const OwnedStockDisplay = (props) => {
   return (

@@ -17,7 +17,6 @@ app.use(express.urlencoded({extended: true}));
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
   const results = controllers.searchStocks.filterStockSearch(stockSearch);
-
   res.send(results);
   res.status(200);
 });
@@ -154,8 +153,22 @@ app.post('/trade', (req, res) => {
   res.send(JSON.stringify(tradeConfirmation));
 });
 
+app.get('/api/getRank', (req, res) => {
+  db.assignRanking()
+    .then((data) => {
+      return db.getRank(req.query.username);
+    })
+    .then((data) => {
+      res.send(data.rows);
+    })
+    .catch((err) => {
+      console.log('Error during getRank: ', err);
+      res.send(500);
+    });
+});
+
 app.get('/api/getLeaderboard', (req, res) => {
-  db.getLeaderboard(req.query.username, req.query.offset, req.query.entries)
+  db.getLeaderboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
@@ -166,7 +179,7 @@ app.get('/api/getLeaderboard', (req, res) => {
 });
 
 app.get('/api/getFriendboard', (req, res) => {
-  db.getFriendboard(req.query.username, req.query.offset, req.query.entries)
+  db.getFriendboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
       res.send(data.rows);
     })
@@ -189,13 +202,12 @@ app.delete('/api/deleteFriend', (req, res) => {
 
 app.put('/api/portfolioValue', (req, res) => {
   let { user_id, portfolio_value } = req.body;
-  console.log('user_id: ', user_id, 'portfolio_value: ', portfolio_value);
   db.putPortfolioValue(user_id, portfolio_value)
     .then((data) => {
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log('Error during putPortfolioValue: ', err)
+      console.log('Error during putPortfolioValue: ', err);
       res.send(500);
     });
 });
