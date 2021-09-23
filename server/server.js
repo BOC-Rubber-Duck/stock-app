@@ -17,7 +17,6 @@ app.use(express.urlencoded({extended: true}));
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
   const results = controllers.searchStocks.filterStockSearch(stockSearch);
-
   res.send(results);
   res.status(200);
 });
