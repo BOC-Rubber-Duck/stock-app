@@ -25,15 +25,16 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
 passport.serializeUser(function(user, done) {
+  //console.log('serializeUser called with user: ', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
   console.log('Deserialize user called.');
-  console.log('id passed into deserialize user: ', id)
+  //console.log('id passed into deserialize user: ', id)
   controllers.user.findById(id, function(err, user) {
     if (err) { console.log('Error returned during deserialize user: ', err) }
-    console.log('deserializeUser found user: ', user);
+    //console.log('deserializeUser found user: ', user);
     done(err, user);
   });
 });
@@ -54,6 +55,7 @@ passport.use(new LocalStrategy(
           return done(null, false, { message: 'Incorrect password.'});
         }
         console.log('Looks like login succeeded.')
+        //console.log('user: ', user);
         return done(null, user); // Successful login? Return the userID to the done callback, so it can stored in the session key.
       });
   }
@@ -268,6 +270,7 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/bundle.js', (req, res) => {
+  console.log('bundle.js requested.');
   res.sendFile(path.join(pathname, 'bundle.js'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -290,8 +293,6 @@ app.get('/bundle.js.LICENSE.txt', (req, res) => {
     }
   })
 });
-
-
 
 app.get('/*',
   passport.authenticate('local', {failureRedirect: '/enter.html'}),
