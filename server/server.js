@@ -174,12 +174,48 @@ app.post('/api/trade', (req, res) => {
     .then((user) => {
       db.getPortfolio(user)
         .then((portfolio) => {
-          console.log('portfolio data: ', data.rows);
+          console.log('portfolio data: ', portfolio.rows[0]);
           // search portfolio
-        });
+          let stock = portfolio.rows.filter(entry => entry.ticker_symbol.toLowerCase() === stockSymbol.toLowerCase());
+          let stockSymbolConfirmed = stock[0].ticker_symbol;
+          let sharesOwned = stock[0].amount;
+          // console.log('selected stock: ', stockSymbolConfirmed, sharesOwned);
+          positionConfirmation.stockSymbol = stockSymbolConfirmed;
+          positionConfirmation.sharesOwned = sharesOwned;
+          return stockSymbolConfirmed;
+        })
+        .then((stockSymbolConfirmed) => { // get current price
+          controllers.marketStack.fetchSelectedStock(stockSymbolConfirmed, (err, results) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const name = controllers.searchStocks.filterStockSearch(stockSymbolConfirmed)[0].name;
+              const symbol = stockSymbolConfirmed;
+              const price = results.data[0].close;
+              positionConfirmation.marketPrice = price;
+
+              const stockSelected = {
+                name,
+                symbol,
+                price,
+              };
+              console.log('stockSelected, current price: ', stockSelected);
+              return stockSelected;
+              // res.send(stockSelected);
+              // res.status(200);
+            }
+          })
+          .then((stockSelected) => {
+            // put transaction
+            db.postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
+            .then((response) => {
+              console.log('transaction response: ', response);
+            })
+          })
+        })
     })
     .catch((err) => {
-      console.log('Error during getUser: ', err);
+      console.log('Error completing trade: ', err);
       res.send(500);
     });
   // validate user ownership of stock
