@@ -14,15 +14,21 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(express.static(static_pathname));
 app.use(cookieParser());
-app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(express.static(static_pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use((req, res, next) => {
+  console.log('middleware running.')
+  //console.log('req.user: ', req.user);
+  console.log('req.', req );
+  next();
+});
 
 passport.serializeUser(function(user, done) {
   //console.log('serializeUser called with user: ', user);
@@ -63,8 +69,7 @@ passport.use(new LocalStrategy(
 
 app.post('/login',
   passport.authenticate('local', { successRedirect: '/',
-                                    failureRedirect: '/login.html',
-                                    failureFlash: true})
+                                    failureRedirect: '/login.html'})
 );
 
 app.get('/userStockSearch', (req, res) => {
@@ -279,6 +284,7 @@ app.get('/bundle.js', (req, res) => {
 });
 
 app.get('/bundle.js.map', (req, res) => {
+  console.log('bundle map requested.');
   res.sendFile(path.join(pathname, 'bundle.js.map'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -287,6 +293,7 @@ app.get('/bundle.js.map', (req, res) => {
 });
 
 app.get('/bundle.js.LICENSE.txt', (req, res) => {
+  console.log('license requested.');
   res.sendFile(path.join(pathname, 'bundle.js.LICENSE.txt'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -294,15 +301,22 @@ app.get('/bundle.js.LICENSE.txt', (req, res) => {
   })
 });
 
+app.get('/leaders', (req, res) => {
+  // I just needed to put this in to stop an infinite loop. Something's calling "leaders", getting redirected to index, and triggering infinite calls.
+  res.sendStatus(204);
+})
+
 app.get('/*',
-  passport.authenticate('local', {failureRedirect: '/enter.html'}),
   function(req, res) {
     console.log('Default route serving index.html');
-    res.sendFile(path.join(pathname, 'index.html'), function(err) {
-    if (err) {
-      res.status(500).send(err);
+    if (!req.user) { res.redirect('/enter.html') }
+    else {
+      res.sendFile(path.join(pathname, 'index.html'), function(err) {
+        if (err) {
+          res.status(500).send(err);
+        }
+      });
     }
-  });
 });
 
 module.exports = app;
