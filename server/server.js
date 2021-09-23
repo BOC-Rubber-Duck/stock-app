@@ -7,6 +7,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const path = require('path');
 const pathname = path.join(__dirname, '..', 'client', 'dist');
+const static_pathname = path.join(__dirname, '..', 'client', 'dist', 'public');
 const controllers = require('./controllers');
 const db = require('./db/queries.js');
 const bodyParser = require('body-parser');
@@ -19,7 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(express.static(pathname));
+app.use(express.static(static_pathname));
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
@@ -28,15 +29,18 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(id, done) {
+  console.log('Deserialize user called.');
+  console.log('id passed into deserialize user: ', id)
   controllers.user.findById(id, function(err, user) {
+    if (err) { console.log('Error returned during deserialize user: ', err) }
+    console.log('deserializeUser found user: ', user);
     done(err, user);
   });
 });
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-      console.log('Attempting localstrategy.');
-      db.getUser(username, function(err, user) {
+      controllers.user.findOne(username, function(err, user) {
         if (err) {
           console.log('findUser returned an error: ', err);
           return done(err);
@@ -45,7 +49,7 @@ passport.use(new LocalStrategy(
           console.log("findUser didn't find that user.");
           return done(null, false, { message: 'Incorrect username. '});
         }
-        if (!bcrypt.compareSync(password, this.password)) {
+        if (!user.validPassword(password)) {
           console.log('Invalid password.', err);
           return done(null, false, { message: 'Incorrect password.'});
         }
@@ -54,6 +58,12 @@ passport.use(new LocalStrategy(
       });
   }
 ));
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                    failureRedirect: '/login.html',
+                                    failureFlash: true})
+);
 
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
@@ -246,11 +256,48 @@ app.get('/testUser', (req, res) => {
     if (err) { console.log('error: ', err); }
     else { console.log('Value returned from user: ', value); }
   });
-  res.send('Testing User FOo Bar Baz');
+  res.send('Testing User');
 });
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(pathname, 'index.html'), function(err) {
+app.get('/logout', function(req, res){
+  console.log('Logout Requested.');
+  console.log('User property before processing logout: ', req.user);
+  req.logout();
+  console.log('User property after processing logout: ', req.user);
+  res.redirect('/');
+});
+
+app.get('/bundle.js', (req, res) => {
+  res.sendFile(path.join(pathname, 'bundle.js'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  })
+});
+
+app.get('/bundle.js.map', (req, res) => {
+  res.sendFile(path.join(pathname, 'bundle.js.map'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  })
+});
+
+app.get('/bundle.js.LICENSE.txt', (req, res) => {
+  res.sendFile(path.join(pathname, 'bundle.js.LICENSE.txt'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  })
+});
+
+
+
+app.get('/*',
+  passport.authenticate('local', {failureRedirect: '/enter.html'}),
+  function(req, res) {
+    console.log('Default route serving index.html');
+    res.sendFile(path.join(pathname, 'index.html'), function(err) {
     if (err) {
       res.status(500).send(err);
     }

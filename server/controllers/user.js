@@ -16,16 +16,13 @@ class User {
   };
 
   findOne(username, cb) {
-    console.log('In User.findOne, username passed in: ', username);
-    db.getUser(username)
-    .then((res) => {
-      let returnedUser = new User(res.rows[0]);
-      cb(null, returnedUser);
-    })
-    .catch((error) => { cb(error, null); });
-    /*
-    , (err, res) => {
-      console.log('query returned result rows: ', res.rows)
+    //console.log('In User.findOne, username passed in: ', username);
+    let query = `
+      SELECT * FROM users
+      WHERE username='${username}'
+    `;
+    db.query_cb(query, (err, res) => {
+      //console.log('query returned result rows: ', res.rows)
       if (err) { cb(err, null); }
       if (res.rows) {
         let user = new User(res.rows[0]);
@@ -34,10 +31,10 @@ class User {
         cb(err, null);
       }
     })
-    */
   };
 
   validPassword(password) {
+    //console.log('In user.validPassword')
     return bcrypt.compareSync(password, this.password);
   }
 
@@ -46,7 +43,7 @@ class User {
         SELECT * FROM users
         WHERE id='${id}'
       `;
-      db.query(query, (err, res) => {
+      db.query_cb(query, (err, res) => {
         if (!res.rows) cb('Didnt find this user id.', null);
         let user = res.rows[0];
         cb(err, user)

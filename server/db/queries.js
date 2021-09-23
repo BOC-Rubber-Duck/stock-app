@@ -18,20 +18,18 @@ class Db {
     return pool.query(query_text);
   }
 
+  query_cb(query_text, callback) {
+    pool.query(query_text, (err, res) => {callback(err, res)});
+  }
+
   // Normally with the callback left undefined, except by passport.
-  getUser(username, cb) {
+  getUser(username) {
+    console.log('In getUser');
     let query = `
       SELECT * FROM users
       WHERE username = '${username}';
     `;
-    if (cb) {
-      // Callback form is expected by passport
-      this.query(query, cb);
-    } else {
-      // The rest of our app uses promises.
-      return this.query(query);
-    }
-
+    return this.query(query);
   }
 
   getUsers(usernameFragment) {
@@ -157,6 +155,7 @@ class Db {
 
 let db = new Db();
 
+module.exports.query_cb = db.query_cb.bind(db);
 module.exports.getUser = db.getUser.bind(db);
 module.exports.getUsers = db.getUsers.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
