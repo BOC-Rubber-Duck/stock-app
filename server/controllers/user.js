@@ -16,13 +16,11 @@ class User {
   };
 
   findOne(username, cb) {
-    //console.log('In User.findOne, username passed in: ', username);
     let query = `
       SELECT * FROM users
       WHERE username='${username}'
     `;
     db.query_cb(query, (err, res) => {
-      //console.log('query returned result rows: ', res.rows)
       if (err) { cb(err, null); }
       if (res.rows) {
         let user = new User(res.rows[0]);
@@ -34,7 +32,6 @@ class User {
   };
 
   validPassword(password) {
-    //console.log('In user.validPassword')
     return bcrypt.compareSync(password, this.password);
   }
 

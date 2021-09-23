@@ -24,23 +24,17 @@ app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use((req, res, next) => {
-  console.log('middleware running.')
-  //console.log('req.user: ', req.user);
   console.log('req.', req );
   next();
 });
 
 passport.serializeUser(function(user, done) {
-  //console.log('serializeUser called with user: ', user);
   done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-  console.log('Deserialize user called.');
-  //console.log('id passed into deserialize user: ', id)
   controllers.user.findById(id, function(err, user) {
     if (err) { console.log('Error returned during deserialize user: ', err) }
-    //console.log('deserializeUser found user: ', user);
     done(err, user);
   });
 });
@@ -60,8 +54,6 @@ passport.use(new LocalStrategy(
           console.log('Invalid password.', err);
           return done(null, false, { message: 'Incorrect password.'});
         }
-        console.log('Looks like login succeeded.')
-        //console.log('user: ', user);
         return done(null, user); // Successful login? Return the userID to the done callback, so it can stored in the session key.
       });
   }
@@ -121,7 +113,7 @@ app.get('/api/getUsers', (req, res) => {
       res.send(data.rows);
     })
     .catch((err) => {
-      console.log('Error during getUser: ', err);
+      console.log('Error during getUsers: ', err);
       res.send(500);
     });
 });
@@ -247,7 +239,6 @@ app.delete('/api/deleteFriend', (req, res) => {
 
 app.put('/api/portfolioValue', (req, res) => {
   let { user_id, portfolio_value } = req.body;
-  console.log('user_id: ', user_id, 'portfolio_value: ', portfolio_value);
   db.putPortfolioValue(user_id, portfolio_value)
     .then((data) => {
       res.sendStatus(204);
@@ -267,15 +258,11 @@ app.get('/testUser', (req, res) => {
 });
 
 app.get('/logout', function(req, res){
-  console.log('Logout Requested.');
-  console.log('User property before processing logout: ', req.user);
   req.logout();
-  console.log('User property after processing logout: ', req.user);
   res.redirect('/');
 });
 
 app.get('/bundle.js', (req, res) => {
-  console.log('bundle.js requested.');
   res.sendFile(path.join(pathname, 'bundle.js'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -284,7 +271,6 @@ app.get('/bundle.js', (req, res) => {
 });
 
 app.get('/bundle.js.map', (req, res) => {
-  console.log('bundle map requested.');
   res.sendFile(path.join(pathname, 'bundle.js.map'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -293,7 +279,6 @@ app.get('/bundle.js.map', (req, res) => {
 });
 
 app.get('/bundle.js.LICENSE.txt', (req, res) => {
-  console.log('license requested.');
   res.sendFile(path.join(pathname, 'bundle.js.LICENSE.txt'), function(err) {
     if (err) {
       res.status(500).send(err);
@@ -302,13 +287,13 @@ app.get('/bundle.js.LICENSE.txt', (req, res) => {
 });
 
 app.get('/leaders', (req, res) => {
-  // I just needed to put this in to stop an infinite loop. Something's calling "leaders", getting redirected to index, and triggering infinite calls.
+  // I just needed to put this in to stop an infinite loop. Something's calling "leaders", getting redirected to index, which starts an infinite loop.
+  // TODO: Remove this once the call to the nonexistent route has been removed (or a real "/leaders" route exists.)
   res.sendStatus(204);
 })
 
 app.get('/*',
   function(req, res) {
-    console.log('Default route serving index.html');
     if (!req.user) { res.redirect('/enter.html') }
     else {
       res.sendFile(path.join(pathname, 'index.html'), function(err) {

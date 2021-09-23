@@ -24,7 +24,6 @@ class Db {
 
   // Normally with the callback left undefined, except by passport.
   getUser(username) {
-    console.log('In getUser');
     let query = `
       SELECT * FROM users
       WHERE username = '${username}';
