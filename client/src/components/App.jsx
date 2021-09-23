@@ -7,7 +7,7 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
@@ -24,15 +24,18 @@ class App extends React.Component {
         id: '',
         first_name: '',
         last_name: '',
-        username: '',
+        username: 'bezos_the_first',
         email: '',
-        cashBalance: 0,
-        rank: null,
+        cashBalance: 200000,
+        rank: 1,
         userPortfolio: [
-          // {
-          //   stockName:
-          //   sharesOwned
-          // }
+          {
+            amount: 1000000,
+            exchange: "nasdaq",
+            id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+            ticker_symbol: "fb",
+            user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
+          }
         ],
         friends: [
           // username, username
@@ -243,10 +246,10 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div> */}
+          </div>*/}
 
           <Switch>
-          <Route exact path="/"
+            <Route exact path="/"
               render={() =>
                 <Leaderboard
                   user={this.state.user}
@@ -258,7 +261,10 @@ class App extends React.Component {
                   user={this.state.user}
                 />
               }/>
-            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/portfolio"
+              render={() =>
+                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+              }/>
             <Route exact path="/stock-search"
               render={() =>
                 <Searchbar

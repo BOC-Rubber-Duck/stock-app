@@ -6,7 +6,7 @@ import {IconContext} from 'react-icons';
 import {FaSearch} from 'react-icons/fa';
 
 import StockDetailPage from './StockDetailPage.jsx';
-import Stockbar from './Stockbar.jsx';
+import Stockbar from './Portfolio/Stockbar.jsx';
 
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
@@ -93,9 +93,8 @@ const Searchbar = (props) => {
             return (
               <Stockbar
                 key={stock.symbol}
-                name={stock.name}
-                symbol={stock.symbol}
-                type={stock.type}
+                stock={stock}
+                useCase={'stockSearch'}
               />
             );
           })
