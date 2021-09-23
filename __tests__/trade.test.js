@@ -100,10 +100,17 @@ test('Display number of stocks to be traded', async () => {
 // test('Trade post query sends proper parameters', async () => {
 //   await act(async () => {
 //     await axios.post.mockImplementationOnce(() => Promise.resolve(data));
-//     render(<Trade stockSelected={stockSelected} user={user} action={action} />);
+//     let appMock = new App;
+//     const handleTrade = appMock.handleTrade;
+
+//     let mountTrade = await render(<Trade stockSelected={stockSelected} user={user} action={action} handleTrade={handleTrade} />);
+//     // console.log(mountTrade.html());
+//     await mountTrade.find('.trade-action').invoke('onClick')();
+//     // mountTrade.update();
+//     await expect(axios.post).toHaveBeenCalledTimes(1);
 //   });
 
-//   await expect(axios.post).toHaveBeenCalledTimes(1);
+//   // await expect(axios.post).toHaveBeenCalledTimes(1);
 //   // Trade Component:
 //   // handleTrade(stockSymbol, shares, action)
 //   // expect(mount(<Trade stockSelected={stockSelected}/>).is('.trade-container')).toBe(true);

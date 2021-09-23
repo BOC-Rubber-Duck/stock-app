@@ -29,13 +29,13 @@ class Portfolio extends React.Component {
     const stockbars = stocks.map((stockObject) => {
       return (
         <Link to="/stock-detail-page" key={stockObject.ticker_symbol}>
-          <Stockbar stock={stockObject} useCase='portfolio' onClick={this.props.onStockClick}/>
+          <Stockbar key={stockObject.ticker_symbol} stock={stockObject} useCase='portfolio' onClick={this.props.onStockClick}/>
         </Link>
       );
     });
 
     return (
-      <div>
+      <div className="portfolio-container">
         <Usercard user={this.state.user}/>
         <div>{stockbars}</div>
       </div>
