@@ -142,7 +142,7 @@ class App extends React.Component {
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
-                const { id, first_name, last_name, username, email, cash_position } = result.data;
+                const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
                 if (self) {
                   this.setState({
                     user: {
@@ -152,6 +152,7 @@ class App extends React.Component {
                       username: username,
                       email: email,
                       cashBalance: cash_position,
+                      portfolioValue: portfolio_value,
                       userPortfolio: portfolio,
                       friends: friends
                     }
@@ -212,7 +213,6 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-
         <React.Fragment>
           {/* <div>
             <nav>
@@ -248,7 +248,7 @@ class App extends React.Component {
               }/>
             <Route exact path="/portfolio"
               render={() =>
-                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+                <Portfolio user={this.state.user} self={false} onStockClick={this.fetchSelectedStock}/>
               }/>
             <Route exact path="/stock-search"
               render={() =>

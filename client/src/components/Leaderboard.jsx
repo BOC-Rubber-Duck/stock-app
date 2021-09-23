@@ -111,7 +111,7 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
-        <Usercard user={this.props.user} />
+        <Usercard user={this.props.user} self={true}/>
         <div id="leaderboard-list">
           <div id="list-header">
             <form>

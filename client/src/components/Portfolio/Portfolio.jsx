@@ -13,14 +13,16 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount() {
-    var userCopy = this.props.user;
-    getPortfolioValue(userCopy).then((expandedUser) => {
-      this.setState({
-        'user': expandedUser
+    if (this.props.self === true) {
+      var userCopy = this.props.user;
+      getPortfolioValue(userCopy).then((expandedUser) => {
+        this.setState({
+          'user': expandedUser
+        });
+      }).catch((err) => {
+        return err;
       });
-    }).catch((err) => {
-      return err;
-    });
+    }
   }
 
   render() {
@@ -29,14 +31,14 @@ class Portfolio extends React.Component {
     const stockbars = stocks.map((stockObject) => {
       return (
         <Link to="/stock-detail-page" key={stockObject.ticker_symbol}>
-          <Stockbar stock={stockObject} useCase='portfolio' onClick={this.props.onStockClick}/>
+          <Stockbar stock={stockObject} showValue={this.props.self} onClick={this.props.onStockClick}/>
         </Link>
       );
     });
 
     return (
       <div>
-        <Usercard user={this.state.user}/>
+        <Usercard user={this.state.user} self={this.props.self}/>
         <div>{stockbars}</div>
       </div>
     );

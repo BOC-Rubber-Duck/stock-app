@@ -13,13 +13,11 @@ const Usercard = (props) => {
   } else {
     gainLoss = 'Gain';
   }
-  return (
-    <div className='usercard'>
-      <div className='profdetail1'>
-        <span>{props.user.username}</span>
-        <span></span>
-        <span>Rank: {/* props.user.rank*/}</span>
-      </div>
+
+  var personalDetails;
+
+  if (props.self === true) {
+    personalDetails =
       <div className='profdetail1'>
         <span>
           <p>Cash Balance</p>
@@ -30,7 +28,20 @@ const Usercard = (props) => {
           <p>Stonk Value</p>
           <p>${props.user.portfolioValue}</p>
         </span>
+      </div>;
+  } else {
+    personalDetails = (<div></div>);
+  };
+
+
+  return (
+    <div className='usercard'>
+      <div className='profdetail1'>
+        <span>{props.user.username}</span>
+        <span></span>
+        <span>Rank: {/* props.user.rank*/}</span>
       </div>
+      {personalDetails}
       <div className='profdetail2'>
         <span></span>
         <span><p className='diamond'>💎</p></span>

@@ -94,7 +94,7 @@ const Searchbar = (props) => {
               <Stockbar
                 key={stock.symbol}
                 stock={stock}
-                useCase={'stockSearch'}
+                showValue={false}
               />
             );
           })
