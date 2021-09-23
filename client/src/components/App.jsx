@@ -86,8 +86,6 @@ class App extends React.Component {
   selectedUserSearch(username) {
     // this is temp
     const portfolioValue= Math.floor(Math.random() * 10000000);
-    // this is temp
-    const rank = Math.ceil(Math.random() * 100);
     axios.get('/api/getPortfolio', {
       params: {
         username
@@ -114,15 +112,24 @@ class App extends React.Component {
             return selectedFriendPortfolio;
           })
           .then((selectedFriendPortfolio) => {
-            const selectedFriend = {
-              username,
-              rank,
-              portfolioValue,
-              selectedFriendPortfolio
-            };
-            this.setState({
-              selectedFriend
-            });
+            axios.get('/api/getRank', {
+              params: {
+                username
+              }
+            })
+              .then((res) => {
+                const rank = res.data[0].rank;
+                const selectedFriend = {
+                  username,
+                  rank,
+                  portfolioValue,
+                  selectedFriendPortfolio
+                };
+                this.setState({
+                  selectedFriend
+                });
+              })
+              .catch((e) => e);
           })
           .catch((e) => e);
       })
@@ -287,7 +294,10 @@ class App extends React.Component {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
+
           </Switch>
+          <button onClick={() => this.selectedUserSearch('the_zuck')}>TEST CLICK</button>
+          <button onClick={() => console.log(this.state.selectedFriend)}>TICK</button>
           <Navbar />
         </React.Fragment>
       </Router>
