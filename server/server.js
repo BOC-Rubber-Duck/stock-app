@@ -203,13 +203,12 @@ app.delete('/api/deleteFriend', (req, res) => {
 
 app.put('/api/portfolioValue', (req, res) => {
   let { user_id, portfolio_value } = req.body;
-  console.log('user_id: ', user_id, 'portfolio_value: ', portfolio_value);
   db.putPortfolioValue(user_id, portfolio_value)
     .then((data) => {
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log('Error during putPortfolioValue: ', err)
+      console.log('Error during putPortfolioValue: ', err);
       res.send(500);
     });
 });

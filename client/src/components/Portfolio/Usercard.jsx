@@ -1,44 +1,42 @@
 import React from 'react';
 
 /*
-Will likely need to be refactored based on routes.
-May potentially be refactored to take in username and make request within the component.
-
-Current expected props w/ example:
-
-  user: {
-    username: 'RubberDuck',
-    rank: 2,
-    cashbalance: 500000,
-    stockbalance: 500000,
-  }
+Still need to pull in Rank
 */
 
 const Usercard = (props) => {
+  const totalValue = props.user.cashBalance + props.user.portfolioValue;
+  const percentChange = ((totalValue - 1000000)/10000).toFixed(2);
+  var gainLoss;
+  if (percentChange < 0) {
+    gainLoss = 'Loss';
+  } else {
+    gainLoss = 'Gain';
+  }
   return (
     <div className='usercard'>
       <div className='profdetail1'>
         <span>{props.user.username}</span>
         <span></span>
-        <span>Rank: {props.user.rank}</span>
+        <span>Rank: {/* props.user.rank*/}</span>
       </div>
       <div className='profdetail1'>
         <span>
           <p>Cash Balance</p>
-          <p>${props.user.cashbalance}</p>
+          <p>${props.user.cashBalance}</p>
         </span>
         <span></span>
         <span>
           <p>Stonk Value</p>
-          <p>${props.user.stockbalance}</p>
+          <p>${props.user.portfolioValue}</p>
         </span>
       </div>
       <div className='profdetail2'>
         <span></span>
         <span><p className='diamond'>💎</p></span>
         <span>
-          <p>Total</p>
-          <p>${props.user.cashbalance + props.user.stockbalance}</p>
+          <p>Net {gainLoss}</p>
+          <p>{percentChange}%</p>
         </span>
         <span><p className='diamond'>💎</p></span>
         <span></span>

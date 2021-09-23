@@ -1,6 +1,6 @@
 import React from 'react';
 import LeaderboardList from './LeaderboardList.jsx';
-import Usercard from './Usercard.jsx';
+import Usercard from './Portfolio/Usercard.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
