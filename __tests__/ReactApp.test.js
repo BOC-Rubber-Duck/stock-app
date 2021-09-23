@@ -11,7 +11,7 @@ import {BrowserRouter} from 'react-router-dom';
 
 import { render, cleanup } from '@testing-library/react';
 import App from '../client/src/components/App.jsx';
-import Portfolio from '../client/src/components/Portfolio.jsx';
+import Portfolio from '../client/src/components/Portfolio/Portfolio.jsx';
 import Navbar from '../client/src/components/Navbar.jsx';
 import Login from '../client/src/components/Login.jsx';
 import Trade from '../client/src/components/Trade.jsx';
@@ -52,7 +52,11 @@ test('Top level App components render', async () => {
   const friendRender = await Promise.resolve(mount(<Friend />));
   expect(friendRender.find('.fr-page').length).toBe(1);
   // Portfolio Component:
-  const portfolioRender = await Promise.resolve(mount(<Portfolio />));
+  const mockApp = new App;
+  const fetchSelectedStock = mockApp.fetchSelectedStock;
+
+  const portfolioRender = await Promise.resolve(shallow(<Portfolio user={user} onStockClick={fetchSelectedStock}/>, {disableLifecycleMethods: true}));
+
   expect(portfolioRender.find('.portfolio-container').length).toBe(1);
   // Navbar Component:
   expect(shallow(<Navbar />).is('.navbar-container')).toBe(true);

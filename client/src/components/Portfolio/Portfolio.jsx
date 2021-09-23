@@ -24,7 +24,7 @@ class Portfolio extends React.Component {
   }
 
   render() {
-    const stocks = this.state.user.userPortfolio;
+    const stocks = this.state.user !== undefined ?this.state.user.userPortfolio: [];
 
     const stockbars = stocks.map((stockObject) => {
       return (
