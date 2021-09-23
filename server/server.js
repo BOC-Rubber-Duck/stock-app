@@ -17,7 +17,6 @@ app.use(express.urlencoded({extended: true}));
 app.get('/userStockSearch', (req, res) => {
   const stockSearch = req.query.userStockSearch;
   const results = controllers.searchStocks.filterStockSearch(stockSearch);
-
   res.send(results);
   res.status(200);
 });
@@ -276,13 +275,12 @@ app.delete('/api/deleteFriend', (req, res) => {
 
 app.put('/api/portfolioValue', (req, res) => {
   let { user_id, portfolio_value } = req.body;
-  console.log('user_id: ', user_id, 'portfolio_value: ', portfolio_value);
   db.putPortfolioValue(user_id, portfolio_value)
     .then((data) => {
       res.sendStatus(204);
     })
     .catch((err) => {
-      console.log('Error during putPortfolioValue: ', err)
+      console.log('Error during putPortfolioValue: ', err);
       res.send(500);
     });
 });
