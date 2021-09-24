@@ -111,26 +111,61 @@ class Db {
     return this.query(query);
   }
 
-  getLeaderboard(username, offset, entries) {
+  putCashPosition(user_id, cash_position) {
+    let query = `
+      UPDATE users
+      SET cash_position = ${cash_position}
+      WHERE id = '${user_id}'
+    `;
+    return this.query(query);
+  };
+
+  getLeaderboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
       LEFT OUTER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = '${username}'
-      ORDER BY u.cash_position
+      AND f.watching_user = '${userId}'
+      ORDER BY (u.cash_position + u.portfolio_value)
       OFFSET ${offset}
       LIMIT ${entries};
     `;
     return this.query(query);
   };
 
-  getFriendboard(username, offset, entries) {
+  assignRanking() {
+    let query = `
+    CREATE OR REPLACE FUNCTION ranking()
+    RETURNS TABLE(username varchar(64), cash_position bigint, portfolio_value bigint)
+    AS
+    $$ SELECT
+    username,
+    cash_position,
+    portfolio_value
+    FROM users AS u
+    ORDER BY (u.cash_position + u.portfolio_value) $$
+    LANGUAGE SQL;
+    `;
+    return this.query(query);
+  };
+
+  getRank(username) {
+    let query = `
+    SELECT * FROM ranking()
+    WITH ordinality
+    AS t(username, cash_position, portfolio_value, rank)
+    WHERE username = '${username}';
+    `;
+    return this.query(query);
+  };
+
+  getFriendboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
       INNER JOIN friendships AS f
       ON u.id = f.watched_user
-      AND f.watching_user = '${username}'
-      ORDER BY u.cash_position
+      AND f.watching_user = '${userId}'
+      ORDER BY (u.cash_position + u.portfolio_value)
       OFFSET ${offset}
       LIMIT ${entries};
     `;
@@ -150,6 +185,24 @@ class Db {
   validPassword(password) {
     return bcrypt.compareSync(password, this.password);
   }
+
+  postTransaction(user_id, ticker_symbol, exchange, transactionType, amount, strikePrice) {
+    let query = `
+    INSERT INTO transactions
+    (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price)
+    VALUES
+    ('${uuidv4()}', '${user_id}', '${ticker_symbol}', '${exchange}', ${transactionType}, ${amount}, ${strikePrice});
+    `;
+    return this.query(query);
+  };
+
+  postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price) {
+  // This one's going to be a transaction: Posting to both transactions and positions.
+  // BEGIN;
+  // INSERT INTO transactions
+  // UPDATE or INSERT INTO or DELETE positions
+  // COMMIT;
+  };
 }
 
 let db = new Db();
@@ -167,4 +220,10 @@ module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
 module.exports.getLeaderboard = db.getLeaderboard.bind(db);
 module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
+<<<<<<< HEAD
 module.exports.validPassword = db.validPassword.bind(db);
+=======
+module.exports.assignRanking = db.assignRanking.bind(db);
+module.exports.getRank = db.getRank.bind(db);
+module.exports.postTransaction = db.postTransaction.bind(db);
+>>>>>>> development
