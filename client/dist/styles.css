@@ -215,8 +215,6 @@ a, a:hover, a:focus, a:active {
   font-size: 1.1rem;
   height: 2.5rem;
   margin: 1rem;
-  padding: 0.5rem;
-
 }
 .searchbar-icon {
   display: flex;
@@ -232,13 +230,14 @@ a, a:hover, a:focus, a:active {
   border-radius: 4px;
   font-size: 1.1rem;
   height: 2.4rem;
-  width: 100%;
+  padding-left: 0.5rem;
 }
 .search-icon-container {
   grid-column: 1;
   grid-row: 1;
   height: 2.5rem;
   width: 1.5rem;
+  padding-left: 0.5rem;
 }
 
 .searchbar-prediction-display {
