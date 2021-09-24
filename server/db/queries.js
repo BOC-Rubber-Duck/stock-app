@@ -212,3 +212,4 @@ module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
 module.exports.assignRanking = db.assignRanking.bind(db);
 module.exports.getRank = db.getRank.bind(db);
+module.exports.postTransaction = db.postTransaction.bind(db);

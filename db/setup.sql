@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
-  strike_price int NOT NULL,
+  strike_price decimal NOT NULL,
   time_entered timestamp NOT NULL DEFAULT now()
 );
 
