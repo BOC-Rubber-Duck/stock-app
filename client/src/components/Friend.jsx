@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const Friend = (props) => {
   const [searchResults, setSearchResults] = useState([]);
@@ -31,15 +32,19 @@ const Friend = (props) => {
   const renderSearchResults = () => {
     const results = searchResults.map((result) => {
       return (
-        <li key={result.id}>
-          <div className="fr-search-result">
-            <p className="fr-username fr-is-friend">{result.username}</p>
-            <p className="fr-portfolio-value">$need to calc</p>
-          </div>
-          <nav className="fr-result-nav">
-            <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-          </nav>
-        </li>
+        <Link to="/friendPortfolio" key={result.username}>
+          <li key={result.id} onClick={() => {
+            props.handleFriendClick(result.username);
+          }}>
+            <div className="fr-search-result">
+              <p className="fr-username fr-is-friend">{result.username}</p>
+              <p className="fr-portfolio-value">$need to calc</p>
+            </div>
+            <nav className="fr-result-nav">
+              <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
+            </nav>
+          </li>
+        </Link>
       );
     });
     return (
