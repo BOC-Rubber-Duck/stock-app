@@ -281,7 +281,6 @@ class App extends React.Component {
             <Route exact path="/trade"
               render={() =>
                 <Trade
-                  tradeAction={this.state.trade.action}
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handleTrade={this.handleTrade}

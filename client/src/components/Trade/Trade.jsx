@@ -6,7 +6,7 @@ class Trade extends React.Component {
     super(props);
     this.state = {
       shares: 0,
-      message: null
+      message: 'Example Message Here'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +27,7 @@ class Trade extends React.Component {
     const name = target.name;
 
     this.setState({
-      [name]: value
+      [name]: Math.floor(value)
     });
   };
 
@@ -69,12 +69,12 @@ class Trade extends React.Component {
                 name="shares"
                 data-testid="shares"
                 type="number"
-                value={this.state.shares}
+                value={this.state.shares !== 0 ? this.state.shares : ''}
                 onChange={this.handleInputChange} />
             </label>
           </div>
           <div id="market-price-container">
-            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">{stockSelected.price}</span>
+            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">${stockSelected.price}</span>
           </div>
           <div id="sale-amount-container">
             <span id="sale-amt-span-lbl">Sale Amount</span>
