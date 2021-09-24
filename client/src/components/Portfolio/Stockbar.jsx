@@ -14,19 +14,19 @@ import React from 'react';
 
 const Stockbar = (props) => {
   let col3 = '';
-  if (props.useCase === 'portfolio') {
+  if (props.showValue === true) {
     col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
-  } else if (props.useCase === 'stockSearch') {
+  } else if (props.showValue === false) {
     col3 = <div className='barColumn'></div>;
   }
 
   return (
-    <div className='bar' key={props.stock.ticker_symbol} /*onClick={() => {
+    <div className='bar' key={props.stock.ticker_symbol || props.stock.symbol} /*onClick={() => {
       props.onClick(props.stock.ticker_symbol);
     }}*/>
       <div className='barColumn'>
-        <p>{props.stock.ticker_symbol}</p>
-        <p>{props.stock.stockName}</p>
+        <p>{props.stock.ticker_symbol || props.stock.symbol}</p>
+        <p>{props.stock.stockName || props.stock.name}</p>
       </div>
       <div className='barColumn'></div>
       {col3}
