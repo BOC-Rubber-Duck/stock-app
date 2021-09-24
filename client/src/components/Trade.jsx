@@ -4,7 +4,8 @@ class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shares: 0
+      shares: 0,
+      message: 'placeholder message'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -40,10 +41,13 @@ class Trade extends React.Component {
   };
 
   render() {
-    const { user, stockSelected } = this.props;
+    const { user, stockSelected, action } = this.props;
     const saleAmount = this.state.shares * stockSelected.price || 0;
-    const actionText = this.state.action === 'buy' ? 'Buy': 'Sell';
-
+    const actionText = action === 'buy' ? 'Buy': 'Sell';
+    const stockOwned = user.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSelected.symbol;
+    });
+    const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
     return (
       <div className="trade-container" id="trade-container">
         <div className="trade-header" id="trade-header">
@@ -54,9 +58,12 @@ class Trade extends React.Component {
           <span id="action-title-stock">{stockSelected.symbol}</span>
         </div>
         <div className="trade-info" id="trade-info">
+          <div className="shares-owned">
+            <span id="shares-owned-span-lbl">Shares Owned:</span> <span id="shares-owned-span">{sharesOwned}</span>
+          </div>
           <div id="shares">
             <label>
-            Shares to {this.props.action}
+            Shares to {action}
               <input
                 name="shares"
                 type="number"
@@ -71,10 +78,17 @@ class Trade extends React.Component {
             <span id="sale-amt-span-lbl">Sale Amount</span>
             <span id="sale-amt-span">${saleAmount}</span>
           </div>
+          <div id="cash-container">
+            <span id="cash-span-lbl">Cash Available</span>
+            <span id="cash-amt-span">${user.cashBalance}</span>
+          </div>
           <div className="trade-action" id="trade-action">
             <button onClick={this.handleSubmit}>
               {actionText}
             </button>
+          </div>
+          <div className="trade-message">
+            {this.state.message}
           </div>
         </div>
       </div>
