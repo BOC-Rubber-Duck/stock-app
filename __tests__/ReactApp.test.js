@@ -63,7 +63,7 @@ test('Top level App components render', async () => {
   // Login Component:
   expect(shallow(<Login />).is('.login-container')).toBe(true);
   // Trade Component:
-  expect(shallow(<Trade stockSelected={stockSelected}/>).is('.trade-container')).toBe(true);
+  expect(shallow(<Trade user={user} stockSelected={stockSelected} action={action}/>).is('.trade-container')).toBe(true);
   // Leaderboard Component:
   const leaderboardRender = await Promise.resolve(shallow(<Leaderboard />).is('.leaderboard-container'));
   expect(leaderboardRender).toBe(true);

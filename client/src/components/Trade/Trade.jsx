@@ -44,9 +44,9 @@ class Trade extends React.Component {
     const { user, stockSelected, action } = this.props;
     const saleAmount = this.state.shares * stockSelected.price || 0;
     const actionText = action === 'buy' ? 'Buy': 'Sell';
-    const stockOwned = user.userPortfolio.filter(stock => {
+    const stockOwned = user !== undefined ? user.userPortfolio.filter(stock => {
       return stock.ticker_symbol === stockSelected.symbol;
-    });
+    }) : 0;
     const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
     return (
       <div className="trade-container" id="trade-container">
