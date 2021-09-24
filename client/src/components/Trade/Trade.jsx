@@ -66,6 +66,7 @@ class Trade extends React.Component {
             Shares to {action}
               <input
                 name="shares"
+                data-testid="shares"
                 type="number"
                 value={this.state.shares}
                 onChange={this.handleInputChange} />

@@ -44,6 +44,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
 });
+
 afterAll(() => server.close());
 
 describe('Renders Searchbar component', () => {
