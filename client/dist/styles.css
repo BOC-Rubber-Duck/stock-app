@@ -93,7 +93,7 @@ a, a:hover, a:focus, a:active {
 /**********BEGIN NAVBAR**********/
 
 .navbar-container {
-  background-color: var(--background-dark);
+  background: var(--level1-lighten), var(--background-dark);
   color: var(--default-text);
   position: fixed;
   right: 0;
@@ -105,6 +105,7 @@ a, a:hover, a:focus, a:active {
   justify-content: space-around;
   padding: 0;
   margin: 0;
+  border-top: 1px solid white;
 }
 
 .navbar-button {
@@ -113,6 +114,7 @@ a, a:hover, a:focus, a:active {
   align-items: center;
   justify-content: center;
   font-size: 1.2em;
+  background: var(--level1-lighten), var(--background-dark);
 }
 
 .navbar-button:hover {
@@ -121,6 +123,11 @@ a, a:hover, a:focus, a:active {
 
 .navbar-button-link {
   text-decoration: inherit;
+  color: inherit;
+  padding-top: .5rem;
+  background: var(--level1-lighten), var(--background-dark);
+}
+.navbar-button-text {
   color: inherit;
 }
 
