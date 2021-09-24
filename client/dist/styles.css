@@ -3,6 +3,7 @@
 
 :root {
   --background-dark: #121212;
+  --navbar-dark: #030303;
   --level1-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.10), rgba(255, 255, 255, 0.10));
   --level2-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.15));
   --level3-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.20), rgba(255, 255, 255, 0.20));
@@ -26,6 +27,7 @@
 * {
   margin: 0px;
   padding: 0px;
+  background-color: var(--background-dark);
 }
 
 body {
@@ -92,7 +94,7 @@ a, a:hover, a:focus, a:active {
 /**********BEGIN NAVBAR**********/
 
 .navbar-container {
-  background-color: var(--background-dark);
+  background: var(--level1-lighten), var(--background-dark);
   color: var(--default-text);
   position: fixed;
   right: 0;
@@ -104,6 +106,7 @@ a, a:hover, a:focus, a:active {
   justify-content: space-around;
   padding: 0;
   margin: 0;
+  border-top: 1px solid white;
 }
 
 .navbar-button {
@@ -112,17 +115,26 @@ a, a:hover, a:focus, a:active {
   align-items: center;
   justify-content: center;
   font-size: 1.2em;
+  background: var(--level1-lighten), var(--background-dark);
 }
 
-.navbar-button:hover {
+.navbar-button:hover, .navbar-button-text:hover {
   color: var(--diamond-blue);
 }
 
 .navbar-button-link {
   text-decoration: inherit;
   color: inherit;
+  background: var(--level1-lighten), var(--background-dark);
+}
+.navbar-button-text{
+  margin: 0;
+  background-color: var(--level1-lighten), var(--background-dark);
 }
 
+.test-button {
+  font-size: 100px;
+}
 /**********END NAVBAR**********/
 /**********BEGIN STOCK DETAIL PAGE**********/
 
@@ -263,13 +275,7 @@ a, a:hover, a:focus, a:active {
   color: inherit;
 }
 
-.navbar-button-text{
-  margin: 0;
-}
 
-.test-button {
-  font-size: 100px;
-}
 /**********END NAVBAR**********/
 /**********BEGIN USERCARD**********/
 .usercard {
