@@ -1,11 +1,12 @@
 import React from 'react';
+import TradeMessage from './TradeMessage.jsx';
 
 class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       shares: 0,
-      message: 'placeholder message'
+      message: null
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -88,9 +89,7 @@ class Trade extends React.Component {
               {actionText}
             </button>
           </div>
-          <div className="trade-message">
-            {this.state.message}
-          </div>
+          <TradeMessage message={this.state.message} />
         </div>
       </div>
     );
