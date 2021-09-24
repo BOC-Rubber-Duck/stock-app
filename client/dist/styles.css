@@ -129,47 +129,56 @@ a, a:hover, a:focus, a:active {
 
 .StockDetailPage {
   margin: 5%;
-  /* background-color: black; */
+  overflow-y: scroll;
 }
 
 .StockInformation {
   display: grid;
-  grid-template-columns: 3;
+  grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 2;
   margin: 2%;
-  grid-auto-columns: 33.3%;
 }
 
 .StockInformation-Name {
   grid-column: 1;
   grid-row: 1;
   text-align: left;
-  font-size: 1.25em;
-  margin-top: 3%;
-  margin-bottom: 3%;
+  font-size: 0.85rem;
+  margin-top: 1%;
+  color: var(--default-text);
+  width: 125%;
 }
 
 .StockInformation-Symbol {
   grid-column: 3;
   grid-row: 1;
   text-align: right;
-  font-size: 1.25em;
-  margin-top: 3%;
-  margin-bottom: 3%;
+  font-size: 0.85rem;
+  margin-top: 1%;
+  color: var(--default-text);
 }
 
 .StockInformation-Price {
   grid-column: 2;
   grid-row: 2;
   text-align: center;
-  font-size: 2em;
-  margin-top: 32%;
-  margin-bottom: 0%;
+  font-size: 2.5rem;
+  margin-top: 15%;
+  color: var(--default-text);
+  width: 100%;
 }
 
 .StockTrends {
-  margin-top: 3%;
-  margin-bottom: 5%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+
+.highcharts-background {
+  fill: var(--level4-lighten);
+}
+
+.highcharts-scrollbar-track {
+  fill: var(--level1-lighten);
 }
 
 .BuySellMenu {
@@ -181,18 +190,26 @@ a, a:hover, a:focus, a:active {
 
 .buyButton {
   grid-column: 1;
-  text-align: center;
   margin-right: 5%;
-  font-size: 1em;
-  height: 1.5em;
+  background-color: var(--level1-lighten);
+  color: var(--default-text);
+  border: 0.1em solid var(--background-light);
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: white;
+  height: 1.6rem;
+  transition: all 0.2s;
 }
 
 .sellButton {
   grid-column: 2;
-  text-align: center;
   margin-left: 5%;
-  font-size: 1em;
-  height: 1.5em;
+  background-color: var(--level1-lighten);
+  border: none;
+  font-size: 1rem;
+  text-align: center;
+  box-shadow: white;
+  height: 1.6rem;
 }
 
 /**********END STOCK DETAIL PAGE **********/

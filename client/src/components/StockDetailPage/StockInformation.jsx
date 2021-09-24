@@ -12,7 +12,7 @@ class StockInformation extends React.Component {
       <div className='StockInformation'>
         <span className='StockInformation-Name'>{this.props.name}</span>
         <span className='StockInformation-Symbol'>{this.props.symbol}</span>
-        <span className='StockInformation-Price'>${this.props.price}</span>
+        <div className='StockInformation-Price'>${this.props.price}</div>
       </div>
     );
   }
