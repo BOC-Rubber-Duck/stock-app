@@ -13,7 +13,7 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
-import StockDetailPage from './StockDetailPage.jsx';
+// import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -248,7 +248,7 @@ class App extends React.Component {
               }/>
             <Route exact path="/portfolio"
               render={() =>
-                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+                <Portfolio user={this.state.user} handleStockClick={this.fetchSelectedStock}/>
               }/>
             <Route exact path="/stock-search"
               render={() =>

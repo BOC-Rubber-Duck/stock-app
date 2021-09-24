@@ -28,8 +28,8 @@ class Portfolio extends React.Component {
 
     const stockbars = stocks.map((stockObject) => {
       return (
-        <Link to="/stock-detail-page" key={stockObject.ticker_symbol}>
-          <Stockbar stock={stockObject} showValue={true} onClick={this.props.onStockClick}/>
+        <Link to="/stock-search" key={stockObject.ticker_symbol}>
+          <Stockbar stock={stockObject} showValue={true} handleStockClick={this.props.handleStockClick}/>
         </Link>
       );
     });
