@@ -24,7 +24,7 @@ app.use(flash());
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use((req, res, next) => {
-  console.log('req.', req );
+  console.log('URL requested: ', req.url);
   next();
 });
 
