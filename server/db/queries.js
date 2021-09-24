@@ -220,10 +220,7 @@ module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
 module.exports.getLeaderboard = db.getLeaderboard.bind(db);
 module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
-<<<<<<< HEAD
 module.exports.validPassword = db.validPassword.bind(db);
-=======
 module.exports.assignRanking = db.assignRanking.bind(db);
 module.exports.getRank = db.getRank.bind(db);
 module.exports.postTransaction = db.postTransaction.bind(db);
->>>>>>> development
