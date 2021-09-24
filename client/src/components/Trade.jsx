@@ -10,6 +10,15 @@ class Trade extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // componentDidMount() {
+  //   console.log('trade component mounted', this.props, this.state);
+  //   if (this.props.tradeAction === 'sell') {
+  //     this.setState({
+  //       action: 'sell'
+  //     });
+  //   }
+  // };
+
   handleInputChange(event) {
     const target = event.target;
     const value = target.value;
@@ -21,17 +30,19 @@ class Trade extends React.Component {
   };
 
   handleSubmit() {
-    let stockSymbol = this.props.stockSelected.symbol;
-    let shares = this.state.shares;
-    let action = this.props.action;
-    console.log('handleSubmit action confirmed');
-    this.props.handleTrade(stockSymbol, shares, action);
+    const currentUser = this.props.user.username;
+    const stockSymbol = this.props.stockSelected.symbol;
+    const action = this.props.action;
+    const shares = this.state.shares;
+
+    let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
+    console.log('tradeResponse:', tradeResponse);
   };
 
   render() {
-    const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected || 0;
-    const actionText = this.props.action === 'buy' ? 'Buy': 'Sell';
+    const { user, stockSelected, action } = this.props;
+    const saleAmount = this.state.shares * stockSelected.price || 0;
+    const actionText = action === 'buy' ? 'Buy': 'Sell';
 
     return (
       <div className="trade-container" id="trade-container">
@@ -48,6 +59,7 @@ class Trade extends React.Component {
             Shares to {this.props.action}
               <input
                 name="shares"
+                data-testid="shares"
                 type="number"
                 value={this.state.shares}
                 onChange={this.handleInputChange} />
@@ -60,7 +72,9 @@ class Trade extends React.Component {
             <span id="sale-amt-span-lbl">Sale Amount</span>
             <span id="sale-amt-span">${saleAmount}</span>
           </div>
-          <div className="trade-action" id="trade-action">
+          <div
+            className="trade-action" id="trade-action"
+            data-testid="trade-action">
             <button onClick={this.handleSubmit}>
               {actionText}
             </button>
