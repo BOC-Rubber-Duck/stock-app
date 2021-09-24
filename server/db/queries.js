@@ -106,6 +106,15 @@ class Db {
     return this.query(query);
   }
 
+  putCashPosition(user_id, cash_position) {
+    let query = `
+      UPDATE users
+      SET cash_position = ${cash_position}
+      WHERE id = '${user_id}'
+    `;
+    return this.query(query);
+  };
+
   getLeaderboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
@@ -168,12 +177,23 @@ class Db {
     return this.query(query);
   };
 
-  // postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
+  postTransaction(user_id, ticker_symbol, exchange, transactionType, amount, strikePrice) {
+    let query = `
+    INSERT INTO transactions
+    (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price)
+    VALUES
+    ('${uuidv4()}', '${user_id}', '${ticker_symbol}', '${exchange}', ${transactionType}, ${amount}, ${strikePrice});
+    `;
+    return this.query(query);
+  };
+
+  postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price) {
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
   // INSERT INTO transactions
   // UPDATE or INSERT INTO or DELETE positions
   // COMMIT;
+  };
 }
 
 let db = new Db();

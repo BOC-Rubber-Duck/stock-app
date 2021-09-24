@@ -76,7 +76,7 @@ app.get('/api/getPortfolio', (req, res) => {
       console.log('Error during getPortfolio: ', err)
       res.send(500);
     });
-})
+});
 
 app.get('/api/getFriends', (req, res) => {
   db.getFriends(req.query.username)
@@ -87,7 +87,7 @@ app.get('/api/getFriends', (req, res) => {
       console.log('Error during getFriends: ', err)
       res.send(500);
     });
-})
+});
 
 app.get('/api/getWatchlist', (req, res) => {
   db.getWatchlist(req.query.username)
@@ -98,7 +98,7 @@ app.get('/api/getWatchlist', (req, res) => {
       console.log('Error during getWatchlist: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postFriend', (req, res) => {
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
@@ -120,7 +120,7 @@ app.post('/api/postWatchSecurity', (req, res) => {
       console.log('Error during postWatchSecurity: ', err)
       res.send(500);
     });
-})
+});
 
 app.post('/api/postUser', (req, res) => {
   let { first_name, last_name, email, username, password } = req.body;
@@ -132,23 +132,96 @@ app.post('/api/postUser', (req, res) => {
       console.log('Error during postUser: ', err)
       res.send(500);
     });
-})
-app.post('/trade', (req, res) => {
-  const stockSymbol = req.query.stockSymbol;
-  const shares = req.query.shares;
-  const action = req.query.action;
+});
+
+app.post('/api/trade', (req, res) => {
+  const user = req.body.user;
+  const stockSymbol = req.body.stockSymbol;
+  const shares = req.body.shares;
+  const action = req.body.action;
+  console.log('here are the trade req details: ', user, stockSymbol, shares, action);
   // process trade
-  // make db queries
-  // confirm success
-  const tradeConfirmation = {
-    username: 'testUser',
+  // TODO: validate user*
+  let positionConfirmation = {
+    username: user,
+    cashBalance: null,
+    stockSymbol: stockSymbol,
+    sharesOwned: null,
+    marketPrice: null,
+  };
+  let tradeConfirmation = {
+    username: '',
     stockSymbol: stockSymbol,
     shares: shares,
     marketPrice: 100,
     saleAmount: 100 * shares,
     action: action,
-    status: 'success'
+    status: 'failed'
   };
+  // validate user cash available
+  db.getUser(user)
+    .then((data) => {
+      let confirmedUsername = data.rows[0].username;
+      let confirmedCash = data.rows[0].cash_position;
+
+      console.log('db user return: ', confirmedUsername, confirmedCash);
+      // populate position confirmation
+      positionConfirmation.username = confirmedUsername;
+      positionConfirmation.cashBalance = confirmedCash;
+      return confirmedUsername;
+    })
+    .then((user) => {
+      db.getPortfolio(user)
+        .then((portfolio) => {
+          console.log('portfolio data: ', portfolio.rows[0]);
+          // search portfolio
+          let stock = portfolio.rows.filter(entry => entry.ticker_symbol.toLowerCase() === stockSymbol.toLowerCase());
+          let stockSymbolConfirmed = stock[0].ticker_symbol;
+          let sharesOwned = stock[0].amount;
+          // console.log('selected stock: ', stockSymbolConfirmed, sharesOwned);
+          positionConfirmation.stockSymbol = stockSymbolConfirmed;
+          positionConfirmation.sharesOwned = sharesOwned;
+          return stockSymbolConfirmed;
+        })
+        .then((stockSymbolConfirmed) => { // get current price
+          controllers.marketStack.fetchSelectedStock(stockSymbolConfirmed, (err, results) => {
+            if (err) {
+              console.log(err);
+            } else {
+              const name = controllers.searchStocks.filterStockSearch(stockSymbolConfirmed)[0].name;
+              const symbol = stockSymbolConfirmed;
+              const price = results.data[0].close;
+              positionConfirmation.marketPrice = price;
+
+              const stockSelected = {
+                name,
+                symbol,
+                price,
+              };
+              console.log('stockSelected, current price: ', stockSelected);
+              return stockSelected;
+              // res.send(stockSelected);
+              // res.status(200);
+            }
+          })
+          .then((stockSelected) => {
+            // put transaction
+            db.postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price)
+            .then((response) => {
+              console.log('transaction response: ', response);
+            })
+          })
+        })
+    })
+    .catch((err) => {
+      console.log('Error completing trade: ', err);
+      res.send(500);
+    });
+  // validate user ownership of stock
+  // make db queries
+  // db.
+  // confirm success
+
   res.status(200);
   res.send(JSON.stringify(tradeConfirmation));
 });
