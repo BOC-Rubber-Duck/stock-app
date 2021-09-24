@@ -1,10 +1,14 @@
 import React from 'react';
+import TradeMessage from './TradeMessage.jsx';
+import tradeValidation from './helperFunctions/tradeValidation.js';
 
 class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      shares: 0
+      shares: 0,
+      tradeIsValid: true,
+      message: 'Example Message Here'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -21,7 +25,7 @@ class Trade extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = target.value;
+    const value = Math.floor(target.value);
     const name = target.name;
 
     this.setState({
@@ -41,9 +45,14 @@ class Trade extends React.Component {
 
   render() {
     const { user, stockSelected, action } = this.props;
-    const saleAmount = this.state.shares * stockSelected.price || 0;
-    const actionText = action === 'buy' ? 'Buy': 'Sell';
+    const stockPrice = stockSelected.price.toFixed(2);
 
+    const saleAmount = (this.state.shares * stockSelected.price).toFixed(2) || 0;
+    const actionText = action === 'buy' ? 'Buy': 'Sell';
+    const stockOwned = user !== undefined ? user.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSelected.symbol;
+    }) : 0;
+    const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
     return (
       <div className="trade-container" id="trade-container">
         <div className="trade-header" id="trade-header">
@@ -54,31 +63,38 @@ class Trade extends React.Component {
           <span id="action-title-stock">{stockSelected.symbol}</span>
         </div>
         <div className="trade-info" id="trade-info">
+          <div className="shares-owned">
+            <span id="shares-owned-span-lbl">Shares Owned:</span> <span id="shares-owned-span">{sharesOwned}</span>
+          </div>
           <div id="shares">
             <label>
-            Shares to {this.props.action}
+            Shares to {action}
               <input
                 name="shares"
                 data-testid="shares"
                 type="number"
-                value={this.state.shares}
+                style={{color: "red"}}
+                value={this.state.shares !== 0 ? this.state.shares : ''}
                 onChange={this.handleInputChange} />
             </label>
           </div>
           <div id="market-price-container">
-            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">{stockSelected.price}</span>
+            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">${stockPrice}</span>
           </div>
           <div id="sale-amount-container">
             <span id="sale-amt-span-lbl">Sale Amount</span>
             <span id="sale-amt-span">${saleAmount}</span>
           </div>
-          <div
-            className="trade-action" id="trade-action"
-            data-testid="trade-action">
+          <div id="cash-container">
+            <span id="cash-span-lbl">Cash Available</span>
+            <span id="cash-amt-span">${user.cashBalance}</span>
+          </div>
+          <div className="trade-action" id="trade-action">
             <button onClick={this.handleSubmit}>
               {actionText}
             </button>
           </div>
+          <TradeMessage message={this.state.message} />
         </div>
       </div>
     );

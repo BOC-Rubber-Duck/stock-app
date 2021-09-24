@@ -10,7 +10,7 @@ import {
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
-import Trade from './Trade.jsx';
+import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 // import StockDetailPage from './StockDetailPage.jsx';
@@ -281,7 +281,6 @@ class App extends React.Component {
             <Route exact path="/trade"
               render={() =>
                 <Trade
-                  tradeAction={this.state.trade.action}
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handleTrade={this.handleTrade}
