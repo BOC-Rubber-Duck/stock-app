@@ -1,11 +1,13 @@
 import React from 'react';
 import TradeMessage from './TradeMessage.jsx';
+import tradeValidation from './helperFunctions/tradeValidation.js';
 
 class Trade extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       shares: 0,
+      tradeIsValid: true,
       message: 'Example Message Here'
     };
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -23,11 +25,11 @@ class Trade extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = target.value;
+    const value = Math.floor(target.value);
     const name = target.name;
 
     this.setState({
-      [name]: Math.floor(value)
+      [name]: value
     });
   };
 
@@ -71,6 +73,7 @@ class Trade extends React.Component {
                 name="shares"
                 data-testid="shares"
                 type="number"
+                style={{color: "red"}}
                 value={this.state.shares !== 0 ? this.state.shares : ''}
                 onChange={this.handleInputChange} />
             </label>
