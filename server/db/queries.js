@@ -106,6 +106,15 @@ class Db {
     return this.query(query);
   }
 
+  putCashPosition(user_id, cash_position) {
+    let query = `
+      UPDATE users
+      SET cash_position = ${cash_position}
+      WHERE id = '${user_id}'
+    `;
+    return this.query(query);
+  };
+
   getLeaderboard(userId, offset, entries) {
     let query = `
       SELECT * FROM users AS u
@@ -168,6 +177,16 @@ class Db {
     return this.query(query);
   };
 
+  postTransaction(user_id, ticker_symbol, exchange, transactionType, amount, strikePrice) {
+    let query = `
+    INSERT INTO transactions
+    (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price)
+    VALUES
+    ('${uuidv4()}', '${user_id}', '${ticker_symbol}', '${exchange}', ${transactionType}, ${amount}, ${strikePrice});
+    `;
+    return this.query(query);
+  };
+
   postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price) {
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
@@ -193,3 +212,4 @@ module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
 module.exports.assignRanking = db.assignRanking.bind(db);
 module.exports.getRank = db.getRank.bind(db);
+module.exports.postTransaction = db.postTransaction.bind(db);
