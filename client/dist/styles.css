@@ -48,6 +48,12 @@ input, textarea {
   font-size: 2em;
 }
 
+a, a:hover, a:focus, a:active {
+  text-decoration: none;
+  color: inherit;
+}
+
+
 /**********END BASE**********/
 /**********BEGIN LAYOUT**********/
 
@@ -62,6 +68,7 @@ input, textarea {
   grid-template-areas: 'col col col';
   grid-gap: 5 px;
   grid-template-rows: 100 px;
+  background-color: var(--background-dark);
 }
 
 .barColumn{

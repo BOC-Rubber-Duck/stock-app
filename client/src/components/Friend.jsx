@@ -1,31 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import regeneratorRuntime from 'regenerator-runtime';
 import axios from 'axios';
 
-const Friend = (props) => {
+const Friend = () => {
   const [searchResults, setSearchResults] = useState([]);
+  const [param, setParam] = useState(null);
 
-  const getUsers = (param) => {
-    return axios.get(`/api/getUsers?username=${param}`)
-      .then((res) => {
-        return res.data;
-      })
-      .catch((error) => {
-        console.error('Error searching users via api', e);
-      });
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (param === null) {
+          setSearchResults([]);
+        } else {
+          const res = await axios.get(`/api/getUsers?username=${param}`);
+          setSearchResults(res.data);
+        }
+      } catch (error) {
+        console.error('Error searching users via api', error);
+      }
+    };
+    fetchData();
+  }, [param]);
 
   const handleUserInput = (e) => {
-    if (!e.target.value) {
-      setSearchResults([]);
-    } else {
-      getUsers(e.target.value)
-        .then((results) => {
-          setSearchResults(results);
-        })
-        .catch((error) => {
-          console.error('Error searching users ', e);
-        });
-    };
+    setParam(!e.target.value ? null : e.target.value);
   };
 
   const renderSearchResults = () => {
@@ -34,11 +32,7 @@ const Friend = (props) => {
         <li key={result.id}>
           <div className="fr-search-result">
             <p className="fr-username fr-is-friend">{result.username}</p>
-            <p className="fr-portfolio-value">$need to calc</p>
           </div>
-          <nav className="fr-result-nav">
-            <span className="fr-view-user-profile material-icons-round">arrow_forward_ios</span>
-          </nav>
         </li>
       );
     });
@@ -61,7 +55,6 @@ const Friend = (props) => {
             placeholder="Search by username"
             onChange={handleUserInput}
           />
-          {/* <button className="fr-button-cancel" type="button" onClick=do_what?>Cancel</button> */}
         </nav>
         { renderSearchResults() }
       </section>

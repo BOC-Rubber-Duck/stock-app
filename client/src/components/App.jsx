@@ -7,13 +7,13 @@ import {
   Route,
   Link
 } from 'react-router-dom';
-import Portfolio from './Portfolio.jsx';
+import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
-import StockDetailPage from './StockDetailPage.jsx';
+// import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -24,15 +24,18 @@ class App extends React.Component {
         id: '',
         first_name: '',
         last_name: '',
-        username: '',
+        username: 'bezos_the_first',
         email: '',
-        cashBalance: 0,
-        rank: null,
+        cashBalance: 200000,
+        rank: 1,
         userPortfolio: [
-          // {
-          //   stockName:
-          //   sharesOwned
-          // }
+          {
+            amount: 1000000,
+            exchange: "nasdaq",
+            id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+            ticker_symbol: "fb",
+            user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
+          }
         ],
         friends: [
           // username, username
@@ -45,8 +48,8 @@ class App extends React.Component {
         portfolioValue: 0,
         selectedFriendPortfolio: [
         //  {
-        //     stockName:
-        //     sharesOwned
+        //     name:
+        //     symbol
         //   },
         //   {}
         ]
@@ -66,6 +69,7 @@ class App extends React.Component {
 
     this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    this.selectedUserSearch = this.selectedUserSearch.bind(this);
     this.updateTradeAction = this.updateTradeAction.bind(this);
   }
 
@@ -80,23 +84,50 @@ class App extends React.Component {
   }
 
   selectedUserSearch(username) {
-    // Tyler?
-    // need to get pricing for each stock in their portfolio, check server route/helper functions
-    this.setState({
-      // selectedFriend: {
-      //   username: '',
-      //   rank: 0,
-      //   portfolioValue: 0,
-      //   selectedFriendPortfolio: [
-      //   //  {
-      //   //     stockName:
-      //   //     sharesOwned
-      //   //   },
-      //   //   {}
-      //   ]
-      // },
-    });
-  };
+    // this is temp
+    const portfolioValue= Math.floor(Math.random() * 10000000);
+    // this is temp
+    const rank = Math.ceil(Math.random() * 100);
+    axios.get('/api/getPortfolio', {
+      params: {
+        username
+      }
+    })
+      .then((res) => {
+        const portfolio = [];
+        const dbPortfolioData = res.data;
+        dbPortfolioData.map((stock) => {
+          const tickerSymbol = stock.ticker_symbol;
+          portfolio.push(
+            axios.get('/userStockSearch', {
+              params: {
+                userStockSearch: tickerSymbol
+              }
+            })
+          );
+        });
+        Promise.all(portfolio)
+          .then((res) => {
+            const selectedFriendPortfolio = res.map((r) => {
+              return r.data[0];
+            });
+            return selectedFriendPortfolio;
+          })
+          .then((selectedFriendPortfolio) => {
+            const selectedFriend = {
+              username,
+              rank,
+              portfolioValue,
+              selectedFriendPortfolio
+            };
+            this.setState({
+              selectedFriend
+            });
+          })
+          .catch((e) => e);
+      })
+      .catch((e) => e);
+  }
 
   getLeaderboard() {
     // get most recent users
@@ -179,18 +210,6 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
-    // TODO: ajax calls to external service
-    // returns 1 year of data, use first response[0] for "up to date" for display purposes
-    // this.setState({
-    //   stockSelected: {
-    //     name: 'Tesla',
-    //     symbol: 'TSLA',
-    //     price: 45.99,
-    //     data: [
-    //       {},{}
-    //     ]
-    //   },
-    // });
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
@@ -227,10 +246,10 @@ class App extends React.Component {
                 </li>
               </ul>
             </nav>
-          </div> */}
+          </div>*/}
 
           <Switch>
-          <Route exact path="/"
+            <Route exact path="/"
               render={() =>
                 <Leaderboard
                   user={this.state.user}
@@ -242,7 +261,10 @@ class App extends React.Component {
                   user={this.state.user}
                 />
               }/>
-            <Route exact path="/portfolio" component={Portfolio} />
+            <Route exact path="/portfolio"
+              render={() =>
+                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+              }/>
             <Route exact path="/stock-search"
               render={() =>
                 <Searchbar

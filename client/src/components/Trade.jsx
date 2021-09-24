@@ -29,9 +29,9 @@ class Trade extends React.Component {
   };
 
   render() {
-    const { user, stockSelected } = this.props;
-    const saleAmount = this.state.shares * stockSelected || 0;
-    const actionText = this.props.action === 'buy' ? 'Buy': 'Sell';
+    const { user, stockSelected, action } = this.props;
+    const saleAmount = this.state.shares * stockSelected.price || 0;
+    const actionText = action === 'buy' ? 'Buy': 'Sell';
 
     return (
       <div className="trade-container" id="trade-container">
@@ -48,6 +48,7 @@ class Trade extends React.Component {
             Shares to {this.props.action}
               <input
                 name="shares"
+                data-testid="shares"
                 type="number"
                 value={this.state.shares}
                 onChange={this.handleInputChange} />
@@ -60,7 +61,9 @@ class Trade extends React.Component {
             <span id="sale-amt-span-lbl">Sale Amount</span>
             <span id="sale-amt-span">${saleAmount}</span>
           </div>
-          <div className="trade-action" id="trade-action">
+          <div
+            className="trade-action" id="trade-action"
+            data-testid="trade-action">
             <button onClick={this.handleSubmit}>
               {actionText}
             </button>
