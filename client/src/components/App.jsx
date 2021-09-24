@@ -176,6 +176,7 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
+    console.log('new stock selected!', symbol);
     axios.get('/fetchSelectedStock', {
       params: {
         symbol

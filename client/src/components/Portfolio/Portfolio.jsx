@@ -18,7 +18,7 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount() {
-    if (this.state.user.userPortfolio.length > 0) {
+    if (this.props.user.userPortfolio.length > 0) {
       var userCopy = this.props.user;
       getPortfolioValue(userCopy).then((expandedUser) => {
         this.setState({
