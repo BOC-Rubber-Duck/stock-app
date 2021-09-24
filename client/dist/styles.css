@@ -211,16 +211,17 @@ a, a:hover, a:focus, a:active {
 
 .searchbar-container {
   height: 4rem;
-  background-color: var(--search-bar);
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 .searchbar-display {
+  background: var(--level1-lighten), var(--background-dark);
   display: flex;
   flex-direction: row;
-  height: 2.75rem;
+  height: 6rem;
   padding: 0.5rem;
+  border-bottom: 1px solid white
 }
 .searchbar-icon {
   display: flex;
@@ -231,9 +232,13 @@ a, a:hover, a:focus, a:active {
   background-color: var(--default-text);
 }
 .searchbar-input {
-  width: 100%;
-  border: none;
   font-size: 1.5rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  height: 2.5rem;
+  margin: 1rem;
+  padding: 0.5rem;
+  background: #FFF
 }
 .search-icon-container {
   height: 100%;
