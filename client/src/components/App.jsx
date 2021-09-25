@@ -10,7 +10,7 @@ import {
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
-import Trade from './Trade.jsx';
+import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 // import StockDetailPage from './StockDetailPage.jsx';
@@ -60,6 +60,7 @@ class App extends React.Component {
 
     this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    this.selectedUserSearch = this.selectedUserSearch.bind(this);
     this.updateTradeAction = this.updateTradeAction.bind(this);
     this.selectedUserSearch = this.selectedUserSearch.bind(this);
   }
@@ -74,53 +75,101 @@ class App extends React.Component {
     });
   }
 
-  selectedUserSearch(user) {
-    console.log('searching for user', user);
-    let portfolio = [];
-    axios.get('/api/getPortfolio?username='+user)
-      .then((results) => {
-        portfolio = results.data;
-        axios.get('/api/getUser?username='+user)
-          .then((result) => {
-            const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
-            this.setState({
-              selectedFriend: {
-                id: id,
-                first_name: first_name,
-                last_name: last_name,
-                username: username,
-                email: email,
-                cashBalance: cash_position,
-                portfolioValue: portfolio_value,
-                userPortfolio: portfolio,
+  // selectedUserSearch(user) {
+  //   console.log('searching for user', user);
+  //   let portfolio = [];
+  //   axios.get('/api/getPortfolio?username='+user)
+  //     .then((results) => {
+  //       portfolio = results.data;
+  //       axios.get('/api/getUser?username='+user)
+  //         .then((result) => {
+  //           const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
+  //           this.setState({
+  //             selectedFriend: {
+  //               id: id,
+  //               first_name: first_name,
+  //               last_name: last_name,
+  //               username: username,
+  //               email: email,
+  //               cashBalance: cash_position,
+  //               portfolioValue: portfolio_value,
+  //               userPortfolio: portfolio,
+  //             }
+  //           }, () => {
+  //             console.log('the state was set');
+  //             console.log(this.state.selectedFriend);
+  //             this.forceUpdate();
+  //           });
+  //         });
+  //     });
+  // };
+
+  selectedUserSearch(username) {
+    // this is temp
+    const portfolioValue= Math.floor(Math.random() * 10000000);
+    // this is temp
+    const rank = Math.ceil(Math.random() * 100);
+    axios.get('/api/getPortfolio', {
+      params: {
+        username
+      }
+    })
+      .then((res) => {
+        const portfolio = [];
+        const dbPortfolioData = res.data;
+        dbPortfolioData.map((stock) => {
+          const tickerSymbol = stock.ticker_symbol;
+          portfolio.push(
+            axios.get('/userStockSearch', {
+              params: {
+                userStockSearch: tickerSymbol
               }
-            }, () => {
-              console.log('the state was set');
-              console.log(this.state.selectedFriend);
-              this.forceUpdate();
+            })
+          );
+        });
+        Promise.all(portfolio)
+          .then((res) => {
+            const selectedFriendPortfolio = res.map((r) => {
+              return r.data[0];
             });
-          });
-      });
-  };
+            return selectedFriendPortfolio;
+          })
+          .then((selectedFriendPortfolio) => {
+            const selectedFriend = {
+              username,
+              rank,
+              portfolioValue,
+              selectedFriendPortfolio
+            };
+            this.setState({
+              selectedFriend
+            });
+          })
+          .catch((e) => e);
+      })
+      .catch((e) => e);
+  }
 
   getLeaderboard() {
     // get most recent users
     // update stock prices?
   };
 
-  handleTrade(stockSymbol, shares, action) {
-    console.log('handleTrade method called');
+  handleTrade(currentUser, stockSymbol, shares, action) {
     // axios call:
-    axios.post('/trade', {
+    return axios.post('/api/trade', {
+      user: currentUser,
       stockSymbol: stockSymbol,
       shares: shares,
       action: action
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        return response;
       })
       .error((err) => {
         console.log('error in attempting trade', err);
+        return err;
       });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
@@ -137,17 +186,38 @@ class App extends React.Component {
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
-                const { id, first_name, last_name, username, email, cash_position } = result.data;
-                this.setState({
-                  user: {
-                    id: id,
-                    first_name: first_name,
-                    last_name: last_name,
-                    username: username,
-                    email: email,
-                    cashBalance: cash_position,
-                    userPortfolio: portfolio,
-                    friends: friends
+                const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
+                if (self) {
+                  this.setState({
+                    user: {
+                      id: id,
+                      first_name: first_name,
+                      last_name: last_name,
+                      username: username,
+                      email: email,
+                      cashBalance: cash_position,
+                      portfolioValue: portfolio_value,
+                      userPortfolio: portfolio,
+                      friends: friends
+                    }
+                  });
+                } else {
+                  // add to some other user in the state
+                  let others = {};
+                  if (this.state.others) {
+                    others = this.state.others;
+                    others[username] = {
+                      first_name: first_name,
+                      last_name: last_name,
+                      username: username,
+                      email: email,
+                      cashBalance: cash_position,
+                      userPortfolio: portfolio,
+                      friends: friends
+                    };
+                    this.setState({
+                      others: others
+                    });
                   }
                 });
               });
@@ -157,7 +227,6 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
-    console.log('new stock selected!', symbol);
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
@@ -175,7 +244,6 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-
         <React.Fragment>
           {/* <div>
             <nav>

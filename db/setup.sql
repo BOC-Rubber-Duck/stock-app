@@ -23,8 +23,8 @@ CREATE TABLE IF NOT EXISTS transactions (
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
-  strike_price int NOT NULL,
-  time_entered timestamp NOT NULL
+  strike_price decimal NOT NULL,
+  time_entered timestamp NOT NULL DEFAULT now()
 );
 
 comment on column transactions.transaction_type is 'Enum: buy: 0, sell: 1';
@@ -83,7 +83,8 @@ VALUES
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A22', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A12', 'amzn', 'nasdaq', 100000000),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A23', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'fb', 'nasdaq', 100000000),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A24', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'msft', 'nasdaq', 100000000),
-('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A25', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse', 100000000);
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A25', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'brk.a', 'nyse', 100000000),
+('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A26', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'nflx', 'nasdaq', 500);
 
 INSERT INTO transactions
 (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price, time_entered)
@@ -113,3 +114,13 @@ VALUES
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A13', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14'),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A14', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15'),
 ('A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A15', 'A0EEBC99-9C0B-4EF8-BB6D-6BB9BD380A11');
+
+CREATE OR REPLACE VIEW ranked_users AS
+SELECT
+  users.id AS user_id,
+  users.username,
+  (users.cash_position + users.portfolio_value) AS account_value,
+  rank() OVER (ORDER BY (users.cash_position + users.portfolio_value) DESC) AS user_rank
+FROM users;
+
+

@@ -1,5 +1,6 @@
 import React from 'react';
 import {ImUserPlus, ImUsers} from 'react-icons/im';
+import {BsGraphUp, BsGraphDown} from "react-icons/bs";
 import {
   BrowserRouter as Router,
   Switch,
@@ -23,9 +24,16 @@ const LeaderboardListElement = (props) => {
         </Router>
       </div>
       <div className="leaderboard-balance">
-        <h2>${Number(props.balance).toFixed(2)}</h2>
+        {(props.cashPosition + props.portfolioValue) >= props.initialBalance
+          ? <div><span className="positive-gain-icon"><BsGraphUp /></span>
+            <span className="leaderboard-gain-text">&nbsp;{((((props.cashPosition + props.portfolioValue) - props.initialBalance) / props.initialBalance) * 100)}%</span>
+            <span className="positive-gain">&nbsp;Gained</span></div>
+          : <div><span className="negative-gain-icon"><BsGraphDown /></span>
+            <span className="leaderboard-gain-text">&nbsp;{((((props.cashPosition + props.portfolioValue) - props.initialBalance) / props.initialBalance) * 100)}%</span>
+            <span className="negative-gain">&nbsp;Lost</span></div>
+        }
       </div>
-      <div className="leadership-friend" onClick={props.addFriend.bind(this, props.username, props.index, props.watchingUser)}>
+      <div className="leaderboard-friend-toggle" onClick={props.addFriend.bind(this, props.username, props.index, props.watchingUser)}>
         {props.watchingUser === null
           ? <div className="leaderboard-not-friend"><ImUserPlus /></div>
           : <div className="leaderboard-friend"><ImUsers /></div>

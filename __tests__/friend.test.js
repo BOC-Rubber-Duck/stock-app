@@ -19,7 +19,11 @@ const apiMockResults = [
 const server = setupServer(
   rest.get('/api/getUsers', (req, res, ctx) => {
     const searchParam = req.url.searchParams.get('username');
-    let responseData = apiMockResults;
+    let responseData = '';
+
+    if (searchParam === 'g') {
+      responseData = apiMockResults;
+    };
 
     if (searchParam === 'gr') {
       responseData = apiMockResults.slice(0, 2);
@@ -29,6 +33,7 @@ const server = setupServer(
       responseData = apiMockResults.slice(0, 1);
     }
 
+    // console.log('going to return:', responseData);
     return res(
       ctx.status(200),
       ctx.json(responseData)
@@ -38,8 +43,8 @@ const server = setupServer(
 
 beforeAll(() => server.listen());
 beforeEach(() => {
-  render(<Friend />);
   server.resetHandlers();
+  render(<Friend />);
 });
 afterAll(() => server.close());
 
@@ -55,22 +60,32 @@ describe('Friend displays properly on initial render', () => {
   });
 });
 
-describe('Friend search displays the correct results', () => {
-  it('Correct results with a one-character search', async () => {
+describe('Friend instant search displays the correct results', () => {
+  it('Correct results with a two-character search', async () => {
     userEvent.type(screen.getByRole('searchbox'), 'g');
-    const results = await screen.findAllByRole('listitem');
-    expect(results).toBeTruthy();
+    expect(await screen.findByText('graphite-x')).toBeInTheDocument();
+    expect(await screen.findByText('gryffindor')).toBeInTheDocument();
+    expect(await screen.findByText('tygah')).toBeInTheDocument();
+    let results = await screen.findAllByRole('listitem');
     expect(results.length).toEqual(3);
+
+    userEvent.type(screen.getByRole('searchbox'), 'r');
+    expect(await screen.findByText('graphite-x')).toBeInTheDocument();
+    expect(await screen.findByText('gryffindor')).toBeInTheDocument();
+    const tygah = screen.queryByText('tygah');
+    expect(tygah).not.toBeInTheDocument();
+    results = await screen.findAllByRole('listitem');
+    expect(results.length).toEqual(2);
+
+    // KEEPING FOR FUTURE STUDY
+    // This section does exactly the same thing the last section above does
+    // but using a different item in the mock results. Yet, it fails. Why?
+    // For some reason, it still finds gryffindor in the document
+    // userEvent.type(screen.getByRole('searchbox'), 'a');
+    // expect(await screen.findByText('graphite-x')).toBeInTheDocument();
+    // const gryffindor = screen.queryByText('gryffindor');
+    // expect(gryffindor).not.toBeInTheDocument();
+
+    // TODO: 'The page will not search on one or more spaces'
   });
 });
-
-// TODO: cannot get a two-character search to work; keeping here to revisit
-// it('Correct results with a two-character search', async () => {
-//   fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'g' } });
-//   userEvent.type(screen.getByRole('searchbox'), 'r');
-//   let results = await screen.findAllByRole('listitem');
-//   expect(results).toBeTruthy();
-//   expect(results.length).toEqual(2);
-// });
-
-// TODO: 'The page will not search on one or more spaces'

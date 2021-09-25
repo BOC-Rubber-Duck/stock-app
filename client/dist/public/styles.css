@@ -9,6 +9,8 @@
   --level4-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
   --default-text: #FFF;
   --diamond-blue: #4FB6F5;
+  --diamond-blue-triadic-1: #F54FB6;
+  --diamond-blue-triadic-2: #B6F54F;
   --search-bar: #AAA;
   --background-light: #ebebeb;
 }
@@ -55,7 +57,12 @@ a, a:hover, a:focus, a:active {
 /**********END BASE**********/
 /**********BEGIN LAYOUT**********/
 
+body {
+  min-width: 320px;
+}
+
 #app {
+  min-width: 320px;
   max-width: 600px;
   margin: auto;
   /* background-color: black; */
@@ -292,14 +299,36 @@ a, a:hover, a:focus, a:active {
 }
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
+.leaderboard-container {
+  height: 100vh;
+}
+
 .container, p {
   color: white;
   text-align: center;
 }
 
-#leaderboard-list {
+.leaderboard-list {
   background-color: #121212;
   margin: auto;
+  padding-top: 0.5rem;
+  height: 70vh;
+}
+
+.leaderboard-list a:link {
+  color: white;
+}
+
+.leaderboard-list a:visited {
+  color: var(--diamond-blue);
+}
+
+.leaderboard-list a:hover {
+  color: var(--diamond-blue-triadic-2);
+}
+
+.leaderboard-list a:active {
+  var(--diamond-blue-triadic-1);
 }
 
 .leaderboard-element {
@@ -310,7 +339,7 @@ a, a:hover, a:focus, a:active {
     "rank username balance friend"
 }
 
-#list-header {
+.list-header {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
   min-height: 2rem;
   margin: 1rem 0;
@@ -346,23 +375,47 @@ a, a:hover, a:focus, a:active {
 
 .leaderboard-balance {
   grid-area: balance;
-  font-size: 0.6rem;
   align-self: center;
   justify-self: start;
 }
 
-.leaderboard-friend {
+.positive-gain-icon {
+  font-size: 1rem;
+  color: var(--diamond-blue-triadic-2);
+}
+
+.negative-gain-icon {
+  font-size: 1rem;
+  color: var(--diamond-blue-triadic-1);
+}
+
+.leaderboard-gain-text {
+  font-size: 0.6rem;
+}
+
+.positive-gain {
+  font-size: 0.6rem;
+  color: var(--diamond-blue-triadic-2);
+}
+
+.negative-gain {
+  font-size: 0.6rem;
+  color: var(--diamond-blue-triadic-1);
+}
+
+.leaderboard-friend-toggle {
   grid-area: friend;
-  font-size: 1.4rem;
   place-self: center;
 }
 
 .leaderboard-not-friend {
-  color: red;
+  color: var(--diamond-blue-triadic-1);
+  font-size: 1.5rem;
 }
 
 .leaderboard-friend {
-  color: green;
+  color: var(--diamond-blue-triadic-2);
+  font-size: 1.5rem;
 }
 
 #leaderboard-bottom-nav-space {
@@ -382,7 +435,7 @@ a, a:hover, a:focus, a:active {
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #ebb462;
+  background: var(--diamond-blue);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -398,14 +451,14 @@ a, a:hover, a:focus, a:active {
   margin-top: -14px;
 }
 #friend-slider:focus::-webkit-slider-runnable-track {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 #friend-slider::-moz-range-track {
   width: 20%;
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #ebb462;
+  background: var(--diamond-blue);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -428,13 +481,13 @@ a, a:hover, a:focus, a:active {
   color: transparent;
 }
 #friend-slider::-ms-fill-lower {
-  background: #ebb462;
+  background: var(--diamond-blue);
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 #friend-slider::-ms-fill-upper {
-  background: #ebb462;
+  background: var(--diamond-blue);
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -449,10 +502,10 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 #friend-slider:focus::-ms-fill-lower {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 #friend-slider:focus::-ms-fill-upper {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
@@ -467,7 +520,7 @@ a, a:hover, a:focus, a:active {
 
 .fr-page {
   background-color: var(--background-dark);
-  height: 100vh;
+  min-height: 100vh;
   margin: auto;
 }
 
@@ -502,15 +555,25 @@ a, a:hover, a:focus, a:active {
 - - - - - - - - - - - - - - - - - - - - - - - - */
 
 .fr-results {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
   list-style-type: none;
   color: var(--default-text);
   font-size: 1.1rem;
+  padding-bottom: 5rem;
 }
 
 .fr-results ul {
   list-style-type: none;
   margin: 1rem;
   color: var(--default-text);
+  width: 100%;
+  height: 100%;
 }
 
 .fr-results li {
@@ -528,41 +591,93 @@ a, a:hover, a:focus, a:active {
   border-radius: 4px;
 }
 
+.fr-results li:hover, .fr-results li:active {
+  box-shadow: 1px 1px 10px var(--diamond-blue);
+}
+
 /* Container for the name and portfolio value */
+
 .fr-search-result {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
   display: flex;
-  flex-wrap: wrap;
   gap: 0.25rem;
-  padding: 1rem 0;
+  /* padding: 1rem 0; */
+  align-items: center;
 }
 
-.fr-username {
-  font-weight: 400;
+.fr-left-side {
+  flex: 1 1 100%;
+  word-break: break-all;
 }
 
-.fr-portfolio-value {
-  font-weight: 200;
-}
-
-.fr-username, .fr-portfolio-value {
+.fr-username, .fr-user-rank {
   line-height: 1.5rem;
 }
 
-.fr-portfolio-value {
-  margin-left: auto;
+.fr-left-side p {
+  text-align: left;
 }
 
-.fr-result-nav {
-  width: 2rem;
-  text-align: right;
-  padding: 0.5rem;
+.fr-username {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--diamond-blue);
 }
+
+.fr-user-holdings {
+  font-size: 0.8rem;
+  font-weight: 100;
+  padding-top: 0.2rem;
+}
+
+.fr-left-side, .fr-right-side {
+  border: 0px solid blue;
+}
+
+.fr-right-side {
+  position: relative;
+  top: -0.5rem;
+  text-align: center;
+}
+
+.fr-user-rank-header {
+  font-size: 0.6rem;
+  font-weight: 200;
+  color: silver;
+}
+
+.fr-user-rank-number {
+  margin: 0 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
 
 /**********END FRIEND SEARCH**********/
 
 /**********BEGIN LOGIN/REGISTRATION**********/
 .login-header {
   background-color: #999;
+}
+
+.login-body {
+  background-color: var(--background-dark);
+  text-align: left;
+  align-content: left;
+  justify-content: left;
+}
+
+.la {
+  text-align: left;
+}
+
+.ra {
+  text-align: right;
 }
 
 .login-corner-icon {

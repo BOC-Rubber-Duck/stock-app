@@ -6,13 +6,15 @@ import React from 'react';
     exchange: "nasdaq",
     id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
     ticker_symbol: "fb",
+    name: "facebook",
     user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
   }
-  useCase: ['stockSearch', 'portfolio']
+  showValue: [true, false]
   onClick: should be 'fetchSelectedStock' from top level state
 */
 
 const Stockbar = (props) => {
+  console.log(props.stock);
   let col3 = '';
   if (props.showValue === true) {
     col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;

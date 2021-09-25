@@ -8,6 +8,20 @@ import {FaSearch} from 'react-icons/fa';
 import StockDetailPage from './StockDetailPage.jsx';
 import Stockbar from './Portfolio/Stockbar.jsx';
 
+const OwnedStockDisplay = (props) => {
+  return (
+    props.stocks.map((stock, i) => {
+      return (
+        <Stockbar
+          key={stock.symbol}
+          stock={stock}
+          showValue={false}
+        />
+      );
+    })
+  );
+};
+
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
   const [displayStockDetails, setDisplayStockDetails] = useState(false);
@@ -19,7 +33,7 @@ const Searchbar = (props) => {
     props.userPortfolio.map((stock) => {
       const symbol = stock.ticker_symbol || stock.symbol;
       stocksToSearch.push(
-        axios.get('./fetchSelectedStock', {
+        axios.get('/fetchSelectedStock', {
           params: {
             symbol
           }
@@ -87,19 +101,7 @@ const Searchbar = (props) => {
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
       {showOwnedStocks &&
-      <div>Stocks you own
-        {
-          ownedStocks.map((stock) => {
-            return (
-              <Stockbar
-                key={stock.symbol}
-                stock={stock}
-                showValue={false}
-              />
-            );
-          })
-        }
-      </div>
+        <OwnedStockDisplay stocks={ownedStocks} />
       }
       {displayStockDetails &&
         <StockDetailPage

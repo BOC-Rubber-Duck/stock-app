@@ -59,7 +59,7 @@ class Portfolio extends React.Component {
     });
 
     return (
-      <div>
+      <div className="portfolio-container">
         <Usercard user={this.state.user} self={this.props.self}/>
         <div>{stockbars}</div>
       </div>
