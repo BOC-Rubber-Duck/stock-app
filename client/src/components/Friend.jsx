@@ -9,7 +9,7 @@ const Friend = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (param === null) {
+        if (param === null || param.length === 0) {
           setSearchResults([]);
         } else {
           const res = await axios.get(`/api/getUsers?username=${param}`);
@@ -23,7 +23,8 @@ const Friend = () => {
   }, [param]);
 
   const handleUserInput = (e) => {
-    setParam(!e.target.value ? null : e.target.value);
+    const searchVal = e.target.value.replace(/\s/g, '');
+    setParam(searchVal);
   };
 
   const renderSearchResults = () => {
@@ -31,7 +32,14 @@ const Friend = () => {
       return (
         <li key={result.id}>
           <div className="fr-search-result">
-            <p className="fr-username fr-is-friend">{result.username}</p>
+            <div className="fr-left-side">
+              <p className="fr-username">{result.username}</p>
+              <p className="fr-user-holdings">{!result.holdings ? 'No stocks held' : result.holdings}</p>
+            </div>
+            <div className="fr-right-side">
+              <span className="fr-user-rank-header">Rank</span>
+              <p className="fr-user-rank-number">{result.user_rank}</p>
+            </div>
           </div>
         </li>
       );

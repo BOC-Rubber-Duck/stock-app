@@ -10,7 +10,7 @@ import {
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
-import Trade from './Trade.jsx';
+import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 // import StockDetailPage from './StockDetailPage.jsx';
@@ -134,19 +134,21 @@ class App extends React.Component {
     // update stock prices?
   };
 
-  handleTrade(stockSymbol, shares, action) {
-    console.log('handleTrade method called');
+  handleTrade(currentUser, stockSymbol, shares, action) {
     // axios call:
-    axios.post('/trade', {
+    return axios.post('/api/trade', {
+      user: currentUser,
       stockSymbol: stockSymbol,
       shares: shares,
       action: action
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        return response;
       })
       .error((err) => {
         console.log('error in attempting trade', err);
+        return err;
       });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
