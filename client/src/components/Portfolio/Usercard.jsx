@@ -35,7 +35,10 @@ const Usercard = (props) => {
 
   var rankSpan;
   if (props.user.rank) {
-    rankSpan = <span>Rank: {props.user.rank}</span>;
+    rankSpan = <span>
+      <p className='prof-title'>Rank</p>
+      <p className='prof-rank-val'>{props.user.rank}</p>
+      </span>;
   } else {
     rankSpan = <span></span>;
   }
@@ -43,8 +46,7 @@ const Usercard = (props) => {
   return (
     <div className='usercard'>
       <div className='profdetail1'>
-        <span>{props.user.username}</span>
-        <span></span>
+        <span className='usercard-username'>{props.user.username}</span>
         {rankSpan}
       </div>
       {personalDetails}
