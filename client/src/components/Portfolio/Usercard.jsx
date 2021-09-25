@@ -35,7 +35,7 @@ const Usercard = (props) => {
 
   var rankSpan;
   if (props.user.rank) {
-    rankSpan = <span>Rank:{props.user.rank}</span>;
+    rankSpan = <span>Rank: {props.user.rank}</span>;
   } else {
     rankSpan = <span></span>;
   }

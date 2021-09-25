@@ -1,12 +1,7 @@
 import React from 'react';
 import {ImUserPlus, ImUsers} from 'react-icons/im';
 import {BsGraphUp, BsGraphDown} from "react-icons/bs";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 const LeaderboardListElement = (props) => {
   return (

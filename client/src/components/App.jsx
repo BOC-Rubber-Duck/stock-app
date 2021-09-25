@@ -190,15 +190,12 @@ class App extends React.Component {
         rank = res.data[0].rank;
         axios.get('/api/getPortfolio?username='+user)
           .then((results) => {
-            console.log('186 running');
             portfolio = results.data;
             axios.get('/api/getFriends?username='+user)
               .then((results) => {
-                console.log('190 running');
                 friends = results.data;
                 axios.get('/api/getUser?username='+user)
                   .then((result) => {
-                    console.log('194 running');
                     const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
                     var user = {
                       id: id,
@@ -213,15 +210,11 @@ class App extends React.Component {
                       friends: friends
                     };
                     if (self) {
-                      console.log('208 running');
                       this.updatePortfolioValue(user)
                         .then((updatedUser) => {
-                          console.log('211 running');
                           this.setState({
                             'user': updatedUser
                           }, () => {
-                            console.log('app level state was updated 215');
-                            console.log(this.state.user);
                           });
                         })
                         .catch((err) => {
@@ -289,8 +282,6 @@ class App extends React.Component {
             stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
             user.portfolioValue += stocks[i].valueOwned;
           }
-          console.log('user at line 283');
-          console.log(user);
           axios.put('/api/portfolioValue', {'user_id': user.id, 'portfolio_value': user.portfolioValue * 100}).then((queryResults) => {
             resolve(user);
           }).catch((err) => {

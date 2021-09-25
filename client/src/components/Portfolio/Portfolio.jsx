@@ -6,9 +6,6 @@ import getPortfolioValue from './helpers/getPortfolioValue.js';
 import axios from 'axios';
 
 const Portfolio = (props) => {
-  console.log('user inside portfolio');
-  console.log(props.user);
-
   const stocks = props.user.userPortfolio || props.user.selectedFriendPortfolio;
   const self = props.self;
   const handleStockClick = props.handleStockClick;
