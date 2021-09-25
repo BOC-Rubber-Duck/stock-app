@@ -57,6 +57,6 @@ test('Stockbar does render value for type portfolio', () => {
     valueOwned: 350000
   };
 
-  render(<Stockbar stock={stockData} useCase='portfolio'/>);
+  render(<Stockbar stock={stockData} showValue={true}/>);
   expect(screen.getByText('$350000')).toBeInTheDocument();
 });

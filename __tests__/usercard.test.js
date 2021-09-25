@@ -17,7 +17,7 @@ beforeEach(() => {
     userPortfolio: [],
     portfolioValue: 1050000
   };
-  render(<Usercard user={user}/>);
+  render(<Usercard user={user} self={true}/>);
 });
 
 afterEach(() => {
