@@ -10,6 +10,8 @@ import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import axios from 'axios';
 
+import {BrowserRouter} from 'react-router-dom';
+
 import Searchbar from '../client/src/components/Searchbar.jsx';
 import Predictions from '../client/src/components/Predictions.jsx';
 
@@ -50,7 +52,7 @@ afterAll(() => server.close());
 describe('Renders Searchbar component', () => {
   it('Mock test', async () => {
     await act(async () => {
-      await render(<Searchbar userPortfolio={samplePredictions} />);
+      await render(<BrowserRouter><Searchbar userPortfolio={samplePredictions} /></BrowserRouter>);
     });
     let searchBox = screen.getByPlaceholderText('Search...');
     expect(searchBox).toBeTruthy();
@@ -58,7 +60,7 @@ describe('Renders Searchbar component', () => {
       await userEvent.type(searchBox, 'AAPL');
     });
     expect(searchBox.value).toBe('AAPL');
-    // let results = await screen.findByText('AAPL');
-    // expect(results).toBeTruthy();
+    let results = await screen.findByText('Apple Inc.');
+    expect(results).toBeTruthy();
   });
 });
