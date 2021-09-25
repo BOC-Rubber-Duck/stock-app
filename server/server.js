@@ -17,7 +17,7 @@ const app = express();
 app.use(express.static(static_pathname));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET_KEY, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
