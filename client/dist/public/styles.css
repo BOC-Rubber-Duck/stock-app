@@ -709,6 +709,10 @@ body {
   text-align: right;
 }
 
+.spaced {
+  margin-top: 0.3rem;
+}
+
 .login-corner-icon {
   height: 3rem;
   width: 3rem;
