@@ -138,7 +138,7 @@ class Db {
       LEFT OUTER JOIN friendships AS f
       ON u.id = f.watched_user
       AND f.watching_user = '${userId}'
-      ORDER BY (u.cash_position + u.portfolio_value)
+      ORDER BY (u.cash_position + u.portfolio_value) DESC
       OFFSET ${offset}
       LIMIT ${entries};
     `;
@@ -155,7 +155,7 @@ class Db {
     cash_position,
     portfolio_value
     FROM users AS u
-    ORDER BY (u.cash_position + u.portfolio_value) $$
+    ORDER BY (u.cash_position + u.portfolio_value) DESC $$
     LANGUAGE SQL;
     `;
     return this.query(query);
@@ -177,7 +177,7 @@ class Db {
       INNER JOIN friendships AS f
       ON u.id = f.watched_user
       AND f.watching_user = '${userId}'
-      ORDER BY (u.cash_position + u.portfolio_value)
+      ORDER BY (u.cash_position + u.portfolio_value) DESC
       OFFSET ${offset}
       LIMIT ${entries};
     `;
