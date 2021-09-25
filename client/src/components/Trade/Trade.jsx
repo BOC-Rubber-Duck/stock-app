@@ -83,51 +83,55 @@ class Trade extends React.Component {
       return stock.ticker_symbol === stockSelected.symbol;
     }) : 0;
     const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
+    const cashAvailable = (user.cashBalance/100).toFixed(2);
+
     return (
-      <div className="trade-container" id="trade-container">
+      <section className="trade-container" id="trade-container">
         <div className="trade-header" id="trade-header">
           <span id="trade-header-name">{stockSelected.name}</span>
           <ExitButton />
         </div>
-        <div className="action-title" id="action-title">
-          <span id="action-title-span">{actionText}</span>
-          <span id="action-title-stock">{stockSelected.symbol}</span>
+        <div className="trade-action-title" id="trade-action-title">
+          <span id="trade-action-title-span">{actionText}</span>
+          <span id="trade-action-title-stock">{stockSelected.symbol}</span>
         </div>
         <div className="trade-info" id="trade-info">
-          <div className="shares-owned">
-            <span id="shares-owned-span-lbl">Shares Owned:</span> <span id="shares-owned-span">{sharesOwned}</span>
+          <div className="trade-info-row" id="trade-market-price-container">
+            <span className="trade-info-row-left" id="trade-market-price-span-lbl">Market Price</span>
+            <span className="trade-info-row-right" id="trade-market-price-span">${stockPrice}</span>
           </div>
-          <div id="shares">
-            <label>
-            Shares to {action}
-              <input
-                name="shares"
-                data-testid="shares"
-                type="number"
-                style={{color: "red"}}
-                value={this.state.shares !== 0 ? this.state.shares : ''}
-                onChange={this.handleInputChange} />
-            </label>
+          <div className="trade-shares-owned trade-info-row">
+            <div className="trade-info-row-left" id="trade-shares-owned-span-lbl">Shares Owned:</div>
+            <div className="trade-info-row-right" id="trade-shares-owned-span">{sharesOwned}</div>
           </div>
-          <div id="market-price-container">
-            <span id="market-price-span-lbl">Market Price</span> <span id="market-price-span">${stockPrice}</span>
+          <div className="trade-info-row" id="trade-shares">
+            <label className="trade-info-row-left" htmlFor="shares">Shares to {action}</label>
+            <input
+              className="trade-info-row-right"
+              id="shares"
+              name="shares"
+              data-testid="shares"
+              type="number"
+              style={{color: "red"}}
+              value={this.state.shares !== 0 ? this.state.shares : ''}
+              onChange={this.handleInputChange} />
           </div>
-          <div id="sale-amount-container">
-            <span id="sale-amt-span-lbl">Sale Amount</span>
-            <span id="sale-amt-span">${saleAmount}</span>
+          <div className="trade-info-row" id="trade-sale-amount-container">
+            <span className="trade-info-row-left" id="trade-sale-amt-span-lbl">Sale Amount</span>
+            <span className="trade-info-row-right" id="trade-sale-amt-span">${saleAmount}</span>
           </div>
-          <div id="cash-container">
-            <span id="cash-span-lbl">Cash Available</span>
-            <span id="cash-amt-span">${user.cashBalance}</span>
+          <div className="trade-info-row" id="trade-cash-container">
+            <span className="trade-info-row-left" id="trade-cash-span-lbl">Cash Available</span>
+            <span className="trade-info-row-right" id="trade-cash-amt-span">${cashAvailable}</span>
           </div>
-          <div className="trade-action" id="trade-action">
-            <button onClick={this.handleSubmit}>
-              {actionText}
-            </button>
-          </div>
-          <TradeMessage message={this.state.message} />
         </div>
-      </div>
+        <div className="trade-action" id="trade-action">
+          <button onClick={this.handleSubmit}>
+            {actionText}
+          </button>
+        </div>
+        <TradeMessage message={this.state.message} />
+      </section>
     );
   };
 };
