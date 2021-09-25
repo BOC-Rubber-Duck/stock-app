@@ -1,15 +1,9 @@
 module.exports.getGraphOptions = (data) => {
-  const groupingUnits = [
-    [
-      'week', // unit name
-      [1] // allowed multiples
-    ],
-    ['month', [1, 2, 3, 4, 6]]
-  ];
   const options = {
     yAxis: [{
       labels: {
-        align: 'left'
+        align: 'left',
+        format: '${text}'
       },
       height: '80%',
       resize: {
@@ -24,6 +18,7 @@ module.exports.getGraphOptions = (data) => {
       offset: 0
     }],
     tooltip: {
+      valuePrefix: '$',
       shape: 'square',
       headerShape: 'callout',
       borderWidth: 0,
@@ -59,17 +54,30 @@ module.exports.getGraphOptions = (data) => {
       type: 'ohlc',
       id: 'aapl-ohlc',
       name: 'AAPL Stock Price',
-      data: data.ohlc
-    }, {
-      type: 'column',
-      id: 'aapl-volume',
-      name: 'AAPL Volume',
-      data: data.volume,
-      yAxis: 1,
-      dataGrouping: {
-        units: groupingUnits
-      }
-    }],
+      data: data.ohlc,
+    },
+    // {
+    //   type: 'column',
+    //   id: 'aapl-volume',
+    //   name: 'AAPL Volume',
+    //   data: data.volume,
+    //   yAxis: 1,
+    // }
+    ],
+    scrollbar: {
+      barBackgroundColor: 'linear-gradient(0deg, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75))',
+      barBorderRadius: 7,
+      buttonBackgroundColor: '#F5F5F5',
+      buttonBorderWidth: 0,
+      buttonArrowColor: 'black',
+      buttonBorderRadius: 7,
+      rifleColor: 'white',
+      trackBackgroundColor: 'white',
+      trackBorderWidth: 1,
+      trackBorderColor: 'silver',
+      trackBorderRadius: 7,
+      height: 15,
+    }
   };
   return options;
 };

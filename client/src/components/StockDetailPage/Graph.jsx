@@ -8,11 +8,13 @@ const Graph = (props) => {
   const options = getGraphOptions(props.data);
   if (props.data) {
     return (
-      <div className='stock-graph' role='graph'>
+      <div role='graph'>
         <HighchartsReact
           highcharts={Highcharts}
           constructorType={'stockChart'}
           options={options}
+          className='stock-graph'
+          role='graph'
         />
       </div>
     );

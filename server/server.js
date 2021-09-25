@@ -17,7 +17,7 @@ const app = express();
 app.use(express.static(static_pathname));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET_KEY, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -149,6 +149,17 @@ app.get('/api/getWatchlist', (req, res) => {
       res.send(500);
     });
 });
+
+app.get('/api/whoami', (req, res) => {
+  if (req.user) {
+    let username = req.user.username;
+    res.status(200).json({
+      username
+    });
+  } else {
+    res.status(404);
+  }
+})
 
 app.post('/api/postFriend', (req, res) => {
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
