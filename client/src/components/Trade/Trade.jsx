@@ -1,6 +1,7 @@
 import React from 'react';
 import TradeMessage from './TradeMessage.jsx';
 import tradeValidation from './helperFunctions/tradeValidation.js';
+import ExitButton from './ExitButton.jsx';
 
 class Trade extends React.Component {
   constructor(props) {
@@ -85,7 +86,8 @@ class Trade extends React.Component {
     return (
       <div className="trade-container" id="trade-container">
         <div className="trade-header" id="trade-header">
-          {stockSelected.name}
+          <span id="trade-header-name">{stockSelected.name}</span>
+          <ExitButton />
         </div>
         <div className="action-title" id="action-title">
           <span id="action-title-span">{actionText}</span>
