@@ -55,6 +55,6 @@ test('Portfolio renders a single usercard', () => {
 });
 
 test('Portfolio renders a stockbar for each stock in the portfolio', () => {
-  var stockbars = document.getElementsByClassName('bar');
+  var stockbars = document.getElementsByClassName('stockbar-bar');
   expect(stockbars.length).toEqual(3);
 });

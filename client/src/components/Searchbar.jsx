@@ -15,7 +15,7 @@ const OwnedStockDisplay = (props) => {
         <Stockbar
           key={stock.symbol}
           stock={stock}
-          useCase={'stockSearch'}
+          showValue={false}
         />
       );
     })
@@ -24,9 +24,10 @@ const OwnedStockDisplay = (props) => {
 
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
-  const [displayStockDetails, setDisplayStockDetails] = useState(false);
+  const [displayStockDetails, setDisplayStockDetails] = useState(props.showDetails);
   const [ownedStocks, setOwnedStocks] = useState([]);
-  const [showOwnedStocks, setShowOwnedStocks] = useState(true);
+  const [showOwnedStocks, setShowOwnedStocks] = useState(!props.showDetails);
+
 
   useEffect(() => {
     const stocksToSearch = [];
@@ -77,32 +78,26 @@ const Searchbar = (props) => {
     setStockPredictions([]);
     setDisplayStockDetails(true);
     setShowOwnedStocks(false);
+    document.getElementsByTagName('input')[0].value = '';
   };
 
 
   return (
     <div className='searcbar-main'>
       <div className='searchbar-container'>
-        <div className='searchbar-display'>
-          <IconContext.Provider value={{className: 'searchbar-icon'}}>
-            <div className='search-icon-container'>
-              <FaSearch />
-            </div>
-          </IconContext.Provider>
-          <input
-            type='text'
-            className='searchbar-input'
-            placeholder='Search...'
-            onChange={(e) => handleUserInput(e)}>
-          </input>
-        </div>
+        <input
+          type='text'
+          className='searchbar-input'
+          placeholder='Search...'
+          onChange={(e) => handleUserInput(e)}>
+        </input>
       </div>
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {showOwnedStocks &&
+      {/* {showOwnedStocks &&
         <OwnedStockDisplay stocks={ownedStocks} />
-      }
+      } */}
       {displayStockDetails &&
         <StockDetailPage
           stockSelected={props.stockSelected}

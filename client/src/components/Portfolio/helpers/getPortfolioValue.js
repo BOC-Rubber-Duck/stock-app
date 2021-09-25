@@ -19,7 +19,7 @@ const getPortfolioValue = (user) => {
           stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
           user.portfolioValue += stocks[i].valueOwned;
         }
-        axios.put('/api/portfolioValue', {'user_id': user.userPortfolio[0].user_id, 'portfolio_value': user.portfolioValue}).then((queryResults) => {
+        axios.put('/api/portfolioValue', {'user_id': user.userPortfolio[0].user_id, 'portfolio_value': user.portfolioValue * 100}).then((queryResults) => {
           resolve(user);
         }).catch((err) => {
           console.log('error writing portfolioValue to db:', err);

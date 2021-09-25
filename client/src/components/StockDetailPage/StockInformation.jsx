@@ -1,21 +1,17 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 
-class StockInformation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
+const StockInformation = (props) => {
+  if (props.price) {
     return (
       <div className='StockInformation'>
-        <span className='StockInformation-Name'>{this.props.name}</span>
-        <span className='StockInformation-Symbol'>{this.props.symbol}</span>
-        <div className='StockInformation-Price'>${this.props.price}</div>
+        <span className='StockInformation-Name'>{props.name}</span>
+        <span className='StockInformation-Symbol'>{props.symbol}</span>
+        <div className='StockInformation-Price'>${props.price.toFixed(2)}</div>
       </div>
     );
   }
-}
+  return null;
+};
 
 export default StockInformation;
