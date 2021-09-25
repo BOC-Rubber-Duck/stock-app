@@ -26,19 +26,19 @@ class Portfolio extends React.Component {
   }
 
   render() {
-    const stocks = this.state.user.userPortfolio;
+    const stocks = this.state.user !== undefined ?this.state.user.userPortfolio: [];
 
     const stockbars = stocks.map((stockObject) => {
       return (
         <Link to="/stock-detail-page" key={stockObject.ticker_symbol}>
-          <Stockbar stock={stockObject} showValue={this.props.self} onClick={this.props.onStockClick}/>
+          <Stockbar key={stockObject.ticker_symbol} stock={stockObject} useCase='portfolio' onClick={this.props.onStockClick}/>
         </Link>
       );
     });
 
     return (
-      <div>
-        <Usercard user={this.state.user} self={this.props.self}/>
+      <div className="portfolio-container">
+        <Usercard user={this.state.user}/>
         <div>{stockbars}</div>
       </div>
     );

@@ -1,4 +1,4 @@
-const list = require('../stockList/stocks.json');
+const list = require('../stockList/nasdaqStocks.json');
 
 const filterStockSearch = (input) => {
   if (!input) {

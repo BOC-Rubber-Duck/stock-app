@@ -10,10 +10,10 @@ import {
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
-import Trade from './Trade.jsx';
+import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
-import StockDetailPage from './StockDetailPage.jsx';
+// import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -48,8 +48,8 @@ class App extends React.Component {
         portfolioValue: 0,
         selectedFriendPortfolio: [
         //  {
-        //     stockName:
-        //     sharesOwned
+        //     name:
+        //     symbol
         //   },
         //   {}
         ]
@@ -69,6 +69,7 @@ class App extends React.Component {
 
     this.fetchSelectedStock = this.fetchSelectedStock.bind(this);
     this.handleTrade = this.handleTrade.bind(this);
+    this.selectedUserSearch = this.selectedUserSearch.bind(this);
     this.updateTradeAction = this.updateTradeAction.bind(this);
   }
 
@@ -83,42 +84,71 @@ class App extends React.Component {
   }
 
   selectedUserSearch(username) {
-    // Tyler?
-    // need to get pricing for each stock in their portfolio, check server route/helper functions
-    this.setState({
-      // selectedFriend: {
-      //   username: '',
-      //   rank: 0,
-      //   portfolioValue: 0,
-      //   selectedFriendPortfolio: [
-      //   //  {
-      //   //     stockName:
-      //   //     sharesOwned
-      //   //   },
-      //   //   {}
-      //   ]
-      // },
-    });
-  };
+    // this is temp
+    const portfolioValue= Math.floor(Math.random() * 10000000);
+    // this is temp
+    const rank = Math.ceil(Math.random() * 100);
+    axios.get('/api/getPortfolio', {
+      params: {
+        username
+      }
+    })
+      .then((res) => {
+        const portfolio = [];
+        const dbPortfolioData = res.data;
+        dbPortfolioData.map((stock) => {
+          const tickerSymbol = stock.ticker_symbol;
+          portfolio.push(
+            axios.get('/userStockSearch', {
+              params: {
+                userStockSearch: tickerSymbol
+              }
+            })
+          );
+        });
+        Promise.all(portfolio)
+          .then((res) => {
+            const selectedFriendPortfolio = res.map((r) => {
+              return r.data[0];
+            });
+            return selectedFriendPortfolio;
+          })
+          .then((selectedFriendPortfolio) => {
+            const selectedFriend = {
+              username,
+              rank,
+              portfolioValue,
+              selectedFriendPortfolio
+            };
+            this.setState({
+              selectedFriend
+            });
+          })
+          .catch((e) => e);
+      })
+      .catch((e) => e);
+  }
 
   getLeaderboard() {
     // get most recent users
     // update stock prices?
   };
 
-  handleTrade(stockSymbol, shares, action) {
-    console.log('handleTrade method called');
+  handleTrade(currentUser, stockSymbol, shares, action) {
     // axios call:
-    axios.post('/trade', {
+    return axios.post('/api/trade', {
+      user: currentUser,
       stockSymbol: stockSymbol,
       shares: shares,
       action: action
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        return response;
       })
       .error((err) => {
         console.log('error in attempting trade', err);
+        return err;
       });
     // let message = response.status == 200 ? 'success': `failed to perform trade, error: ${error}`;
     // return message;
@@ -183,19 +213,6 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
-    console.log(`Stock ${symbol} clicked!`);
-    // TODO: ajax calls to external service
-    // returns 1 year of data, use first response[0] for "up to date" for display purposes
-    // this.setState({
-    //   stockSelected: {
-    //     name: 'Tesla',
-    //     symbol: 'TSLA',
-    //     price: 45.99,
-    //     data: [
-    //       {},{}
-    //     ]
-    //   },
-    // });
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
