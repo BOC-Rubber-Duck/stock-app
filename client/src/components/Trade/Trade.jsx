@@ -9,7 +9,7 @@ class Trade extends React.Component {
     this.state = {
       shares: 0,
       tradeIsValid: true,
-      message: 'Example Message Here'
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,42 +26,47 @@ class Trade extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = Math.floor(target.value);
+    const value = Math.floor(Math.abs(target.value));
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
-
+    const currentUser = this.props.user;
     const shares = this.state.shares;
+    const stockSymbol = this.props.stockSelected.symbol;
+    const stockOwned = currentUser !== undefined ? currentUser.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSymbol;
+    }) : 0;
     const price = this.props.stockSelected.price;
-    const cashBalance = this.props.user.cashBalance;
+    const cashBalance = (this.props.user.cashBalance/100).toFixed(2);
     const action = this.props.action;
 
-    if (tradeValidation(shares, price, cashBalance, action)) {
-      console.log('trade can be performed');
+    if (tradeValidation(shares, stockOwned, price, cashBalance, action)) {
       this.setState({
+        [name]: value,
         tradeIsValid: true,
-        message: 'Good To Go!'
+        message: 'Trade can be submitted!'
       });
     } else {
-      console.log('trade cannot be performed');
       this.setState({
+        [name]: value,
         tradeIsValid: false,
-        message: 'Trade cannot be performed'
+        message: 'Trade cannot be submitted'
       });
     }
+    this.forceUpdate();
   };
 
   handleSubmit() {
-    const currentUser = this.props.user.username;
+    const currentUser = this.props.user;
     const stockSymbol = this.props.stockSelected.symbol;
     const action = this.props.action;
     const shares = this.state.shares;
     const price = this.props.stockSelected.price;
     const cashBalance = (this.props.user.cashBalance/100).toFixed(2);
+    const stockOwned = currentUser !== undefined ? currentUser.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSymbol;
+    }) : 0;
 
-    if (tradeValidation(shares, price, cashBalance, action)) {
+    if (tradeValidation(shares, stockOwned, price, cashBalance, action)) {
       let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
       console.log('tradeResponse:', tradeResponse);
     } else {
@@ -111,7 +116,7 @@ class Trade extends React.Component {
               name="shares"
               data-testid="shares"
               type="number"
-              style={this.tradeIsValid === false ? {color: "red"} : {}}
+              style={this.state.tradeIsValid === false ? {color: "red"} : {}}
               value={this.state.shares !== 0 ? this.state.shares : ''}
               onChange={this.handleInputChange} />
           </div>
