@@ -206,7 +206,7 @@ class App extends React.Component {
             <Route exact path="/leaderboard"
               render={() =>
                 <Leaderboard
-                  user={this.state.user}
+                  user={this.state.user} handleFriendFlick={this.selectedUserSearch}
                 />
               }/>
             <Route exact path="/portfolio"

@@ -14,9 +14,11 @@ const LeaderboardListElement = (props) => {
         <h2>{(props.index + 1)}</h2>
       </div>
       <div className="leaderboard-username">
-         <Router>
-          <Link to="/portfolio">
-            <h2>{props.username}</h2>
+        <Router>
+          <Link to="/friendPortfolio" key={props.username}>
+            <h2 onClick={() => {
+              props.handleFriendClick(props.username);
+            }}>{props.username}</h2>
           </Link>
         </Router>
       </div>

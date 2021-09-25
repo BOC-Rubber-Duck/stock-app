@@ -144,7 +144,7 @@ class Leaderboard extends React.Component {
                 <p>&#8593; Release to refresh</p>
               }
             >
-              <LeaderboardList addFriend={this.addFriend} list={this.state.list}/>
+              <LeaderboardList addFriend={this.addFriend} list={this.state.list} handleFriendClick={this.props.handleFriendClick}/>
             </InfiniteScroll>
           </div>
         </div>

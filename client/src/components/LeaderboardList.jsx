@@ -13,7 +13,8 @@ const LeaderboardList = (props) => {
           username={element.username}
           balance={element.cash_position}
           watchingUser={element.watching_user}
-          addFriend={props.addFriend}/>
+          addFriend={props.addFriend}
+          handleFriendclick={props.handleFriendClick}/>
       ))}
     </div>
   );

@@ -4,6 +4,9 @@ import Usercard from './Usercard.jsx';
 import {Link} from 'react-router-dom';
 import getPortfolioValue from './helpers/getPortfolioValue.js';
 
+
+//TODO: Move helper function to App level, refactor to be classless and render only based on props
+
 class Portfolio extends React.Component {
   constructor(props) {
     super(props);
