@@ -61,7 +61,6 @@ class Leaderboard extends React.Component {
             } else {
               this.setState({list: list.concat(response.data), previousList: response.data});
             }
-            console.log(this.state.list);
             if (response.data.length === 0) {
               this.setState({hasMore: false});
             }
@@ -111,7 +110,7 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
-        <Usercard user={this.props.user} />
+        <Usercard user={this.props.user} self={true}/>
         <div id="leaderboard-list">
           <div id="list-header">
             <form>

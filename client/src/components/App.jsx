@@ -26,23 +26,25 @@ class App extends React.Component {
         last_name: '',
         username: 'bezos_the_first',
         email: '',
-        cashBalance: 200000,
-        rank: 1,
-        userPortfolio: [
-          {
-            amount: 1000000,
-            exchange: "nasdaq",
-            id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
-            ticker_symbol: "fb",
-            user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
-          }
-        ],
-        friends: [
-          // username, username
-        ]
+        cashBalance: 10,
+        portfolioValue: 0,
+        rank: 0,
+        userPortfolio: [],
+        friends: []
       },
       sessionInfo: {}, // need to be populated with passport
-      selectedFriend: {},
+      selectedFriend: {
+        id: '',
+        first_name: '',
+        last_name: '',
+        username: 'selectedFriendDefault',
+        email: '',
+        cashBalance: 10,
+        portfolioValue: 0,
+        rank: 0,
+        userPortfolio: [],
+        friends: []
+      },
       stockSelected: {
         name: 'Tesla',
         symbol: 'TSLA',
@@ -63,7 +65,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrentUser();
+    this.getCurrentUser(this.state.user.username);
   }
 
   updateTradeAction(action) {
@@ -73,13 +75,14 @@ class App extends React.Component {
   }
 
   selectedUserSearch(user) {
+    console.log('searching for user', user);
     let portfolio = [];
     axios.get('/api/getPortfolio?username='+user)
       .then((results) => {
         portfolio = results.data;
         axios.get('/api/getUser?username='+user)
           .then((result) => {
-            const { id, first_name, last_name, username, email, cash_position } = result.data;
+            const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
             this.setState({
               selectedFriend: {
                 id: id,
@@ -88,8 +91,13 @@ class App extends React.Component {
                 username: username,
                 email: email,
                 cashBalance: cash_position,
+                portfolioValue: portfolio_value,
                 userPortfolio: portfolio,
               }
+            }, () => {
+              console.log('the state was set');
+              console.log(this.state.selectedFriend);
+              this.forceUpdate();
             });
           });
       });
@@ -119,13 +127,6 @@ class App extends React.Component {
   };
 
   getCurrentUser(user) {
-    // in conjunction with passport auth? Should only be able to fetch own info.
-    let self = true;
-    if (user === undefined) {
-      user = 'the_zuck';
-    } else {
-      self = false;
-    }
     let portfolio = [];
     let friends = [];
     axios.get('/api/getPortfolio?username='+user)
@@ -137,38 +138,18 @@ class App extends React.Component {
             axios.get('/api/getUser?username='+user)
               .then((result) => {
                 const { id, first_name, last_name, username, email, cash_position } = result.data;
-                if (self) {
-                  this.setState({
-                    user: {
-                      id: id,
-                      first_name: first_name,
-                      last_name: last_name,
-                      username: username,
-                      email: email,
-                      cashBalance: cash_position,
-                      userPortfolio: portfolio,
-                      friends: friends
-                    }
-                  });
-                } else {
-                  // add to some other user in the state
-                  let others = {};
-                  if (this.state.others) {
-                    others = this.state.others;
-                    others[username] = {
-                      first_name: first_name,
-                      last_name: last_name,
-                      username: username,
-                      email: email,
-                      cashBalance: cash_position,
-                      userPortfolio: portfolio,
-                      friends: friends
-                    };
-                    this.setState({
-                      others: others
-                    });
+                this.setState({
+                  user: {
+                    id: id,
+                    first_name: first_name,
+                    last_name: last_name,
+                    username: username,
+                    email: email,
+                    cashBalance: cash_position,
+                    userPortfolio: portfolio,
+                    friends: friends
                   }
-                }
+                });
               });
           });
       })
@@ -230,11 +211,11 @@ class App extends React.Component {
               }/>
             <Route exact path="/portfolio"
               render={() =>
-                <Portfolio user={this.state.user} handleStockClick={this.fetchSelectedStock}/>
+                <Portfolio user={this.state.user} handleStockClick={this.fetchSelectedStock} self={true}/>
               }/>
             <Route exact path="/friendPortfolio"
               render={() =>
-                <Portfolio user={this.state.selectedFriend} handleStockClick={this.fetchSelectedStock}/>
+                <Portfolio user={this.state.selectedFriend} handleStockClick={this.fetchSelectedStock} self={false}/>
               }/>
             <Route exact path="/stock-search"
               render={() =>
