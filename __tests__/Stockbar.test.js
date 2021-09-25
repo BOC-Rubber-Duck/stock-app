@@ -58,5 +58,5 @@ test('Stockbar does render value for type portfolio', () => {
   };
 
   render(<Stockbar stock={stockData} showValue={true}/>);
-  expect(screen.getByText('$350000')).toBeInTheDocument();
+  expect(screen.getByText('$350000.00')).toBeInTheDocument();
 });

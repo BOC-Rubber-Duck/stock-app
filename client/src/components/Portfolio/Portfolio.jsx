@@ -9,8 +9,6 @@ const Portfolio = (props) => {
   const stocks = props.user.userPortfolio || props.user.selectedFriendPortfolio;
   const self = props.self;
   const handleStockClick = props.handleStockClick;
-  console.log('portfolio in portfolio line 12');
-  console.log(props.user.portfolioValue);
 
   const stockbars = stocks.map((stockObject) => {
     if (stockObject) {
