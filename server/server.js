@@ -176,7 +176,13 @@ app.post('/api/postUser', (req, res) => {
   let { first_name, last_name, email, username, password } = req.body;
   db.postUser(first_name, last_name, email, username, password)
     .then((data) => {
-      res.sendStatus(204);
+      controllers.user.findById(data.rows[0].id, function(err, user) {
+        if (err) { console.log('Error returned when attempting to log in a freshly registered user: ', err) }
+        req.login(user, function(err) {
+          if (err) { return next(err); }
+          return res.redirect('/');
+        });
+      });
     })
     .catch((err) => {
       console.log('Error during postUser: ', err)
