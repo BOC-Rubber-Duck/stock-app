@@ -171,7 +171,6 @@ class App extends React.Component {
   };
 
   getCurrentUser(user, mount = false) {
-    console.log('174 running');
     // in conjunction with passport auth? Should only be able to fetch own info.
     let self = true;
     if (this.state.user.username === '' && mount === true) {
@@ -181,63 +180,73 @@ class App extends React.Component {
     }
     let portfolio = [];
     let friends = [];
-    axios.get('/api/getPortfolio?username='+user)
-      .then((results) => {
-        console.log('186 running');
-        portfolio = results.data;
-        axios.get('/api/getFriends?username='+user)
+    var rank = 0;
+    axios.get('/api/getRank', {
+      params: {
+        'username': user
+      }
+    })
+      .then((res) => {
+        rank = res.data[0].rank;
+        axios.get('/api/getPortfolio?username='+user)
           .then((results) => {
-            console.log('190 running');
-            friends = results.data;
-            axios.get('/api/getUser?username='+user)
-              .then((result) => {
-                console.log('194 running');
-                const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
-                var user = {
-                  id: id,
-                  first_name: first_name,
-                  last_name: last_name,
-                  username: username,
-                  email: email,
-                  cashBalance: cash_position,
-                  portfolioValue: portfolio_value,
-                  userPortfolio: portfolio,
-                  friends: friends
-                };
-                if (self) {
-                  console.log('208 running');
-                  this.updatePortfolioValue(user)
-                    .then((updatedUser) => {
-                      console.log('211 running');
-                      this.setState({
-                        'user': updatedUser
-                      }, () => {
-                        console.log('app level state was updated 215');
-                        console.log(this.state.user);
-                      });
-                    })
-                    .catch((err) => {
-                      console.log('error updating portfolioValue', err);
-                    });
-                } else {
-                  // add to some other user in the state
-                  let others = {};
-                  if (this.state.others) {
-                    others = this.state.others;
-                    others[username] = {
+            console.log('186 running');
+            portfolio = results.data;
+            axios.get('/api/getFriends?username='+user)
+              .then((results) => {
+                console.log('190 running');
+                friends = results.data;
+                axios.get('/api/getUser?username='+user)
+                  .then((result) => {
+                    console.log('194 running');
+                    const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
+                    var user = {
+                      id: id,
                       first_name: first_name,
                       last_name: last_name,
                       username: username,
                       email: email,
                       cashBalance: cash_position,
+                      portfolioValue: portfolio_value,
                       userPortfolio: portfolio,
+                      rank: rank,
                       friends: friends
                     };
-                    this.setState({
-                      others: others
-                    });
-                  }
-                };
+                    if (self) {
+                      console.log('208 running');
+                      this.updatePortfolioValue(user)
+                        .then((updatedUser) => {
+                          console.log('211 running');
+                          this.setState({
+                            'user': updatedUser
+                          }, () => {
+                            console.log('app level state was updated 215');
+                            console.log(this.state.user);
+                          });
+                        })
+                        .catch((err) => {
+                          console.log('error updating portfolioValue', err);
+                        });
+                    } else {
+                      // add to some other user in the state
+                      let others = {};
+                      if (this.state.others) {
+                        others = this.state.others;
+                        others[username] = {
+                          first_name: first_name,
+                          last_name: last_name,
+                          username: username,
+                          email: email,
+                          cashBalance: cash_position,
+                          userPortfolio: portfolio,
+                          friends: friends
+                        };
+                        this.setState({
+                          others: others
+                        });
+                      }
+                    };
+                  });
               });
           });
       })
