@@ -10,7 +10,7 @@ import {
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
 import Leaderboard from './Leaderboard.jsx';
-import Trade from './Trade.jsx';
+import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
 // import StockDetailPage from './StockDetailPage.jsx';
@@ -86,8 +86,6 @@ class App extends React.Component {
   selectedUserSearch(username) {
     // this is temp
     const portfolioValue= Math.floor(Math.random() * 10000000);
-    // this is temp
-    const rank = Math.ceil(Math.random() * 100);
     axios.get('/api/getPortfolio', {
       params: {
         username
@@ -114,15 +112,25 @@ class App extends React.Component {
             return selectedFriendPortfolio;
           })
           .then((selectedFriendPortfolio) => {
-            const selectedFriend = {
-              username,
-              rank,
-              portfolioValue,
-              selectedFriendPortfolio
-            };
-            this.setState({
-              selectedFriend
-            });
+            axios.get('/api/getRank', {
+              params: {
+                username
+              }
+            })
+              .then((res) => {
+                const rank = res.data[0].rank;
+                const portfolioValue = res.data[0].portfolio_value;
+                const selectedFriend = {
+                  username,
+                  rank,
+                  portfolioValue,
+                  selectedFriendPortfolio
+                };
+                this.setState({
+                  selectedFriend
+                });
+              })
+              .catch((e) => e);
           })
           .catch((e) => e);
       })
@@ -281,7 +289,6 @@ class App extends React.Component {
             <Route exact path="/trade"
               render={() =>
                 <Trade
-                  tradeAction={this.state.trade.action}
                   stockSelected={this.state.stockSelected}
                   user={this.state.user}
                   handleTrade={this.handleTrade}
@@ -290,6 +297,7 @@ class App extends React.Component {
             />
             <Route exact path="/login" component={Login} />
             <Route exact path="/friend" component={Friend} />
+
           </Switch>
           <Navbar />
         </React.Fragment>
