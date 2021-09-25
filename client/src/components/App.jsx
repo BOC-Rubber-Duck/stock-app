@@ -256,8 +256,6 @@ class App extends React.Component {
         const stockSelected = res.data;
         this.setState({
           stockSelected
-        }, () => {
-          this.forceUpdate();
         });
       })
       .catch((e) => console.log(e));
