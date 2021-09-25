@@ -24,13 +24,13 @@ class App extends React.Component {
         id: '',
         first_name: '',
         last_name: '',
-        username: 'bezos_the_first',
+        username: '',
         email: '',
-        cashBalance: 200000,
-        rank: 1,
+        cashBalance: 0,
+        rank: 0,
         userPortfolio: [
           {
-            amount: 1000000,
+            amount: 0,
             exchange: "nasdaq",
             id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
             ticker_symbol: "fb",
@@ -74,7 +74,13 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getCurrentUser();
+    axios.get('/api/whoami')
+      .then((res) => {
+        if (res.data.username) {
+          this.getCurrentUser(res.data.username, true);
+        }
+      })
+      .catch((e) => e);
   }
 
   updateTradeAction(action) {
@@ -162,11 +168,11 @@ class App extends React.Component {
     // return message;
   };
 
-  getCurrentUser(user) {
+  getCurrentUser(user, mount = false) {
     // in conjunction with passport auth? Should only be able to fetch own info.
     let self = true;
-    if (user === undefined) {
-      user = 'the_zuck';
+    if (this.state.user.username === '' && mount === true) {
+      user = user;
     } else {
       self = false;
     }
@@ -261,9 +267,7 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/"
               render={() =>
-                <Leaderboard
-                  user={this.state.user}
-                />
+                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
               }/>
             <Route exact path="/leaderboard"
               render={() =>
