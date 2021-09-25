@@ -42,7 +42,7 @@ class Trade extends React.Component {
       console.log('trade can be performed');
       this.setState({
         tradeIsValid: true,
-        message: ''
+        message: 'Good To Go!'
       });
     } else {
       console.log('trade cannot be performed');
