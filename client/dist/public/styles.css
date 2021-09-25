@@ -256,11 +256,13 @@ body {
   grid-column: 2;
   margin-left: 5%;
   background-color: var(--level1-lighten);
-  border: none;
+  color: var(--default-text);
+  border: 0.1em solid var(--background-light);
   font-size: 1rem;
   text-align: center;
   box-shadow: white;
   height: 1.6rem;
+  transition: all 0.2s;
 }
 
 /**********END STOCK DETAIL PAGE **********/

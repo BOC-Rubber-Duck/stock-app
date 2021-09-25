@@ -10,11 +10,13 @@ const BuySellMenu = (props) => {
   let numStock = null;
   for (let i = 0; i < length; i++) {
     const stock = props.user.userPortfolio[i];
-    if (stock.stockName === props.stockSelected.name) {
-      numStock = stock.sharesOwned;
+    if (stock.ticker_symbol.toLowerCase() === props.stockSelected.symbol) {
+      numStock = stock.valueOwned;
     }
   }
-  numStock = numStock || 0;
+  if (!numStock) {
+    numStock = 0;
+  }
   const displaySell = numStock > 0 ? true : false;
   let action = null;
   const history = useHistory();
