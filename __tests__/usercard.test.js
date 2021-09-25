@@ -30,10 +30,10 @@ test('Usercard renders username and rank', () => {
 });
 
 test('Usercard renders cash balance and stock value', () => {
-  expect(screen.getByText('$2000000')).toBeInTheDocument();
+  expect(screen.getByText('$20000')).toBeInTheDocument();
   expect(screen.getByText('$10500000')).toBeInTheDocument();
 });
 
 test('Usercard renders total net gain/loss', () => {
-  expect(screen.getByText('11.50%')).toBeInTheDocument();
+  expect(screen.getByText('952.00%')).toBeInTheDocument();
 });
