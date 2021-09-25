@@ -94,12 +94,12 @@ afterAll(() => server.close());
 
 test('Leaderboard mounts.', () => {
   sinon.spy(Leaderboard.prototype, 'componentDidMount');
-  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  var wrapper = mount(<BrowserRouter><Leaderboard user={initialProps.user} /></BrowserRouter>);
   expect(Leaderboard.prototype.componentDidMount).toHaveProperty('callCount', 1);
 });
 
 test('Leaderboard renders text to screen.', () => {
-  var wrapper = mount(<Leaderboard user={initialProps.user} />);
+  var wrapper = mount(<BrowserRouter><Leaderboard user={initialProps.user} /></BrowserRouter>);
   expect(wrapper.find('.list-header').text()).toMatch(/Leaderboard/);
 });
 
