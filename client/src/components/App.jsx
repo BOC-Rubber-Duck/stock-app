@@ -5,7 +5,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  useHistory
 } from 'react-router-dom';
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
@@ -23,13 +23,22 @@ class App extends React.Component {
         id: '',
         first_name: '',
         last_name: '',
-        username: 'bezos_the_first',
+        username: '',
         email: '',
-        cashBalance: 10,
-        portfolioValue: 0,
+        cashBalance: 0,
         rank: 0,
-        userPortfolio: [],
-        friends: []
+        userPortfolio: [
+          {
+            amount: 0,
+            exchange: "nasdaq",
+            id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a23",
+            ticker_symbol: "fb",
+            user_id: "a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a13"
+          }
+        ],
+        friends: [
+          // username, username
+        ]
       },
       sessionInfo: {}, // need to be populated with passport
       selectedFriend: {
@@ -45,9 +54,9 @@ class App extends React.Component {
         friends: []
       },
       stockSelected: {
-        name: 'Tesla',
-        symbol: 'TSLA',
-        price: 100,
+        name: '',
+        symbol: '',
+        price: null,
         data: [
           // {},{}
         ]
@@ -61,11 +70,17 @@ class App extends React.Component {
     this.handleTrade = this.handleTrade.bind(this);
     this.selectedUserSearch = this.selectedUserSearch.bind(this);
     this.updateTradeAction = this.updateTradeAction.bind(this);
-    this.selectedUserSearch = this.selectedUserSearch.bind(this);
+    this.exitButton = this.exitButton.bind(this);
   }
 
   componentDidMount() {
-    this.getCurrentUser(this.state.user.username);
+    axios.get('/api/whoami')
+      .then((res) => {
+        if (res.data.username) {
+          this.getCurrentUser(res.data.username, true);
+        }
+      })
+      .catch((e) => e);
   }
 
   updateTradeAction(action) {
@@ -75,6 +90,8 @@ class App extends React.Component {
   }
 
   selectedUserSearch(username) {
+    // this is temp
+    const portfolioValue= Math.floor(Math.random() * 10000000);
     axios.get('/api/getPortfolio', {
       params: {
         username
@@ -101,17 +118,27 @@ class App extends React.Component {
             return selectedFriendPortfolio;
           })
           .then((selectedFriendPortfolio) => {
-            const selectedFriend = {
-              username,
-              rank: 0,
-              portfolioValue: 0,
-              selectedFriendPortfolio
-            };
-            this.setState({
-              selectedFriend
-            }, () => {
-              this.forceUpdate();
-            });
+            axios.get('/api/getRank', {
+              params: {
+                username
+              }
+            })
+              .then((res) => {
+                const rank = res.data[0].rank;
+                const portfolioValue = res.data[0].portfolio_value;
+                const cashBalance = res.data[0].cash_position;
+                const selectedFriend = {
+                  username,
+                  rank,
+                  portfolioValue,
+                  cashBalance,
+                  selectedFriendPortfolio
+                };
+                this.setState({
+                  selectedFriend
+                });
+              })
+              .catch((e) => e);
           })
           .catch((e) => e);
       })
@@ -143,32 +170,55 @@ class App extends React.Component {
     // return message;
   };
 
-  getCurrentUser(user) {
+  getCurrentUser(user, mount = false) {
+    console.log('174 running');
+    // in conjunction with passport auth? Should only be able to fetch own info.
+    let self = true;
+    if (this.state.user.username === '' && mount === true) {
+      user = user;
+    } else {
+      self = false;
+    }
     let portfolio = [];
     let friends = [];
     axios.get('/api/getPortfolio?username='+user)
       .then((results) => {
+        console.log('186 running');
         portfolio = results.data;
         axios.get('/api/getFriends?username='+user)
           .then((results) => {
+            console.log('190 running');
             friends = results.data;
             axios.get('/api/getUser?username='+user)
               .then((result) => {
+                console.log('194 running');
                 const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
+                var user = {
+                  id: id,
+                  first_name: first_name,
+                  last_name: last_name,
+                  username: username,
+                  email: email,
+                  cashBalance: cash_position,
+                  portfolioValue: portfolio_value,
+                  userPortfolio: portfolio,
+                  friends: friends
+                };
                 if (self) {
-                  this.setState({
-                    user: {
-                      id: id,
-                      first_name: first_name,
-                      last_name: last_name,
-                      username: username,
-                      email: email,
-                      cashBalance: cash_position,
-                      portfolioValue: portfolio_value,
-                      userPortfolio: portfolio,
-                      friends: friends
-                    }
-                  });
+                  console.log('208 running');
+                  this.updatePortfolioValue(user)
+                    .then((updatedUser) => {
+                      console.log('211 running');
+                      this.setState({
+                        'user': updatedUser
+                      }, () => {
+                        console.log('app level state was updated 215');
+                        console.log(this.state.user);
+                      });
+                    })
+                    .catch((err) => {
+                      console.log('error updating portfolioValue', err);
+                    });
                 } else {
                   // add to some other user in the state
                   let others = {};
@@ -209,6 +259,45 @@ class App extends React.Component {
         });
       })
       .catch((e) => console.log(e));
+  };
+
+  updatePortfolioValue(user) {
+    const stocks = user.userPortfolio;
+    const stockData = stocks.slice();
+    user.portfolioValue = 0;
+
+    return new Promise((resolve, reject) => {
+      axios.all(stockData.map((stock) =>
+        axios.get('/fetchSelectedStock', {
+          params: {
+            'symbol': stock.ticker_symbol
+          }
+        })
+      ))
+        .then(axios.spread((...responses) => {
+          for (var i = 0; i < responses.length; i++) {
+            stocks[i].stockName = responses[i].data.name;
+            stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
+            user.portfolioValue += stocks[i].valueOwned;
+          }
+          console.log('user at line 283');
+          console.log(user);
+          axios.put('/api/portfolioValue', {'user_id': user.id, 'portfolio_value': user.portfolioValue * 100}).then((queryResults) => {
+            resolve(user);
+          }).catch((err) => {
+            console.log('error writing portfolioValue to db:', err);
+            resolve(user);
+          });
+        }))
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
+
+  exitButton() {
+    let history = useHistory();
+    history.push('/');
   };
 
   render() {
@@ -286,6 +375,7 @@ class App extends React.Component {
                   user={this.state.user}
                   handleTrade={this.handleTrade}
                   action={this.state.trade.action}
+                  exitButton={this.exitButton}
                 />}
             />
             <Route exact path="/login" component={Login} />

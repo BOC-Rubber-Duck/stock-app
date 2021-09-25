@@ -17,7 +17,7 @@ const app = express();
 app.use(express.static(static_pathname));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(session({ secret: "dispositions lossy rependo rakastaa", resave: false, saveUninitialized: true }));
+app.use(session({ secret: process.env.SESSION_SECRET_KEY, resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
@@ -150,6 +150,17 @@ app.get('/api/getWatchlist', (req, res) => {
     });
 });
 
+app.get('/api/whoami', (req, res) => {
+  if (req.user) {
+    let username = req.user.username;
+    res.status(200).json({
+      username
+    });
+  } else {
+    res.status(404);
+  }
+})
+
 app.post('/api/postFriend', (req, res) => {
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
     .then((data) => {
@@ -176,7 +187,13 @@ app.post('/api/postUser', (req, res) => {
   let { first_name, last_name, email, username, password } = req.body;
   db.postUser(first_name, last_name, email, username, password)
     .then((data) => {
-      res.sendStatus(204);
+      controllers.user.findById(data.rows[0].id, function(err, user) {
+        if (err) { console.log('Error returned when attempting to log in a freshly registered user: ', err) }
+        req.login(user, function(err) {
+          if (err) { return next(err); }
+          return res.redirect('/');
+        });
+      });
     })
     .catch((err) => {
       console.log('Error during postUser: ', err)
