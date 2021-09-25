@@ -4,6 +4,7 @@ import axios from 'axios';
 import Predictions from './Predictions.jsx';
 import {IconContext} from 'react-icons';
 import {FaSearch} from 'react-icons/fa';
+import {Link} from 'react-router-dom';
 
 import StockDetailPage from './StockDetailPage.jsx';
 import Stockbar from './Portfolio/Stockbar.jsx';
@@ -12,11 +13,13 @@ const OwnedStockDisplay = (props) => {
   return (
     props.stocks.map((stock, i) => {
       return (
-        <Stockbar
-          key={stock.symbol}
-          stock={stock}
-          showValue={false}
-        />
+        <Link to={'/stock-detail'} key={stock.symbol}>
+          <Stockbar
+            key={stock.symbol}
+            stock={stock}
+            showValue={false}
+          />
+        </Link>
       );
     })
   );
@@ -94,9 +97,9 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {/* {showOwnedStocks &&
+      {showOwnedStocks &&
         <OwnedStockDisplay stocks={ownedStocks} />
-      } */}
+      }
       {displayStockDetails &&
         <StockDetailPage
           stockSelected={props.stockSelected}

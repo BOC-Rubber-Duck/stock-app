@@ -15,8 +15,8 @@ import React from 'react';
 
 const Stockbar = (props) => {
   let col3 = '';
-  if (props.showValue === true) {
-    col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
+  if (props.showValue === true && props.stock.valueOwned) {
+    col3 = <div className='barColumn'><p>${props.stock.valueOwned.toFixed(2)}</p></div>;
   } else if (props.showValue === false) {
     col3 = <div className='barColumn'></div>;
   }

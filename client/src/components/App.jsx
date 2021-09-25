@@ -27,6 +27,7 @@ class App extends React.Component {
         email: '',
         cashBalance: 0,
         rank: 0,
+        portfolioValue: 0,
         userPortfolio: [
           {
             amount: 0,
@@ -125,7 +126,7 @@ class App extends React.Component {
             })
               .then((res) => {
                 const rank = res.data[0].rank;
-                const portfolioValue = res.data[0].portfolio_value;
+                const portfolioValue = res.data[0].portfolio_value / 100;
                 const cashBalance = res.data[0].cash_position;
                 const selectedFriend = {
                   username,
@@ -162,7 +163,7 @@ class App extends React.Component {
         console.log('response to trade POST query:', response);
         return response;
       })
-      .error((err) => {
+      .catch((err) => {
         console.log('error in attempting trade', err);
         return err;
       });
@@ -214,7 +215,6 @@ class App extends React.Component {
                         .then((updatedUser) => {
                           this.setState({
                             'user': updatedUser
-                          }, () => {
                           });
                         })
                         .catch((err) => {
@@ -277,8 +277,8 @@ class App extends React.Component {
         .then(axios.spread((...responses) => {
           for (var i = 0; i < responses.length; i++) {
             stocks[i].stockName = responses[i].data.name;
-            stocks[i].valueOwned = stocks[i].amount * responses[i].data.price;
-            user.portfolioValue += stocks[i].valueOwned;
+            stocks[i].valueOwned = (stocks[i].amount * responses[i].data.price);
+            user.portfolioValue += Number(stocks[i].valueOwned);
           }
           axios.put('/api/portfolioValue', {'user_id': user.id, 'portfolio_value': user.portfolioValue * 100}).then((queryResults) => {
             resolve(user);
