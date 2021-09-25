@@ -15,20 +15,20 @@ import React from 'react';
 const Stockbar = (props) => {
   let col3 = '';
   if (props.useCase === 'portfolio') {
-    col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
+    col3 = <div className='barColumn-price'><p className='bar-stock-price'>${props.stock.valueOwned}</p></div>;
   } else if (props.useCase === 'stockSearch') {
     col3 = <div className='barColumn'></div>;
   }
 
   return (
-    <div className='bar' key={props.stock.ticker_symbol} /*onClick={() => {
+    <div className='stockbar-bar' key={props.stock.ticker_symbol} /*onClick={() => {
       props.onClick(props.stock.ticker_symbol);
     }}*/>
       <div className='barColumn'>
-        <p>{props.stock.ticker_symbol}</p>
-        <p>{props.stock.stockName}</p>
+        <p className='bar-stock-symbol'>{props.stock.ticker_symbol}</p>
+        <p className='bar-stock-name'>{props.stock.stockName}</p>
       </div>
-      <div className='barColumn'></div>
+      {/* <div className='barColumn'></div> */}
       {col3}
     </div>
   );
