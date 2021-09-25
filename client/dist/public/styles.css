@@ -9,6 +9,8 @@
   --level4-lighten: linear-gradient(0deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.25));
   --default-text: #FFF;
   --diamond-blue: #4FB6F5;
+  --diamond-blue-triadic-1: #F54FB6;
+  --diamond-blue-triadic-2: #B6F54F;
   --search-bar: #AAA;
   --background-light: #ebebeb;
 }
@@ -297,14 +299,36 @@ body {
 }
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
+.leaderboard-container {
+  height: 100vh;
+}
+
 .container, p {
   color: white;
   text-align: center;
 }
 
-#leaderboard-list {
+.leaderboard-list {
   background-color: #121212;
   margin: auto;
+  padding-top: 0.5rem;
+  height: 70vh;
+}
+
+.leaderboard-list a:link {
+  color: white;
+}
+
+.leaderboard-list a:visited {
+  color: var(--diamond-blue);
+}
+
+.leaderboard-list a:hover {
+  color: var(--diamond-blue-triadic-2);
+}
+
+.leaderboard-list a:active {
+  var(--diamond-blue-triadic-1);
 }
 
 .leaderboard-element {
@@ -315,7 +339,7 @@ body {
     "rank username balance friend"
 }
 
-#list-header {
+.list-header {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
   min-height: 2rem;
   margin: 1rem 0;
@@ -351,23 +375,47 @@ body {
 
 .leaderboard-balance {
   grid-area: balance;
-  font-size: 0.6rem;
   align-self: center;
   justify-self: start;
 }
 
-.leaderboard-friend {
+.positive-gain-icon {
+  font-size: 1rem;
+  color: var(--diamond-blue-triadic-2);
+}
+
+.negative-gain-icon {
+  font-size: 1rem;
+  color: var(--diamond-blue-triadic-1);
+}
+
+.leaderboard-gain-text {
+  font-size: 0.6rem;
+}
+
+.positive-gain {
+  font-size: 0.6rem;
+  color: var(--diamond-blue-triadic-2);
+}
+
+.negative-gain {
+  font-size: 0.6rem;
+  color: var(--diamond-blue-triadic-1);
+}
+
+.leaderboard-friend-toggle {
   grid-area: friend;
-  font-size: 1.4rem;
   place-self: center;
 }
 
 .leaderboard-not-friend {
-  color: red;
+  color: var(--diamond-blue-triadic-1);
+  font-size: 1.5rem;
 }
 
 .leaderboard-friend {
-  color: green;
+  color: var(--diamond-blue-triadic-2);
+  font-size: 1.5rem;
 }
 
 #leaderboard-bottom-nav-space {
@@ -387,7 +435,7 @@ body {
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #ebb462;
+  background: var(--diamond-blue);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -403,14 +451,14 @@ body {
   margin-top: -14px;
 }
 #friend-slider:focus::-webkit-slider-runnable-track {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 #friend-slider::-moz-range-track {
   width: 20%;
   height: 8.4px;
   cursor: pointer;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #ebb462;
+  background: var(--diamond-blue);
   border-radius: 1.3px;
   border: 0.2px solid #010101;
 }
@@ -433,13 +481,13 @@ body {
   color: transparent;
 }
 #friend-slider::-ms-fill-lower {
-  background: #ebb462;
+  background: var(--diamond-blue);
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
 }
 #friend-slider::-ms-fill-upper {
-  background: #ebb462;
+  background: var(--diamond-blue);
   border: 0.2px solid #010101;
   border-radius: 2.6px;
   box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
@@ -454,10 +502,10 @@ body {
   cursor: pointer;
 }
 #friend-slider:focus::-ms-fill-lower {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 #friend-slider:focus::-ms-fill-upper {
-  background: #ebb462;
+  background: var(--diamond-blue);
 }
 /**********END LEADERBOARD**********/
 /**********BEGIN FRIEND SEARCH**********/
