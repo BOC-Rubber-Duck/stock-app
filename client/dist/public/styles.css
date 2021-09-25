@@ -703,14 +703,24 @@ body {
 
 .la {
   text-align: left;
+  font-size: 1.5rem;
+  line-height: 1.5rem;
 }
 
 .ra {
   text-align: right;
 }
 
+.login-button {
+  background-color: #fff;
+  padding: 0.2rem;
+  margin-right: 0.3rem;
+  font-weight: 600;
+  border-radius: 0px;
+}
+
 .spaced {
-  margin-top: 0.3rem;
+  margin-top: 0.5rem;
 }
 
 .login-corner-icon {
