@@ -88,6 +88,7 @@ class Db {
       (id, password, first_name, last_name, email, username, cash_position, portfolio_value)
       VALUES
       ('${uuidv4()}', '${hash}', '${first_name}', '${last_name}', '${email}', '${username}', ${starting_cash}, ${starting_portfolio_value})
+      returning id
     `;
     return this.query(query);
   }
