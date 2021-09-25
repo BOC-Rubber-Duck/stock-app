@@ -617,6 +617,21 @@ body {
   background-color: #999;
 }
 
+.login-body {
+  background-color: var(--background-dark);
+  text-align: left;
+  align-content: left;
+  justify-content: left;
+}
+
+.la {
+  text-align: left;
+}
+
+.ra {
+  text-align: right;
+}
+
 .login-corner-icon {
   height: 3rem;
   width: 3rem;

@@ -18,6 +18,11 @@ class Db {
     return pool.query(query_text);
   }
 
+  query_cb(query_text, callback) {
+    pool.query(query_text, (err, res) => {callback(err, res)});
+  }
+
+  // Normally with the callback left undefined, except by passport.
   getUser(username) {
     let query = `
       SELECT * FROM users
@@ -188,6 +193,10 @@ class Db {
     return this.query(query);
   };
 
+  validPassword(password) {
+    return bcrypt.compareSync(password, this.password);
+  }
+
   postTransaction(user_id, ticker_symbol, exchange, transactionType, amount, strikePrice) {
     let query = `
     INSERT INTO transactions
@@ -209,6 +218,7 @@ class Db {
 
 let db = new Db();
 
+module.exports.query_cb = db.query_cb.bind(db);
 module.exports.getUser = db.getUser.bind(db);
 module.exports.getUsers = db.getUsers.bind(db);
 module.exports.getPortfolio = db.getPortfolio.bind(db);
@@ -221,6 +231,7 @@ module.exports.putPortfolioValue = db.putPortfolioValue.bind(db);
 module.exports.getLeaderboard = db.getLeaderboard.bind(db);
 module.exports.getFriendboard = db.getFriendboard.bind(db);
 module.exports.deleteFriend = db.deleteFriend.bind(db);
+module.exports.validPassword = db.validPassword.bind(db);
 module.exports.assignRanking = db.assignRanking.bind(db);
 module.exports.getRank = db.getRank.bind(db);
 module.exports.postTransaction = db.postTransaction.bind(db);
