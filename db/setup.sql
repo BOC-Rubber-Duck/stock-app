@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS users (
   username varchar(64) not null unique,
   email varchar(64) not null unique,
   cash_position bigint default 100000000,
-  portfolio_value bigint default 100000000
+  portfolio_value bigint default 0
 );
 
 CREATE INDEX ON users (first_name);
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   exchange varchar(8) NOT NULL,
   transaction_type smallint NOT NULL,
   amount int NOT NULL,
-  strike_price decimal NOT NULL,
+  strike_price bigint NOT NULL,
   time_entered timestamp NOT NULL DEFAULT now()
 );
 

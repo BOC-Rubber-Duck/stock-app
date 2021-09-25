@@ -732,6 +732,129 @@ body {
 }
 /**********END LOGIN/REGISTRATION**********/
 
+/********** BEGIN TRADE **********/
+
+.trade-container {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  font-size: 1.1rem;
+}
+
+.trade-container {
+  background-color: var(--background-dark);
+  min-height: 100vh;
+  margin: auto;
+  color: var(--default-text);
+  font-weight: 300;
+}
+
+.trade-header {
+  height: 2rem;
+  padding: 1rem;
+  font-size: x-large;
+  font-weight: 300;
+}
+
+.trade-action-title {
+  padding: 0.5rem;
+  font-size: x-large;
+  text-align: center;
+  background-color: var(--diamond-blue);
+}
+
+#trade-action-title-span {
+  margin-right: 0.5rem;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--background-dark)
+}
+
+.trade-info {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  flex-direction: column;
+  background: var(--level1-lighten), var(--background-dark);
+  border-radius: 4px;
+  min-height: 4rem;
+  margin: 2rem 2rem;
+  padding: 0.5rem;
+  padding-left: 1rem;
+}
+
+.trade-info-row {
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.6rem 0;
+}
+
+.trade-info-row-left {
+  flex: 1 1 100%;
+  text-align: left;
+}
+
+.trade-info-row-right {
+  text-align: right;
+}
+
+.trade-info-row input {
+  /* background-color:  */
+  background-color: darkslategray;
+  color: var(--default-text);
+  border: 1px solid var(--default-text);
+  box-shadow: none;
+  border-radius: 4px;
+  height: 1.1rem;
+  padding: 0.1rem;
+  font-size: 1.1rem;
+  min-width: 3rem;
+}
+
+.trade-action {
+  text-align: center;
+}
+
+.trade-action button {
+  background: var(--level2-lighten), var(--background-dark);
+  border: none;
+  border-radius: 4px;
+  color: var(--diamond-blue);
+  font-size: 1.5rem;
+  font-weight: 500;
+  padding: 0.75rem 2rem;;
+}
+
+.trade-action button:hover, .trade-action button:active {
+  box-shadow: 1px 1px 10px var(--diamond-blue);
+}
+
+.trade-message {
+  margin-top: 3rem;
+  text-align: center;
+  border: 1px solid var(--diamond-blue-triadic-2);
+  border-radius: 4px;
+  margin: 3rem 2rem;
+  padding: 1rem;
+}
+
+/********** END TRADE **********/
 /*
   DETAILS
   Base: Default styles. Typically applies to native elements: body, form, input, a, a:hover, etc.
