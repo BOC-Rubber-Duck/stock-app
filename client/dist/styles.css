@@ -117,7 +117,15 @@ a, a:hover, a:focus, a:active {
   background: var(--level1-lighten), var(--background-dark);
 }
 
+.navbar-button-icon {
+  font-size: 1.2em;
+}
+
 .navbar-button:hover {
+  color: var(--diamond-blue);
+}
+
+.diamond-blue {
   color: var(--diamond-blue);
 }
 
@@ -208,13 +216,12 @@ a, a:hover, a:focus, a:active {
 .searchbar-container {
   background: var(--level1-lighten), var(--background-dark);
   border-bottom: 1px solid white;
-  height: 6rem;
+  height: 6em;
   display: grid;
-  grid-template-columns: 2fr min-content;
   align-items: center;
-  width: 100%;
+  grid-template-columns: 1fr min-content;
 }
-.searchbar-display {
+/* .searchbar-display {
   display: grid;
   grid-template-columns: 2rem auto;
   background: #FFF;
@@ -222,7 +229,7 @@ a, a:hover, a:focus, a:active {
   font-size: 1.1rem;
   height: 2.5rem;
   margin: 1rem;
-}
+} */
 .searchbar-icon {
   display: flex;
   align-content: center;
@@ -232,12 +239,12 @@ a, a:hover, a:focus, a:active {
   background-color: var(--default-text);
 }
 .searchbar-input {
-  grid-column: 2;
-  border: none;
+  /* grid-column: 2; */
+  background: #FFF;
   border-radius: 4px;
   font-size: 1.1rem;
-  height: 2.4rem;
-  padding-left: 0.5rem;
+  margin: 1rem;
+  padding: 0.5rem;
 }
 .search-icon-container {
   grid-column: 1;
