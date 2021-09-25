@@ -229,15 +229,7 @@ body {
   align-items: center;
   grid-template-columns: 1fr min-content;
 }
-/* .searchbar-display {
-  display: grid;
-  grid-template-columns: 2rem auto;
-  background: #FFF;
-  border-radius: 4px;
-  font-size: 1.1rem;
-  height: 2.5rem;
-  margin: 1rem;
-} */
+
 .searchbar-icon {
   display: flex;
   align-content: center;
