@@ -99,6 +99,10 @@ body {
 .stockname {
   text-align: left;
 }
+.prof-title {
+  font-size: .6rem;
+  font-weight: 200;
+}
 
 .bar-stock-symbol {
   text-align: left;
@@ -314,7 +318,7 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   margin: .2em 0px;
-  color: var(--default-text)
+  color: var(--diamond-blue)
 }
 .searchbar-prediction-title {
   margin: 0px;
