@@ -24,9 +24,10 @@ const OwnedStockDisplay = (props) => {
 
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
-  const [displayStockDetails, setDisplayStockDetails] = useState(false);
+  const [displayStockDetails, setDisplayStockDetails] = useState(props.showDetails);
   const [ownedStocks, setOwnedStocks] = useState([]);
-  const [showOwnedStocks, setShowOwnedStocks] = useState(true);
+  const [showOwnedStocks, setShowOwnedStocks] = useState(!props.showDetails);
+
 
   useEffect(() => {
     const stocksToSearch = [];

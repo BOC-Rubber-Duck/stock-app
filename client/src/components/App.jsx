@@ -297,6 +297,19 @@ class App extends React.Component {
                   handlePredictionClick={this.fetchSelectedStock}
                   userPortfolio={this.state.user.userPortfolio}
                   updateTradeAction={this.updateTradeAction}
+                  showDetails={false}
+                />
+              }
+            />
+            <Route exact path="/stock-details"
+              render={() =>
+                <Searchbar
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                  handlePredictionClick={this.fetchSelectedStock}
+                  userPortfolio={this.state.user.userPortfolio}
+                  updateTradeAction={this.updateTradeAction}
+                  showDetails={true}
                 />
               }
             />
