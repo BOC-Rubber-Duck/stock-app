@@ -150,6 +150,17 @@ app.get('/api/getWatchlist', (req, res) => {
     });
 });
 
+app.get('/api/whoami', (req, res) => {
+  if (req.user) {
+    let username = req.user.username;
+    res.status(200).json({
+      username
+    });
+  } else {
+    res.status(404);
+  }
+})
+
 app.post('/api/postFriend', (req, res) => {
   db.postFriend(req.body.watching_user_id, req.body.watched_username)
     .then((data) => {
