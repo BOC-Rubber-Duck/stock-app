@@ -76,5 +76,4 @@ test('getGraphOptions function returns an option with the correct shape', () => 
   const formattedData = formatAPIData(sampleData.data);
   const options = getGraphOptions(formattedData);
   expect(options.series[0].data.length).toBe(formattedData.ohlc.length);
-  expect(options.series[1].data.length).toBe(formattedData.volume.length);
 });
