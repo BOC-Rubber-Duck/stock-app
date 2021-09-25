@@ -2,6 +2,7 @@ import React from 'react';
 import LeaderboardList from './LeaderboardList.jsx';
 import Usercard from './Portfolio/Usercard.jsx';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import {TiRefreshOutline, TiArrowDownThick, TiArrowUpThick} from "react-icons/ti";
 import axios from 'axios';
 const CancelToken = axios.CancelToken;
 const source = CancelToken.source();
@@ -15,8 +16,9 @@ class Leaderboard extends React.Component {
       page: 0,
       hasMore: true,
       friendsMode: 'Leaderboard',
-      entries: 2,
-      previousList: []
+      entries: 10,
+      previousList: [],
+      offset: -1
     };
     this.addFriend = this.addFriend.bind(this);
     this.fetchList = this.fetchList.bind(this);
@@ -52,27 +54,29 @@ class Leaderboard extends React.Component {
     const entries = this.state.entries;
     const offset = this.state.page * entries;
     if (this.props.user && this.props.user.id.length > 0) {
-      this.setState({page: (this.state.page + 1)});
-      axios.get(`/api/get${this.state.friendsMode}`, {params: {userId: this.props.user.id, offset: offset, entries: entries}, cancelToken: source.token})
-        .then((response) => {
-          if (typeof(response.data) === 'object') {
-            if (response.data === this.state.previousList) {
-              this.setState({hasMore: false});
+      this.setState({page: (this.state.page + 1)}, () => {
+        axios.get(`/api/get${this.state.friendsMode}`, {params: {userId: this.props.user.id, offset: offset, entries: entries}, cancelToken: source.token})
+          .then((response) => {
+            if (typeof(response.data.results) === 'object') {
+              if (response.data.results === this.state.previousList) {
+                this.setState({hasMore: false});
+              } else {
+                if (response.data.offset > this.state.offset) {
+                  this.setState({list: list.concat(response.data.results), previousList: response.data.results, offset: response.data.offset});
+                }
+              }
+              if (response.data.results.length < this.state.entries) {
+                this.setState({hasMore: false});
+              }
             } else {
-              this.setState({list: list.concat(response.data), previousList: response.data});
-            }
-            console.log(this.state.list);
-            if (response.data.length === 0) {
               this.setState({hasMore: false});
+              console.log('Array not returned as response for Leaderboard list.');
             }
-          } else {
-            this.setState({hasMore: false});
-            console.log('Array not returned as response for Leaderboard list.');
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     }
   }
 
@@ -82,12 +86,13 @@ class Leaderboard extends React.Component {
     } else {
       this.setState({friendsMode: 'Leaderboard'});
     }
-    this.setState({list: [], page: 0, hasMore: true, previousList: []});
+    this.setState({list: [], page: 0, hasMore: true, previousList: [], offset: -1});
   }
 
   refreshList() {
-    this.setState({list: [], page: 0, hasMore: true, previousList: []});
-    this.fetchList();
+    this.setState({list: [], page: 0, hasMore: true, previousList: [], offset: -1}, () => {
+      this.fetchList();
+    });
   }
 
   componentDidMount() {
@@ -104,15 +109,16 @@ class Leaderboard extends React.Component {
     }
   }
 
-  componentWillUnmount() {
+/*   componentWillUnmount() {
     source.cancel('Operation canceled by the user.');
-  }
+    this.setState({list: [], page: 0, hasMore: true, previousList: []});
+  } */
 
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
         <div className="leaderboard-usercard">
-          <Usercard user={this.props.user} />
+          <Usercard user={this.props.user} self={true}/>
         </div>
         <div className="leaderboard-list">
           <div className="list-header">
@@ -141,17 +147,17 @@ class Leaderboard extends React.Component {
               pullDownToRefresh={true}
               pullDownToRefreshThreshold={50}
               pullDownToRefreshContent={
-                <p id="leaderboard-pull-down">&#8595; Pull down to refresh</p>
+                <p className="leaderboard-pull-down"><TiRefreshOutline /><TiArrowDownThick />&nbsp;Pull down to refresh!</p>
               }
               releaseToRefreshContent={
-                <p>&#8593; Release to refresh</p>
+                <p className="leaderboard-pull-down"><TiArrowUpThick />&nbsp;Release to refresh!</p>
               }
             >
-              <LeaderboardList addFriend={this.addFriend} list={this.state.list}/>
+              <LeaderboardList addFriend={this.addFriend} list={this.state.list} handleFriendClick={this.props.handleFriendClick}/>
             </InfiniteScroll>
           </div>
-        </div>
-        <div id="leaderboard-bottom-nav-space">
+          <div id="leaderboard-bottom-nav-space">
+          </div>
         </div>
       </div>
     );

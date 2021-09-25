@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import regeneratorRuntime from 'regenerator-runtime';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
-const Friend = () => {
+const Friend = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [param, setParam] = useState(null);
 
@@ -28,20 +29,25 @@ const Friend = () => {
   };
 
   const renderSearchResults = () => {
+    var handleFriendClick = props.handleFriendClick;
     const results = searchResults.map((result) => {
       return (
-        <li key={result.id}>
-          <div className="fr-search-result">
-            <div className="fr-left-side">
-              <p className="fr-username">{result.username}</p>
-              <p className="fr-user-holdings">{!result.holdings ? 'No stocks held' : result.holdings}</p>
+        <Link to="/friendPortfolio" key={result.username}>
+          <li key={result.id} onClick={() => {
+            handleFriendClick(result.username);
+          }}>
+            <div className="fr-search-result">
+              <div className="fr-left-side">
+                <p className="fr-username">{result.username}</p>
+                <p className="fr-user-holdings">{!result.holdings ? 'No stocks held' : result.holdings}</p>
+              </div>
+              <div className="fr-right-side">
+                <span className="fr-user-rank-header">Rank</span>
+                <p className="fr-user-rank-number">{result.user_rank}</p>
+              </div>
             </div>
-            <div className="fr-right-side">
-              <span className="fr-user-rank-header">Rank</span>
-              <p className="fr-user-rank-number">{result.user_rank}</p>
-            </div>
-          </div>
-        </li>
+          </li>
+        </Link>
       );
     });
     return (

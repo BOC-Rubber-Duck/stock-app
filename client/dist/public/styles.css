@@ -74,7 +74,6 @@ body {
   grid-template-areas: 'col col';
   grid-gap: 5 px;
   grid-template-rows: 100 px;
-  background-color: var(--background-dark);
   background: var(--level1-lighten), var(--background-dark);
   min-height: 4rem;
   margin: 1rem 0;
@@ -82,6 +81,12 @@ body {
   padding-left: 1rem;
   border-radius: 4px;
 }
+
+.stockbar-bar:hover {
+  box-shadow: 1px 1px 10px var(--diamond-blue);
+}
+
+
 
 .barColumn{
   float: left;
@@ -355,6 +360,7 @@ body {
   width: 100%;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
+  font-size: 1.2em;
   align-content: flex-end;
   margin: .2rem 0;
 }
@@ -434,6 +440,10 @@ body {
   color: white;
 }
 
+#leaderboard-pull-down {
+  color: var(--diamond-blue-triadic-2);
+}
+
 .leaderboard-element {
   background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #121212;
   min-height: 2rem;
@@ -473,16 +483,16 @@ body {
 }
 
 .leaderboard-gain-text {
-  font-size: 0.6rem;
+  font-size: 1rem;
 }
 
 .positive-gain {
-  font-size: 0.6rem;
+  font-size: 1rem;
   color: var(--diamond-blue-triadic-2);
 }
 
 .negative-gain {
-  font-size: 0.6rem;
+  font-size: 1rem;
   color: var(--diamond-blue-triadic-1);
 }
 
@@ -502,7 +512,7 @@ body {
 }
 
 #leaderboard-bottom-nav-space {
-  height: 75px;
+  height: 200px;
 }
 
 #friend-slider {

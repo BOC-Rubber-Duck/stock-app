@@ -15,7 +15,7 @@ const OwnedStockDisplay = (props) => {
         <Stockbar
           key={stock.symbol}
           stock={stock}
-          useCase={'stockSearch'}
+          showValue={false}
         />
       );
     })
@@ -24,9 +24,10 @@ const OwnedStockDisplay = (props) => {
 
 const Searchbar = (props) => {
   const [stockPredictions, setStockPredictions] = useState([]);
-  const [displayStockDetails, setDisplayStockDetails] = useState(false);
+  const [displayStockDetails, setDisplayStockDetails] = useState(props.showDetails);
   const [ownedStocks, setOwnedStocks] = useState([]);
-  const [showOwnedStocks, setShowOwnedStocks] = useState(true);
+  const [showOwnedStocks, setShowOwnedStocks] = useState(!props.showDetails);
+
 
   useEffect(() => {
     const stocksToSearch = [];
@@ -94,9 +95,9 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {showOwnedStocks &&
+      {/* {showOwnedStocks &&
         <OwnedStockDisplay stocks={ownedStocks} />
-      }
+      } */}
       {displayStockDetails &&
         <StockDetailPage
           stockSelected={props.stockSelected}
