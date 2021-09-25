@@ -100,7 +100,7 @@ test('Leaderboard mounts.', () => {
 
 test('Leaderboard renders text to screen.', () => {
   var wrapper = mount(<Leaderboard user={initialProps.user} />);
-  expect(wrapper.find('#list-header').text()).toMatch(/Leaderboard/);
+  expect(wrapper.find('.list-header').text()).toMatch(/Leaderboard/);
 });
 
 test('Two Leaderboard entries render state change.', () => {

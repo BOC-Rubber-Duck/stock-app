@@ -82,11 +82,11 @@ class Leaderboard extends React.Component {
     } else {
       this.setState({friendsMode: 'Leaderboard'});
     }
-    this.setState({list: [], page: 0, hasMore: true});
+    this.setState({list: [], page: 0, hasMore: true, previousList: []});
   }
 
   refreshList() {
-    this.setState({list: [], page: 0, hasMore: true});
+    this.setState({list: [], page: 0, hasMore: true, previousList: []});
     this.fetchList();
   }
 
@@ -111,9 +111,17 @@ class Leaderboard extends React.Component {
   render() {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
+<<<<<<< HEAD
         <Usercard user={this.props.user} self={true}/>
         <div id="leaderboard-list">
           <div id="list-header">
+=======
+        <div className="leaderboard-usercard">
+          <Usercard user={this.props.user} />
+        </div>
+        <div className="leaderboard-list">
+          <div className="list-header">
+>>>>>>> origin/development
             <form>
               Leaderboard&nbsp;&nbsp;<input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'Leaderboard'
                 ? 0
