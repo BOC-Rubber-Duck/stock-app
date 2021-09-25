@@ -213,7 +213,8 @@ class Db {
     INSERT INTO positions
     (id, user_id, ticker_symbol, exchange, amount)
     VALUES
-    ('${uuidv4()}', '${user_id}', ${ticker_symbol}', '${exchange}', ${amount});
+    ('${uuidv4()}', '${user_id}', ${ticker_symbol}', '${exchange}', ${amount})
+    ON CONFLICT (ticker_symbol) DO UPDATE SET amount = EXCLUDED.amount;
     `;
     return this.query(query);
   };
