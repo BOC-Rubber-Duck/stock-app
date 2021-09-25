@@ -3,7 +3,7 @@ import regeneratorRuntime from 'regenerator-runtime';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
 
-const Friend = () => {
+const Friend = (props) => {
   const [searchResults, setSearchResults] = useState([]);
   const [param, setParam] = useState(null);
 
@@ -29,11 +29,12 @@ const Friend = () => {
   };
 
   const renderSearchResults = () => {
+    var handleFriendClick = props.handleFriendClick;
     const results = searchResults.map((result) => {
       return (
         <Link to="/friendPortfolio" key={result.username}>
           <li key={result.id} onClick={() => {
-            props.handleFriendClick(result.username);
+            handleFriendClick(result.username);
           }}>
             <div className="fr-search-result">
               <div className="fr-left-side">

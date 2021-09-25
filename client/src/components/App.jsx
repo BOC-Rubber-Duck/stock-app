@@ -143,6 +143,10 @@ class App extends React.Component {
             };
             this.setState({
               selectedFriend
+            }, () => {
+              console.log('the state was set');
+              console.log(this.state.selectedFriend);
+              this.forceUpdate();
             });
           })
           .catch((e) => e);
@@ -219,7 +223,7 @@ class App extends React.Component {
                       others: others
                     });
                   }
-                });
+                };
               });
           });
       })
@@ -267,14 +271,14 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/"
               render={() =>
-                <Leaderboard
-                  user={this.state.user}
+                <Portfolio
+                  user={this.state.user} self={true} handleStockClick={this.fetchSelectedStock}
                 />
               }/>
             <Route exact path="/leaderboard"
               render={() =>
                 <Leaderboard
-                  user={this.state.user} handleFriendFlick={this.selectedUserSearch}
+                  user={this.state.user} handleFriendClick={this.selectedUserSearch}
                 />
               }/>
             <Route exact path="/portfolio"

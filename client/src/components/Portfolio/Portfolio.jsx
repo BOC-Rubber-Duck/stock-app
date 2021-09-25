@@ -3,6 +3,7 @@ import Stockbar from './Stockbar.jsx';
 import Usercard from './Usercard.jsx';
 import {Link} from 'react-router-dom';
 import getPortfolioValue from './helpers/getPortfolioValue.js';
+import axios from 'axios';
 
 
 //TODO: Move helper function to App level, refactor to be classless and render only based on props
@@ -21,7 +22,6 @@ class Portfolio extends React.Component {
   }
 
   componentDidMount() {
-    console.log('componentMounted');
     if (this.props.self) {
       var userCopy = this.props.user;
       getPortfolioValue(userCopy).then((expandedUser) => {
@@ -35,27 +35,43 @@ class Portfolio extends React.Component {
   }
 
   componentDidUpdate() {
-    console.log('componentUpdated');
-    if (!this.props.self && this.state.user.username === 'portfolioDefault') {
-      this.setState({
-        'user': this.props.user
+    var user = this.props.user;
+    if (!this.props.self && this.state.user.username !== user.username) {
+      axios.get('/api/getUser?username='+user.username)
+        .then((res) => {
+          user.cashBalance = res.data.cash_position;``
+          this.setState({
+            'user': user
+          });
+        });
+    }
+
+    if (this.props.self && this.state.user.username !== user.username) {
+      getPortfolioValue(user).then((expandedUser) => {
+        this.setState({
+          'user': expandedUser
+        });
+      }).catch((err) => {
+        return err;
       });
     }
   }
 
   render() {
-    console.log('rendering a portfolio for the following user:', this.state.user.username);
-    console.log('props contained the following user:', this.props.user.username);
-    const stocks = this.state.user.userPortfolio;
+    const stocks = this.state.user.userPortfolio || this.state.user.selectedFriendPortfolio;
     const self = this.props.self;
     const handleStockClick = this.props.handleStockClick;
 
     const stockbars = stocks.map((stockObject) => {
-      return (
-        <Link to="/stock-search" key={stockObject.ticker_symbol}>
-          <Stockbar stock={stockObject} showValue={self} handleStockClick={handleStockClick}/>
-        </Link>
-      );
+      if (stockObject) {
+        return (
+          <Link to="/stock-search" key={stockObject.ticker_symbol || stockObject.symbol}>
+            <Stockbar stock={stockObject} showValue={self} handleStockClick={handleStockClick}/>
+          </Link>
+        );
+      } else {
+        return (<div></div>);
+      }
     });
 
     return (

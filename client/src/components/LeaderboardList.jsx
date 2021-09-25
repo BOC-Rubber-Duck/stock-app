@@ -16,7 +16,7 @@ const LeaderboardList = (props) => {
           portfolioValue={Number(element.portfolio_value)}
           watchingUser={element.watching_user}
           addFriend={props.addFriend}
-          handleFriendclick={props.handleFriendClick}/>
+          handleFriendClick={props.handleFriendClick}/>
       ))}
     </div>
   );

@@ -15,13 +15,11 @@ const LeaderboardListElement = (props) => {
         <h2>{(props.index + 1)}</h2>
       </div>
       <div className="leaderboard-username">
-        <Router>
-          <Link to="/friendPortfolio" key={props.username}>
-            <h2 onClick={() => {
-              props.handleFriendClick(props.username);
-            }}>{props.username}</h2>
-          </Link>
-        </Router>
+        <Link to="/friendPortfolio" key={props.username}>
+          <h2 onClick={() => {
+            props.handleFriendClick(props.username);
+          }}>{props.username}</h2>
+        </Link>
       </div>
       <div className="leaderboard-balance">
         {(props.cashPosition + props.portfolioValue) >= props.initialBalance
