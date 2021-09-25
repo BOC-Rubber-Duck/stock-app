@@ -1,12 +1,7 @@
 import React from 'react';
 import {ImUserPlus, ImUsers} from 'react-icons/im';
 import {BsGraphUp, BsGraphDown} from "react-icons/bs";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {Link} from 'react-router-dom';
 
 const LeaderboardListElement = (props) => {
   return (
@@ -15,11 +10,11 @@ const LeaderboardListElement = (props) => {
         <h2>{(props.index + 1)}</h2>
       </div>
       <div className="leaderboard-username">
-         <Router>
-          <Link to="/portfolio">
-            <h2>{props.username}</h2>
-          </Link>
-        </Router>
+        <Link to="/friendPortfolio" key={props.username}>
+          <h2 onClick={() => {
+            props.handleFriendClick(props.username);
+          }}>{props.username}</h2>
+        </Link>
       </div>
       <div className="leaderboard-balance">
         {(props.cashPosition + props.portfolioValue) >= props.initialBalance

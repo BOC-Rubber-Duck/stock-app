@@ -74,13 +74,16 @@ body {
   grid-template-areas: 'col col';
   grid-gap: 5 px;
   grid-template-rows: 100 px;
-  background-color: var(--background-dark);
   background: var(--level1-lighten), var(--background-dark);
   min-height: 4rem;
   margin: 1rem 0;
   padding: 0.5rem;
   padding-left: 1rem;
   border-radius: 4px;
+}
+
+.stockbar-bar:hover {
+  box-shadow: 1px 1px 10px var(--diamond-blue);
 }
 
 .barColumn{
@@ -345,16 +348,24 @@ body {
 /**********END NAVBAR**********/
 /**********BEGIN USERCARD**********/
 .usercard {
-  background: var(--level4-lighten), var(--background-dark);
+  background: var(--level3-lighten), var(--background-dark);
   text-align: center;
   border-radius: 10px;
   padding: 0.5rem 1rem;
 }
-
+.usercard-username {
+  font-size: 2rem;
+  color: var(--diamond-blue);
+  background: var(--level4-lighten), var(--background-dark);
+  grid-column: 1 / span 2;
+  border-radius: 4px;
+  box-shadow: 1px 1px 10px var(--diamond-blue);
+}
 .profdetail1 {
   width: 100%;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
+  font-size: 1.2em;
   align-content: flex-end;
   margin: .2rem 0;
 }

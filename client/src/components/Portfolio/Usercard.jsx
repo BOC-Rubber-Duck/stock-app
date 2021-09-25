@@ -5,24 +5,19 @@ Still need to pull in Rank
 */
 
 const Usercard = (props) => {
-  const totalValue = props.user.cashBalance + props.user.portfolioValue;
-  const percentChange = ((totalValue - 1000000)/10000).toFixed(2);
+  const totalValue = (parseInt(props.user.cashBalance) + parseInt(props.user.portfolioValue));
+  const percentChange = ((totalValue - 1000000)/1000000).toFixed(2);
   var gainLoss;
   if (percentChange < 0) {
     gainLoss = 'Loss';
   } else {
     gainLoss = 'Gain';
   }
-  return (
-    <div className='usercard'>
-      <div className='profdetail1'>
-        <span className='prof-name'>{props.user.username}</span>
-        <span></span>
-        <span className='prof-rank-container'>
-          <p className='prof-title'>Rank</p>
-          <p className='prof-rank-val'>{props.user.rank}</p>
-        </span>
-      </div>
+
+  var personalDetails;
+
+  if (props.self === true) {
+    personalDetails =
       <div className='profdetail1'>
         <span className='prof-cash-container'>
           <p className='prof-title'>Cash Balance</p>
@@ -33,7 +28,28 @@ const Usercard = (props) => {
           <p className='prof-title'>Stonk Value</p>
           <p className='prof-stonk-val'>${props.user.portfolioValue}</p>
         </span>
+      </div>;
+  } else {
+    personalDetails = (<div></div>);
+  };
+
+  var rankSpan;
+  if (props.user.rank) {
+    rankSpan = <span>
+      <p className='prof-title'>Rank</p>
+      <p className='prof-rank-val'>{props.user.rank}</p>
+      </span>;
+  } else {
+    rankSpan = <span></span>;
+  }
+
+  return (
+    <div className='usercard'>
+      <div className='profdetail1'>
+        <span className='usercard-username'>{props.user.username}</span>
+        {rankSpan}
       </div>
+      {personalDetails}
       <div className='profdetail2'>
         <span></span>
         <span><p className='diamond'>💎</p></span>
