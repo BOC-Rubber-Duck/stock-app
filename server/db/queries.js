@@ -33,8 +33,19 @@ class Db {
 
   getUsers(usernameFragment) {
     let query = `
-      SELECT id, username FROM users
-      WHERE username LIKE '%${usernameFragment}%';
+      SELECT
+        users.id,
+        users.username,
+        ranked_users.user_rank,
+        string_agg(UPPER(positions.ticker_symbol), ', ') as holdings
+      FROM users
+      INNER JOIN ranked_users ON
+        users.id = ranked_users.user_id
+      LEFT JOIN positions ON
+        users.id = positions.user_id
+      WHERE LOWER(users.username) LIKE LOWER('%${usernameFragment}%')
+      GROUP BY users.id, users.username, ranked_users.user_rank
+      ORDER BY users.username ASC;
     `;
     return this.query(query);
   }
