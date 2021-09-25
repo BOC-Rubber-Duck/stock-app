@@ -13,7 +13,6 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
-// import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -75,40 +74,7 @@ class App extends React.Component {
     });
   }
 
-  // selectedUserSearch(user) {
-  //   console.log('searching for user', user);
-  //   let portfolio = [];
-  //   axios.get('/api/getPortfolio?username='+user)
-  //     .then((results) => {
-  //       portfolio = results.data;
-  //       axios.get('/api/getUser?username='+user)
-  //         .then((result) => {
-  //           const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
-  //           this.setState({
-  //             selectedFriend: {
-  //               id: id,
-  //               first_name: first_name,
-  //               last_name: last_name,
-  //               username: username,
-  //               email: email,
-  //               cashBalance: cash_position,
-  //               portfolioValue: portfolio_value,
-  //               userPortfolio: portfolio,
-  //             }
-  //           }, () => {
-  //             console.log('the state was set');
-  //             console.log(this.state.selectedFriend);
-  //             this.forceUpdate();
-  //           });
-  //         });
-  //     });
-  // };
-
   selectedUserSearch(username) {
-    // this is temp
-    const portfolioValue= Math.floor(Math.random() * 10000000);
-    // this is temp
-    const rank = Math.ceil(Math.random() * 100);
     axios.get('/api/getPortfolio', {
       params: {
         username
@@ -137,15 +103,13 @@ class App extends React.Component {
           .then((selectedFriendPortfolio) => {
             const selectedFriend = {
               username,
-              rank,
-              portfolioValue,
+              rank: 0,
+              portfolioValue: 0,
               selectedFriendPortfolio
             };
             this.setState({
               selectedFriend
             }, () => {
-              console.log('the state was set');
-              console.log(this.state.selectedFriend);
               this.forceUpdate();
             });
           })
@@ -231,21 +195,17 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
-    console.log('line 234 is running');
-    console.log(symbol);
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
       }
     })
       .then((res) => {
-        console.log('line 241 is running');
         const stockSelected = res.data;
         this.setState({
           stockSelected
         }, () => {
-          console.log('line 245 is running');
-          console.log(this.state.selectedFriend);
+          this.forceUpdate();
         });
       })
       .catch((e) => console.log(e));

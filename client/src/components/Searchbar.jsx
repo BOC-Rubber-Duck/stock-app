@@ -102,9 +102,9 @@ const Searchbar = (props) => {
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}
       </div>
-      {showOwnedStocks &&
+      {/* {showOwnedStocks &&
         <OwnedStockDisplay stocks={ownedStocks} />
-      }
+      } */}
       {displayStockDetails &&
         <StockDetailPage
           stockSelected={props.stockSelected}

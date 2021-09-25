@@ -5,8 +5,8 @@ Still need to pull in Rank
 */
 
 const Usercard = (props) => {
-  const totalValue = props.user.cashBalance + props.user.portfolioValue;
-  const percentChange = ((totalValue - 1000000)/10000).toFixed(2);
+  const totalValue = (props.user.cashBalance + props.user.portfolioValue) / 100;
+  const percentChange = ((totalValue - 1000000)/1000000).toFixed(2);
   var gainLoss;
   if (percentChange < 0) {
     gainLoss = 'Loss';
@@ -21,12 +21,12 @@ const Usercard = (props) => {
       <div className='profdetail1'>
         <span>
           <p>Cash Balance</p>
-          <p>${props.user.cashBalance}</p>
+          <p>${props.user.cashBalance / 100}</p>
         </span>
         <span></span>
         <span>
           <p>Stonk Value</p>
-          <p>${props.user.portfolioValue}</p>
+          <p>${props.user.portfolioValue / 100}</p>
         </span>
       </div>;
   } else {
@@ -39,7 +39,7 @@ const Usercard = (props) => {
       <div className='profdetail1'>
         <span>{props.user.username}</span>
         <span></span>
-        <span>Rank: {/* props.user.rank*/}</span>
+        <span>{/*Rank: {res.data[0]}*/}</span>
       </div>
       {personalDetails}
       <div className='profdetail2'>
