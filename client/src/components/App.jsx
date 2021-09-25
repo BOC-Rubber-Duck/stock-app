@@ -231,15 +231,21 @@ class App extends React.Component {
   }
 
   fetchSelectedStock(symbol) {
+    console.log('line 234 is running');
+    console.log(symbol);
     axios.get('/fetchSelectedStock', {
       params: {
         symbol
       }
     })
       .then((res) => {
+        console.log('line 241 is running');
         const stockSelected = res.data;
         this.setState({
           stockSelected
+        }, () => {
+          console.log('line 245 is running');
+          console.log(this.state.selectedFriend);
         });
       })
       .catch((e) => console.log(e));

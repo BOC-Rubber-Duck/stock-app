@@ -14,7 +14,6 @@ import React from 'react';
 */
 
 const Stockbar = (props) => {
-  console.log(props.stock);
   let col3 = '';
   if (props.showValue === true) {
     col3 = <div className='barColumn'><p>${props.stock.valueOwned}</p></div>;
@@ -24,7 +23,7 @@ const Stockbar = (props) => {
 
   return (
     <div className='bar' key={props.stock.ticker_symbol || props.stock.symbol} onClick={() => {
-      props.handleStockClick(props.stock.ticker_symbol);
+      props.handleStockClick(props.stock.ticker_symbol || props.stock.symbol);
     }}>
       <div className='barColumn'>
         <p>{props.stock.ticker_symbol || props.stock.symbol}</p>
