@@ -31,6 +31,25 @@ class Trade extends React.Component {
     this.setState({
       [name]: value
     });
+
+    const shares = this.state.shares;
+    const price = this.props.stockSelected.price;
+    const cashBalance = this.props.user.cashBalance;
+    const action = this.props.action;
+
+    if (tradeValidation(shares, price, cashBalance, action)) {
+      console.log('trade can be performed');
+      this.setState({
+        tradeIsValid: true,
+        message: ''
+      });
+    } else {
+      console.log('trade cannot be performed');
+      this.setState({
+        tradeIsValid: false,
+        message: 'Trade cannot be performed'
+      });
+    }
   };
 
   handleSubmit() {
@@ -38,9 +57,19 @@ class Trade extends React.Component {
     const stockSymbol = this.props.stockSelected.symbol;
     const action = this.props.action;
     const shares = this.state.shares;
+    const price = this.props.stockSelected.price;
+    const cashBalance = this.props.user.cashBalance;
 
-    let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
-    console.log('tradeResponse:', tradeResponse);
+    if (tradeValidation(shares, price, cashBalance, action)) {
+      let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
+      console.log('tradeResponse:', tradeResponse);
+    } else {
+      console.log('cannot perform trade');
+      this.setState({
+        message: 'cannot perform trade'
+      });
+    }
+
   };
 
   render() {
