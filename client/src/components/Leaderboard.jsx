@@ -118,7 +118,7 @@ class Leaderboard extends React.Component {
     return (
       <div className="leaderboard-container" id="leaderboard-container">
         <div className="leaderboard-usercard">
-          <Usercard user={this.props.user} />
+          <Usercard user={this.props.user} self={true}/>
         </div>
         <div className="leaderboard-list">
           <div className="list-header">
@@ -153,7 +153,7 @@ class Leaderboard extends React.Component {
                 <p className="leaderboard-pull-down"><TiArrowUpThick />&nbsp;Release to refresh!</p>
               }
             >
-              <LeaderboardList addFriend={this.addFriend} list={this.state.list}/>
+              <LeaderboardList addFriend={this.addFriend} list={this.state.list} handleFriendClick={this.props.handleFriendClick}/>
             </InfiniteScroll>
           </div>
           <div id="leaderboard-bottom-nav-space">
