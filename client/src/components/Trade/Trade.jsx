@@ -54,6 +54,8 @@ class Trade extends React.Component {
       return stock.ticker_symbol === stockSelected.symbol;
     }) : 0;
     const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
+    const cashAvailable = (user.cashBalance/100).toFixed(2);
+
     return (
       <div className="trade-container" id="trade-container">
         <div className="trade-header" id="trade-header">
@@ -89,7 +91,7 @@ class Trade extends React.Component {
           </div>
           <div id="cash-container">
             <span id="cash-span-lbl">Cash Available</span>
-            <span id="cash-amt-span">${user.cashBalance}</span>
+            <span id="cash-amt-span">${cashAvailable}</span>
           </div>
           <div className="trade-action" id="trade-action">
             <button onClick={this.handleSubmit}>
