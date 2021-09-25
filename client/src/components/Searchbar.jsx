@@ -81,6 +81,7 @@ const Searchbar = (props) => {
     setStockPredictions([]);
     setDisplayStockDetails(true);
     setShowOwnedStocks(false);
+    document.getElementsByTagName('input')[0].value = '';
   };
 
 

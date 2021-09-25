@@ -20,14 +20,14 @@ const Usercard = (props) => {
   if (props.self === true) {
     personalDetails =
       <div className='profdetail1'>
-        <span>
-          <p>Cash Balance</p>
-          <p>${props.user.cashBalance/100}</p>
+        <span className='prof-cash-container'>
+          <p className='prof-title'>Cash Balance</p>
+          <p className='prof-cash-val'>${props.user.cashBalance/100}</p>
         </span>
         <span></span>
-        <span>
-          <p>Stonk Value</p>
-          <p>${props.user.portfolioValue}</p>
+        <span className='prof-stonk-container'>
+          <p className='prof-title'>Stonk Value</p>
+          <p className='prof-stonk-val'>${props.user.portfolioValue}</p>
         </span>
       </div>;
   } else {
@@ -36,7 +36,10 @@ const Usercard = (props) => {
 
   var rankSpan;
   if (props.user.rank) {
-    rankSpan = <span>Rank: {props.user.rank}</span>;
+    rankSpan = <span>
+      <p className='prof-title'>Rank</p>
+      <p className='prof-rank-val'>{props.user.rank}</p>
+      </span>;
   } else {
     rankSpan = <span></span>;
   }
@@ -44,15 +47,14 @@ const Usercard = (props) => {
   return (
     <div className='usercard'>
       <div className='profdetail1'>
-        <span>{props.user.username}</span>
-        <span></span>
+        <span className='usercard-username'>{props.user.username}</span>
         {rankSpan}
       </div>
       {personalDetails}
       <div className='profdetail2'>
         <span></span>
         <span><p className='diamond'>💎</p></span>
-        <span>
+        <span className='prof-net-container'>
           <p>Net {gainLoss}</p>
           <p>{percentChange.toFixed(2)}%</p>
         </span>

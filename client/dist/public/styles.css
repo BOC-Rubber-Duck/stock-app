@@ -69,9 +69,9 @@ body {
   /* background-color: black; */
 }
 
-.bar {
+.stockbar-bar {
   display: grid;
-  grid-template-areas: 'col col col';
+  grid-template-areas: 'col col';
   grid-gap: 5 px;
   grid-template-rows: 100 px;
   background: var(--level1-lighten), var(--background-dark);
@@ -82,19 +82,38 @@ body {
   border-radius: 4px;
 }
 
-.bar:hover {
+.stockbar-bar:hover {
   box-shadow: 1px 1px 10px var(--diamond-blue);
 }
 
-
-
 .barColumn{
-  position: relative;
-  width: 50 px;
-  height: 100 px;
   float: left;
-  font-size: 30px;
   align-content: center;
+  margin: 0 2rem;
+}
+/* .bar-stock-price {
+  font-size: 2rem;
+} */
+.barColumn-price {
+  align-self: center;
+  font-size: 1.5rem;
+}
+
+.stockname {
+  text-align: left;
+}
+.prof-title {
+  font-size: .6rem;
+  font-weight: 200;
+}
+
+.bar-stock-symbol {
+  text-align: left;
+  color: var(--diamond-blue);
+  font-size: 2rem;
+}
+.bar-stock-name {
+  text-align: left;
 }
 /**********END LAYOUT**********/
 /**********BEGIN MODULE**********/
@@ -286,6 +305,8 @@ body {
   display: flex;
   border-bottom: 1px solid black;
   flex-direction: column;
+  border-radius: 4px;
+  margin: .3rem .6rem;
 }
 .searchbar-predictions-container {
   z-index: 2;
@@ -302,7 +323,7 @@ body {
   font-size: 1.5rem;
   font-weight: bold;
   margin: .2em 0px;
-  color: var(--default-text)
+  color: var(--diamond-blue)
 }
 .searchbar-prediction-title {
   margin: 0px;
@@ -327,31 +348,53 @@ body {
 /**********END NAVBAR**********/
 /**********BEGIN USERCARD**********/
 .usercard {
-  background: var(--level2-lighten), var(--background-dark);
-  padding-top: 1em;
-  padding-bottom: .5em;
+  background: var(--level3-lighten), var(--background-dark);
   text-align: center;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
 }
-
+.usercard-username {
+  font-size: 2rem;
+  color: var(--diamond-blue);
+  background: var(--level4-lighten), var(--background-dark);
+  grid-column: 1 / span 2;
+  border-radius: 4px;
+  box-shadow: 1px 1px 10px var(--diamond-blue);
+}
 .profdetail1 {
   width: 100%;
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
   font-size: 1.2em;
   align-content: flex-end;
-  color:var(--diamond-blue);
+  margin: .2rem 0;
+}
+
+.prof-name, .prof-rank {
+  font-size: 1.8rem;
+  text-align: left;
+  color: var(--diamond-blue)
 }
 
 .profdetail2 {
   width: 100%;
   display: inline-grid;
-  font-size: 1.3em;
-  grid-template-columns: 30% 10% 20% 10% 35%;
+  grid-template-columns: 25% 15% 20% 15% 25%;
+}
+
+.leaderboard-usercard {
+  margin: .5rem;
 }
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
 .leaderboard-container {
   height: 100vh;
+}
+
+.portfolio-container {
+  margin: 0.5rem;
+  border-radius: 20px;
+
 }
 
 .container, p {

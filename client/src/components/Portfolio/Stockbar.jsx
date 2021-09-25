@@ -16,20 +16,20 @@ import React from 'react';
 const Stockbar = (props) => {
   let col3 = '';
   if (props.showValue === true && props.stock.valueOwned) {
-    col3 = <div className='barColumn'><p>${props.stock.valueOwned.toFixed(2)}</p></div>;
+    col3 = <div className='barColumn'><p className='bar-stock-price'>${props.stock.valueOwned.toFixed(2)}</p></div>;
   } else if (props.showValue === false) {
     col3 = <div className='barColumn'></div>;
   }
 
   return (
-    <div className='bar' key={props.stock.ticker_symbol || props.stock.symbol} onClick={() => {
+    <div className='stockbar-bar' key={props.stock.ticker_symbol || props.stock.symbol} onClick={() => {
       props.handleStockClick(props.stock.ticker_symbol || props.stock.symbol);
     }}>
       <div className='barColumn'>
-        <p>{props.stock.ticker_symbol || props.stock.symbol}</p>
-        <p>{props.stock.stockName || props.stock.name}</p>
+        <p className='bar-stock-symbol'>{props.stock.ticker_symbol || props.stock.symbol}</p>
+        <p className='bar-stock-name'>{props.stock.stockName || props.stock.name}</p>
       </div>
-      <div className='barColumn'></div>
+      {/* <div className='barColumn'></div> */}
       {col3}
     </div>
   );

@@ -1,6 +1,6 @@
 import React from 'react';
 import TradeMessage from './TradeMessage.jsx';
-import tradeValidation from './helperFunctions/tradeValidation.js';
+import {tradeValidation} from './helperFunctions/tradeValidation.js';
 import ExitButton from './ExitButton.jsx';
 
 class Trade extends React.Component {
@@ -9,7 +9,7 @@ class Trade extends React.Component {
     this.state = {
       shares: 0,
       tradeIsValid: true,
-      message: 'Example Message Here'
+      message: ''
     };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,28 +26,66 @@ class Trade extends React.Component {
 
   handleInputChange(event) {
     const target = event.target;
-    const value = Math.floor(target.value);
+    const value = Math.floor(Math.abs(target.value));
     const name = target.name;
 
-    this.setState({
-      [name]: value
-    });
+    const currentUser = this.props.user;
+    const shares = this.state.shares;
+    const stockSymbol = this.props.stockSelected.symbol;
+    const stockOwned = currentUser !== undefined ? currentUser.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSymbol;
+    }) : 0;
+    const price = this.props.stockSelected.price;
+    const cashBalance = (this.props.user.cashBalance/100).toFixed(2);
+    const action = this.props.action;
+
+    if (tradeValidation(shares, stockOwned, price, cashBalance, action)) {
+      this.setState({
+        [name]: value,
+        tradeIsValid: true,
+        message: 'Trade can be submitted!'
+      });
+    } else {
+      this.setState({
+        [name]: value,
+        tradeIsValid: false,
+        message: 'Trade cannot be submitted'
+      });
+    }
+    this.forceUpdate();
   };
 
   handleSubmit() {
-    const currentUser = this.props.user.username;
+    const currentUser = this.props.user;
     const stockSymbol = this.props.stockSelected.symbol;
     const action = this.props.action;
     const shares = this.state.shares;
+    const price = this.props.stockSelected.price;
+    const cashBalance = (this.props.user.cashBalance/100).toFixed(2);
+    const stockOwned = currentUser !== undefined ? currentUser.userPortfolio.filter(stock => {
+      return stock.ticker_symbol === stockSymbol;
+    }) : 0;
 
-    let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
-    console.log('tradeResponse:', tradeResponse);
+    if (tradeValidation(shares, stockOwned, price, cashBalance, action)) {
+      this.props.handleTrade(currentUser, stockSymbol, shares, action)
+        .then((tradeResponse) => {
+          console.log('tradeResponse:', tradeResponse);
+          if (tradeResponse.status === 200) {
+            this.setState({message: 'Trade successfully completed!'});
+          }
+        })
+        .catch(error => error);
+    } else {
+      console.log('cannot perform trade');
+      this.setState({
+        message: 'cannot perform trade'
+      });
+    }
   };
 
   render() {
     const { user, stockSelected, action } = this.props;
     const stockPrice = stockSelected.price.toFixed(2);
-
     const saleAmount = (this.state.shares * stockSelected.price).toFixed(2) || 0;
     const actionText = action === 'buy' ? 'Buy': 'Sell';
     const stockOwned = user !== undefined ? user.userPortfolio.filter(stock => {
@@ -55,6 +93,13 @@ class Trade extends React.Component {
     }) : 0;
     const sharesOwned = stockOwned.length > 0 ? stockOwned[0].amount : 0;
     const cashAvailable = (user.cashBalance/100).toFixed(2);
+    let tradeMessage = '';
+
+    if (this.props.tradeResponse) {
+      tradeMessage = this.props.tradeResponse === 200 ? 'Trade Completed!' : 'Trade Not Completed';
+    } else {
+      tradeMessage = this.state.message;
+    }
 
     return (
       <section className="trade-container" id="trade-container">
@@ -83,7 +128,7 @@ class Trade extends React.Component {
               name="shares"
               data-testid="shares"
               type="number"
-              style={{color: "red"}}
+              style={this.state.tradeIsValid === false ? {color: "red"} : {}}
               value={this.state.shares !== 0 ? this.state.shares : ''}
               onChange={this.handleInputChange} />
           </div>
@@ -101,7 +146,7 @@ class Trade extends React.Component {
             {actionText}
           </button>
         </div>
-        <TradeMessage message={this.state.message} />
+        <TradeMessage message={tradeMessage} />
       </section>
     );
   };

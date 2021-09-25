@@ -23,7 +23,7 @@ const postTrade = (user, symbol, shares, action) => {
   // validate user cash available
   return db.getUser(user)
     .then((data) => {
-      console.log('user info from db:', data.rows[0]);
+      console.log('user info from db:', data, data.rows[0]);
       let confirmedUserId = data.rows[0].id;
       let confirmedUsername = data.rows[0].username;
       let confirmedCash = data.rows[0].cash_position;
@@ -74,40 +74,46 @@ const postTrade = (user, symbol, shares, action) => {
             }
           });
         })
-          .then((stockSelected) => {
-            // put transaction
-            let user_id = positionConfirmation.user_id;
-            let exchange = positionConfirmation.exchange;
-            let ticker_symbol = positionConfirmation.stockSymbol;
-            let amount = positionConfirmation.amount;
-            let strike_price = positionConfirmation.strikePrice;
+        .then((stockSelected) => {
+          // put transaction
+          let user_id = positionConfirmation.user_id;
+          let exchange = positionConfirmation.exchange;
+          let ticker_symbol = positionConfirmation.stockSymbol;
+          let amount = positionConfirmation.amount;
+          let strike_price = positionConfirmation.strikePrice;
 
-            if (action === 'buy') {
-              if (positionConfirmation.cashBalance >= positionConfirmation.strikePrice * shares) {
-                db.postTransaction(user_id, 0, exchange, ticker_symbol, amount, strike_price)
-                  .then((response) => {
-                    console.log('transaction response: ', response);
-                  })
-                  .catch(error => error);
-              } else {
-                return 'insufficient funds to perform trade';
-              }
-            } else if (action === 'sell') {
-              if (positionConfirmation.sharesOwned >= shares) {
-                db.postTrade(user_id, 1, exchange, ticker_symbol, amount, strike_price)
-                  .then((response) => {
-                    console.log('transaction response: ', response);
-                  })
-                  .catch(error => error);
-              } else {
-                return 'insufficient shares to perform trade';
-              }
+          if (action === 'buy') {
+            if (positionConfirmation.cashBalance >= positionConfirmation.strikePrice * shares) {
+              db.postTransaction(user_id, 0, exchange, ticker_symbol, amount, strike_price)
+                .then((response) => {
+                  console.log('transaction response: ', response);
+                  let newSharesOwned = positionConfirmation.sharesOwned + amount;
+                  db.postPosition(user_id, ticker_symbol, exchange, newSharesOwned)
+                    .then((response) => response);
+                })
+                .catch(error => error);
             } else {
-              return 'error performing trade';
+              return 'insufficient funds to perform trade';
             }
-          });
-      })
-        .catch((error) => error);
+          } else if (action === 'sell') {
+            if (positionConfirmation.sharesOwned >= shares) {
+              db.postTransaction(user_id, 1, exchange, ticker_symbol, amount, strike_price)
+                .then((response) => {
+                  console.log('transaction response: ', response);
+                  let newSharesOwned = positionConfirmation.sharesOwned - amount;
+                  db.postPosition(user_id, ticker_symbol, exchange, newSharesOwned)
+                    .then((response) => response);
+                })
+                .catch(error => error);
+            } else {
+              return 'insufficient shares to perform trade';
+            }
+          } else {
+            return 'error performing trade';
+          }
+        });
+    })
+    .catch((error) => error);
 };
 
 module.exports = {

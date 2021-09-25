@@ -63,7 +63,8 @@ class App extends React.Component {
         ]
       },
       trade: {
-        action: 'sell'
+        action: 'sell',
+        response: null
       }
     };
 
@@ -161,6 +162,9 @@ class App extends React.Component {
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        this.setState({
+          trade: { 'response': response.status }
+        });
         return response;
       })
       .catch((err) => {
@@ -374,6 +378,7 @@ class App extends React.Component {
                   handleTrade={this.handleTrade}
                   action={this.state.trade.action}
                   exitButton={this.exitButton}
+                  tradeResponse={this.state.trade.response}
                 />}
             />
             <Route exact path="/login" component={Login} />
