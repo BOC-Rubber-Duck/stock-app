@@ -26,12 +26,12 @@ const Usercard = (props) => {
       <div className='profdetail1'>
         <span className='prof-cash-container'>
           <p className='prof-title'>Cash Balance</p>
-          <p className='prof-cash-val'>{props.user.cashBalance}</p>
+          <p className='prof-cash-val'>${props.user.cashBalance}</p>
         </span>
         <span></span>
         <span className='prof-stonk-container'>
           <p className='prof-title'>Stonk Value</p>
-          <p className='prof-stonk-val'>{props.user.portfolioValue}</p>
+          <p className='prof-stonk-val'>${props.user.portfolioValue}</p>
         </span>
       </div>
       <div className='profdetail2'>
