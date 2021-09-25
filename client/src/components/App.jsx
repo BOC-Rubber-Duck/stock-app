@@ -5,7 +5,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  useHistory
 } from 'react-router-dom';
 import Portfolio from './Portfolio/Portfolio.jsx';
 import Login from './Login.jsx';
@@ -71,6 +72,7 @@ class App extends React.Component {
     this.handleTrade = this.handleTrade.bind(this);
     this.selectedUserSearch = this.selectedUserSearch.bind(this);
     this.updateTradeAction = this.updateTradeAction.bind(this);
+    this.exitButton = this.exitButton.bind(this);
   }
 
   componentDidMount() {
@@ -234,6 +236,11 @@ class App extends React.Component {
       .catch((e) => console.log(e));
   };
 
+  exitButton() {
+    let history = useHistory();
+    history.push('/');
+  };
+
   render() {
     return (
       <Router>
@@ -293,6 +300,7 @@ class App extends React.Component {
                   user={this.state.user}
                   handleTrade={this.handleTrade}
                   action={this.state.trade.action}
+                  exitButton={this.exitButton}
                 />}
             />
             <Route exact path="/login" component={Login} />
