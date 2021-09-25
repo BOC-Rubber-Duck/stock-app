@@ -113,8 +113,8 @@ class Leaderboard extends React.Component {
         <div className="leaderboard-usercard">
           <Usercard user={this.props.user} self={true}/>
         </div>
-        <div id="leaderboard-list">
-          <div id="list-header">
+        <div className="leaderboard-list">
+          <div className="list-header">
             <form>
               Leaderboard&nbsp;&nbsp;<input type="range" id="friend-slider" name="friend-slider" min="0" max="1" value={this.state.friendsMode === 'Leaderboard'
                 ? 0
