@@ -14,7 +14,7 @@ import App from '../client/src/components/App.jsx';
 import Portfolio from '../client/src/components/Portfolio/Portfolio.jsx';
 import Navbar from '../client/src/components/Navbar.jsx';
 import Login from '../client/src/components/Login.jsx';
-import Trade from '../client/src/components/Trade.jsx';
+import Trade from '../client/src/components/Trade/Trade.jsx';
 import Leaderboard from '../client/src/components/Leaderboard.jsx';
 import Searchbar from '../client/src/components/Searchbar.jsx';
 import Friend from '../client/src/components/Friend.jsx';
@@ -63,7 +63,7 @@ test('Top level App components render', async () => {
   // Login Component:
   expect(shallow(<Login />).is('.login-container')).toBe(true);
   // Trade Component:
-  expect(shallow(<Trade stockSelected={stockSelected}/>).is('.trade-container')).toBe(true);
+  expect(shallow(<Trade user={user} stockSelected={stockSelected} action={action}/>).is('.trade-container')).toBe(true);
   // Leaderboard Component:
   const leaderboardRender = await Promise.resolve(shallow(<Leaderboard />).is('.leaderboard-container'));
   expect(leaderboardRender).toBe(true);

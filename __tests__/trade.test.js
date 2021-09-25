@@ -16,7 +16,7 @@ import { act } from "react-dom/test-utils";
 import axios from 'axios';
 
 import App from '../client/src/components/App.jsx';
-import Trade from '../client/src/components/Trade.jsx';
+import Trade from '../client/src/components/Trade/Trade.jsx';
 const { sampleState } = require('../sampleData/sampleState.js');
 const { stockSelected, user, action } = sampleState;
 
