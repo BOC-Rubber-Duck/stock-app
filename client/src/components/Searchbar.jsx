@@ -83,12 +83,12 @@ const Searchbar = (props) => {
   return (
     <div className='searcbar-main'>
       <div className='searchbar-container'>
-          <input
-            type='text'
-            className='searchbar-input'
-            placeholder='Search...'
-            onChange={(e) => handleUserInput(e)}>
-          </input>
+        <input
+          type='text'
+          className='searchbar-input'
+          placeholder='Search...'
+          onChange={(e) => handleUserInput(e)}>
+        </input>
       </div>
       <div className='searchbar-predictions-container'>
         {stockPredictions && <Predictions predictions={stockPredictions} predictionClick={handlePredictionClick}/>}

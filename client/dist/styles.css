@@ -153,6 +153,7 @@ a, a:hover, a:focus, a:active {
   grid-template-rows: 2;
   margin: 2%;
   grid-auto-columns: 33.3%;
+  color: #FFF;
 }
 
 .StockInformation-Name {
@@ -255,8 +256,8 @@ a, a:hover, a:focus, a:active {
 }
 
 .searchbar-prediction-display {
-  padding-left: 1em;
-  background-color: white;
+  padding: .8rem 1rem;
+  background: var(--level2-lighten),var(--background-dark);
   display: flex;
   border-bottom: 1px solid black;
   flex-direction: column;
@@ -276,12 +277,14 @@ a, a:hover, a:focus, a:active {
   font-size: 1.5rem;
   font-weight: bold;
   margin: .2em 0px;
+  color: var(--default-text)
 }
 .searchbar-prediction-title {
   margin: 0px;
   font-size: 1rem;
   font-style: italic;
   margin-bottom: .2em;
+  text-align: left;
 }
 .searchbar-main {
   width: inherit;
