@@ -1,6 +1,6 @@
 import React from 'react';
 import TradeMessage from './TradeMessage.jsx';
-import tradeValidation from './helperFunctions/tradeValidation.js';
+import {tradeValidation} from './helperFunctions/tradeValidation.js';
 import ExitButton from './ExitButton.jsx';
 
 class Trade extends React.Component {
@@ -59,7 +59,7 @@ class Trade extends React.Component {
     const action = this.props.action;
     const shares = this.state.shares;
     const price = this.props.stockSelected.price;
-    const cashBalance = this.props.user.cashBalance;
+    const cashBalance = (this.props.user.cashBalance/100).toFixed(2);
 
     if (tradeValidation(shares, price, cashBalance, action)) {
       let tradeResponse = this.props.handleTrade(currentUser, stockSymbol, shares, action);
@@ -70,7 +70,6 @@ class Trade extends React.Component {
         message: 'cannot perform trade'
       });
     }
-
   };
 
   render() {
@@ -112,7 +111,7 @@ class Trade extends React.Component {
               name="shares"
               data-testid="shares"
               type="number"
-              style={{color: "red"}}
+              style={this.tradeIsValid === false ? {color: "red"} : {}}
               value={this.state.shares !== 0 ? this.state.shares : ''}
               onChange={this.handleInputChange} />
           </div>
