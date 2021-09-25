@@ -208,6 +208,16 @@ class Db {
     return this.query(query);
   };
 
+  postPosition(user_id, ticker_symbol, exchange, amount) {
+    let query =`
+    INSERT INTO positions
+    (id, user_id, ticker_symbol, exchange, amount)
+    VALUES
+    ('${uuidv4()}', '${user_id}', ${ticker_symbol}', '${exchange}', ${amount});
+    `;
+    return this.query(query);
+  };
+
   postTrade(user_id, buy_sell, exchange, ticker_symbol, amount, strike_price) {
   // This one's going to be a transaction: Posting to both transactions and positions.
   // BEGIN;
