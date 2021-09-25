@@ -69,22 +69,44 @@ body {
   /* background-color: black; */
 }
 
-.bar {
+.stockbar-bar {
   display: grid;
-  grid-template-areas: 'col col col';
+  grid-template-areas: 'col col';
   grid-gap: 5 px;
   grid-template-rows: 100 px;
   background-color: var(--background-dark);
+  background: var(--level1-lighten), var(--background-dark);
+  min-height: 4rem;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  padding-left: 1rem;
+  border-radius: 4px;
 }
 
 .barColumn{
-  position: relative;
-  width: 50 px;
-  height: 100 px;
-  border-bottom: solid 1px var(--background-dark);
   float: left;
-  font-size: 30px;
   align-content: center;
+  margin: 0 2rem;
+}
+/* .bar-stock-price {
+  font-size: 2rem;
+} */
+.barColumn-price {
+  align-self: center;
+  font-size: 1.5rem;
+}
+
+.stockname {
+  text-align: left;
+}
+
+.bar-stock-symbol {
+  text-align: left;
+  color: var(--diamond-blue);
+  font-size: 2rem;
+}
+.bar-stock-name {
+  text-align: left;
 }
 /**********END LAYOUT**********/
 /**********BEGIN MODULE**********/
@@ -317,9 +339,10 @@ body {
 /**********END NAVBAR**********/
 /**********BEGIN USERCARD**********/
 .usercard {
-  background-color: var(--background-light);
-  font-size: 2em;
+  background: var(--level4-lighten), var(--background-dark);
   text-align: center;
+  border-radius: 10px;
+  padding: 0.5rem 1rem;
 }
 
 .profdetail1 {
@@ -327,17 +350,34 @@ body {
   display: inline-grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-content: flex-end;
+  margin: .2rem 0;
+}
+
+.prof-name, .prof-rank {
+  font-size: 1.8rem;
+  text-align: left;
+  color: var(--diamond-blue)
 }
 
 .profdetail2 {
   width: 100%;
   display: inline-grid;
-  grid-template-columns: 30% 10% 20% 10% 35%;
+  grid-template-columns: 25% 15% 20% 15% 25%;
+}
+
+.leaderboard-usercard {
+  margin: .5rem;
 }
 /**********END USERCARD**********/
 /**********BEGIN LEADERBOARD**********/
 .leaderboard-container {
   height: 100vh;
+}
+
+.portfolio-container {
+  margin: 0.5rem;
+  border-radius: 20px;
+
 }
 
 .container, p {
