@@ -12,8 +12,8 @@
 
 ## Features
 * The main features of this appalication include:
-  - Secure Login
-    - ![Image of Login](./readme-imgs/login/main.png) ![Image of Register](./readme-imgs/login/register.png)
+  ### Secure Login
+    ![Image of Login](./readme-imgs/login/main.png) ![Image of Register](./readme-imgs/login/register.png)
 
   - Leaderboard of all users of the application, ranked by net gain
   - View your profile with stocks owned, cash, and portfolio value
