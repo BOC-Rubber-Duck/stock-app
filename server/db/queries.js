@@ -138,7 +138,7 @@ class Db {
       LEFT OUTER JOIN friendships AS f
       ON u.id = f.watched_user
       AND f.watching_user = '${userId}'
-      ORDER BY (u.cash_position + u.portfolio_value)
+      ORDER BY (u.cash_position + u.portfolio_value) DESC
       OFFSET ${offset}
       LIMIT ${entries};
     `;
@@ -155,7 +155,7 @@ class Db {
     cash_position,
     portfolio_value
     FROM users AS u
-    ORDER BY (u.cash_position + u.portfolio_value) $$
+    ORDER BY (u.cash_position + u.portfolio_value) DESC $$
     LANGUAGE SQL;
     `;
     return this.query(query);
@@ -177,7 +177,7 @@ class Db {
       INNER JOIN friendships AS f
       ON u.id = f.watched_user
       AND f.watching_user = '${userId}'
-      ORDER BY (u.cash_position + u.portfolio_value)
+      ORDER BY (u.cash_position + u.portfolio_value) DESC
       OFFSET ${offset}
       LIMIT ${entries};
     `;
@@ -204,6 +204,17 @@ class Db {
     (id, user_id, ticker_symbol, exchange, transaction_type, amount, strike_price)
     VALUES
     ('${uuidv4()}', '${user_id}', '${ticker_symbol}', '${exchange}', ${transactionType}, ${amount}, ${strikePrice});
+    `;
+    return this.query(query);
+  };
+
+  postPosition(user_id, ticker_symbol, exchange, amount) {
+    let query =`
+    INSERT INTO positions
+    (id, user_id, ticker_symbol, exchange, amount)
+    VALUES
+    ('${uuidv4()}', '${user_id}', ${ticker_symbol}', '${exchange}', ${amount})
+    ON CONFLICT (ticker_symbol) DO UPDATE SET amount = EXCLUDED.amount;
     `;
     return this.query(query);
   };

@@ -45,7 +45,7 @@ test('Stockbars do not render a value for type stockSearch', () => {
     amount: 350000
   };
 
-  render(<Stockbar stock={stockData} useCase='stockSearch'/>);
+  render(<Stockbar stock={stockData} showPrice={false}/>);
   expect(screen.queryByText('$')).not.toBeInTheDocument();
 });
 
@@ -57,6 +57,6 @@ test('Stockbar does render value for type portfolio', () => {
     valueOwned: 350000
   };
 
-  render(<Stockbar stock={stockData} useCase='portfolio'/>);
-  expect(screen.getByText('$350000')).toBeInTheDocument();
+  render(<Stockbar stock={stockData} showValue={true}/>);
+  expect(screen.getByText('$350000.00')).toBeInTheDocument();
 });

@@ -29,7 +29,7 @@ test('StockDetailPage renders stock symbol, name, and price', () => {
   render(<StockDetailPage stockSelected={stockSelected} user={user}/>);
   expect(screen.getByText('Tesla')).toBeInTheDocument();
   expect(screen.getByText('TSLA')).toBeInTheDocument();
-  expect(screen.getByText('$100')).toBeInTheDocument();
+  expect(screen.getByText('$100.00')).toBeInTheDocument();
 });
 
 test('StockDetailPage renders buy button when user has enough cash balance', () => {

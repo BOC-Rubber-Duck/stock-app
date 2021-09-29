@@ -12,12 +12,12 @@ beforeEach(() => {
     last_name: '',
     username: 'RubberDuck',
     email: '',
-    cashBalance: 200000,
+    cashBalance: 2000000,
     rank: 2,
     userPortfolio: [],
-    portfolioValue: 1050000
+    portfolioValue: 10500000
   };
-  render(<Usercard user={user}/>);
+  render(<Usercard user={user} self={true}/>);
 });
 
 afterEach(() => {
@@ -30,10 +30,10 @@ test('Usercard renders username and rank', () => {
 });
 
 test('Usercard renders cash balance and stock value', () => {
-  expect(screen.getByText('$200000')).toBeInTheDocument();
-  expect(screen.getByText('$1050000')).toBeInTheDocument();
+  expect(screen.getByText('$20000')).toBeInTheDocument();
+  expect(screen.getByText('$10500000')).toBeInTheDocument();
 });
 
 test('Usercard renders total net gain/loss', () => {
-  expect(screen.getByText('25.00%')).toBeInTheDocument();
+  expect(screen.getByText('952.00%')).toBeInTheDocument();
 });

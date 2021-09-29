@@ -5,7 +5,6 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   useHistory
 } from 'react-router-dom';
 import Portfolio from './Portfolio/Portfolio.jsx';
@@ -14,7 +13,6 @@ import Leaderboard from './Leaderboard.jsx';
 import Trade from './Trade/Trade.jsx';
 import Navbar from './Navbar.jsx';
 import Friend from './Friend.jsx';
-// import StockDetailPage from './StockDetailPage.jsx';
 import Searchbar from './Searchbar.jsx';
 
 class App extends React.Component {
@@ -29,6 +27,7 @@ class App extends React.Component {
         email: '',
         cashBalance: 0,
         rank: 0,
+        portfolioValue: 0,
         userPortfolio: [
           {
             amount: 0,
@@ -44,16 +43,16 @@ class App extends React.Component {
       },
       sessionInfo: {}, // need to be populated with passport
       selectedFriend: {
-        username: '',
-        rank: 0,
+        id: '',
+        first_name: '',
+        last_name: '',
+        username: 'selectedFriendDefault',
+        email: '',
+        cashBalance: 10,
         portfolioValue: 0,
-        selectedFriendPortfolio: [
-        //  {
-        //     name:
-        //     symbol
-        //   },
-        //   {}
-        ]
+        rank: 0,
+        userPortfolio: [],
+        friends: []
       },
       stockSelected: {
         name: '',
@@ -64,7 +63,8 @@ class App extends React.Component {
         ]
       },
       trade: {
-        action: 'sell'
+        action: 'sell',
+        response: null
       }
     };
 
@@ -127,11 +127,13 @@ class App extends React.Component {
             })
               .then((res) => {
                 const rank = res.data[0].rank;
-                const portfolioValue = res.data[0].portfolio_value;
+                const portfolioValue = res.data[0].portfolio_value / 100;
+                const cashBalance = res.data[0].cash_position;
                 const selectedFriend = {
                   username,
                   rank,
                   portfolioValue,
+                  cashBalance,
                   selectedFriendPortfolio
                 };
                 this.setState({
@@ -160,9 +162,12 @@ class App extends React.Component {
     })
       .then((response) => {
         console.log('response to trade POST query:', response);
+        this.setState({
+          trade: { 'response': response.status }
+        });
         return response;
       })
-      .error((err) => {
+      .catch((err) => {
         console.log('error in attempting trade', err);
         return err;
       });
@@ -180,47 +185,65 @@ class App extends React.Component {
     }
     let portfolio = [];
     let friends = [];
-    axios.get('/api/getPortfolio?username='+user)
-      .then((results) => {
-        portfolio = results.data;
-        axios.get('/api/getFriends?username='+user)
+    var rank = 0;
+    axios.get('/api/getRank', {
+      params: {
+        'username': user
+      }
+    })
+      .then((res) => {
+        rank = res.data[0].rank;
+        axios.get('/api/getPortfolio?username='+user)
           .then((results) => {
-            friends = results.data;
-            axios.get('/api/getUser?username='+user)
-              .then((result) => {
-                const { id, first_name, last_name, username, email, cash_position } = result.data;
-                if (self) {
-                  this.setState({
-                    user: {
+            portfolio = results.data;
+            axios.get('/api/getFriends?username='+user)
+              .then((results) => {
+                friends = results.data;
+                axios.get('/api/getUser?username='+user)
+                  .then((result) => {
+                    const { id, first_name, last_name, username, email, cash_position, portfolio_value } = result.data;
+                    var user = {
                       id: id,
                       first_name: first_name,
                       last_name: last_name,
                       username: username,
                       email: email,
                       cashBalance: cash_position,
+                      portfolioValue: portfolio_value,
                       userPortfolio: portfolio,
-                      friends: friends
-                    }
-                  });
-                } else {
-                  // add to some other user in the state
-                  let others = {};
-                  if (this.state.others) {
-                    others = this.state.others;
-                    others[username] = {
-                      first_name: first_name,
-                      last_name: last_name,
-                      username: username,
-                      email: email,
-                      cashBalance: cash_position,
-                      userPortfolio: portfolio,
+                      rank: rank,
                       friends: friends
                     };
-                    this.setState({
-                      others: others
-                    });
-                  }
-                }
+                    if (self) {
+                      this.updatePortfolioValue(user)
+                        .then((updatedUser) => {
+                          this.setState({
+                            'user': updatedUser
+                          });
+                        })
+                        .catch((err) => {
+                          console.log('error updating portfolioValue', err);
+                        });
+                    } else {
+                      // add to some other user in the state
+                      let others = {};
+                      if (this.state.others) {
+                        others = this.state.others;
+                        others[username] = {
+                          first_name: first_name,
+                          last_name: last_name,
+                          username: username,
+                          email: email,
+                          cashBalance: cash_position,
+                          userPortfolio: portfolio,
+                          friends: friends
+                        };
+                        this.setState({
+                          others: others
+                        });
+                      }
+                    };
+                  });
               });
           });
       })
@@ -242,6 +265,38 @@ class App extends React.Component {
       .catch((e) => console.log(e));
   };
 
+  updatePortfolioValue(user) {
+    const stocks = user.userPortfolio;
+    const stockData = stocks.slice();
+    user.portfolioValue = 0;
+
+    return new Promise((resolve, reject) => {
+      axios.all(stockData.map((stock) =>
+        axios.get('/fetchSelectedStock', {
+          params: {
+            'symbol': stock.ticker_symbol
+          }
+        })
+      ))
+        .then(axios.spread((...responses) => {
+          for (var i = 0; i < responses.length; i++) {
+            stocks[i].stockName = responses[i].data.name;
+            stocks[i].valueOwned = (stocks[i].amount * responses[i].data.price);
+            user.portfolioValue += Number(stocks[i].valueOwned);
+          }
+          axios.put('/api/portfolioValue', {'user_id': user.id, 'portfolio_value': user.portfolioValue * 100}).then((queryResults) => {
+            resolve(user);
+          }).catch((err) => {
+            console.log('error writing portfolioValue to db:', err);
+            resolve(user);
+          });
+        }))
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
+
   exitButton() {
     let history = useHistory();
     history.push('/');
@@ -250,7 +305,6 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-
         <React.Fragment>
           {/* <div>
             <nav>
@@ -274,17 +328,23 @@ class App extends React.Component {
           <Switch>
             <Route exact path="/"
               render={() =>
-                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+                <Portfolio
+                  user={this.state.user} self={true} handleStockClick={this.fetchSelectedStock}
+                />
               }/>
             <Route exact path="/leaderboard"
               render={() =>
                 <Leaderboard
-                  user={this.state.user}
+                  user={this.state.user} handleFriendClick={this.selectedUserSearch}
                 />
               }/>
             <Route exact path="/portfolio"
               render={() =>
-                <Portfolio user={this.state.user} onStockClick={this.fetchSelectedStock}/>
+                <Portfolio user={this.state.user} handleStockClick={this.fetchSelectedStock} self={true}/>
+              }/>
+            <Route exact path="/friendPortfolio"
+              render={() =>
+                <Portfolio user={this.state.selectedFriend} handleStockClick={this.fetchSelectedStock} self={false}/>
               }/>
             <Route exact path="/stock-search"
               render={() =>
@@ -294,6 +354,19 @@ class App extends React.Component {
                   handlePredictionClick={this.fetchSelectedStock}
                   userPortfolio={this.state.user.userPortfolio}
                   updateTradeAction={this.updateTradeAction}
+                  showDetails={false}
+                />
+              }
+            />
+            <Route exact path="/stock-details"
+              render={() =>
+                <Searchbar
+                  stockSelected={this.state.stockSelected}
+                  user={this.state.user}
+                  handlePredictionClick={this.fetchSelectedStock}
+                  userPortfolio={this.state.user.userPortfolio}
+                  updateTradeAction={this.updateTradeAction}
+                  showDetails={true}
                 />
               }
             />
@@ -305,11 +378,15 @@ class App extends React.Component {
                   handleTrade={this.handleTrade}
                   action={this.state.trade.action}
                   exitButton={this.exitButton}
+                  tradeResponse={this.state.trade.response}
                 />}
             />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/friend" component={Friend} />
-
+            <Route exact path="/friend"
+              render={() =>
+                <Friend handleFriendClick={this.selectedUserSearch}
+                />}
+            />
           </Switch>
           <Navbar />
         </React.Fragment>

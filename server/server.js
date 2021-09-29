@@ -202,7 +202,7 @@ app.post('/api/postUser', (req, res) => {
 });
 
 app.post('/api/trade', (req, res) => {
-  const user = req.body.user;
+  const user = req.body.user.username;
   const stockSymbol = req.body.stockSymbol;
   const shares = req.body.shares;
   const action = req.body.action;
@@ -239,7 +239,7 @@ app.get('/api/getRank', (req, res) => {
 app.get('/api/getLeaderboard', (req, res) => {
   db.getLeaderboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
-      res.send(data.rows);
+      res.json({results: data.rows, offset: req.query.offset});
     })
     .catch((err) => {
       console.log('Error during getLeaderboard: ', err);
@@ -250,7 +250,7 @@ app.get('/api/getLeaderboard', (req, res) => {
 app.get('/api/getFriendboard', (req, res) => {
   db.getFriendboard(req.query.userId, req.query.offset, req.query.entries)
     .then((data) => {
-      res.send(data.rows);
+      res.json({results: data.rows, offset: req.query.offset});
     })
     .catch((err) => {
       console.log('Error during getFriendboard: ', err);
