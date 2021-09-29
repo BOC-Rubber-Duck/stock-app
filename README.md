@@ -11,15 +11,14 @@
 
 
 ## Features
-* The main features of this appalication include:
   ### Secure Login
-    ![Image of Login](./readme-imgs/login/main.png) ![Image of Register](./readme-imgs/login/register.png)
+    ![Image of Login](./readme-imgs/login/main.png)     ![Image of Register](./readme-imgs/login/register.png)
 
-  - Leaderboard of all users of the application, ranked by net gain
-  - View your profile with stocks owned, cash, and portfolio value
-  - The ability to search for and buy/sell 'stocks'
-  - View stocks owned by other users
-  - "Friend" other users to narrow the leaderboard view
+  ### Leaderboard of all users of the application, ranked by net gain
+  ### View your profile with stocks owned, cash, and portfolio value
+  ### The ability to search for and buy/sell 'stocks'
+  ### View stocks owned by other users
+  ### Friend other users to narrow the leaderboard view
 
 ## Installation (Local Development)
 
