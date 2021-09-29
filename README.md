@@ -20,7 +20,7 @@
   ### View your profile with stocks owned, cash, and portfolio value
   ![Profile](./readme-imgs/profile/profile.png)
   ### The ability to search for and buy/sell 'stocks'
-  ![Search](./readme-imgs/search/search-stock.png)![Graph](./readme-imgs/search/graph.png)![Buy](./readme-imgs/search/buy.png)
+  ![Search](./readme-imgs/search/search-stocks.png)![Graph](./readme-imgs/search/graph.png)![Buy](./readme-imgs/search/buy.png)
   ### View stocks owned by other users
   ![Friend-View](./readme-imgs/profile/friend-prof.png)
 
