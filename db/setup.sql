@@ -122,5 +122,3 @@ SELECT
   (users.cash_position + users.portfolio_value) AS account_value,
   rank() OVER (ORDER BY (users.cash_position + users.portfolio_value) DESC) AS user_rank
 FROM users;
-
-

@@ -27,7 +27,7 @@ const Usercard = (props) => {
         <span></span>
         <span className='prof-stonk-container'>
           <p className='prof-title'>Stonk Value</p>
-          <p className='prof-stonk-val'>${props.user.portfolioValue}</p>
+          <p className='prof-stonk-val'>${props.user.portfolioValue.toFixed(2)}</p>
         </span>
       </div>;
   } else {

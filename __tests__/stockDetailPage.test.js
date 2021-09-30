@@ -49,7 +49,7 @@ test('StockDetailPage renders buy button when user has enough cash balance', () 
 test('StockDetailPage renders sell button when user owns at least 1 share of the stock', () => {
   const stockSelected = {
     name: 'Tesla',
-    symbol: 'TSLA',
+    symbol: 'tsla',
     price: 100,
     data: sampleData.data
   };
@@ -58,7 +58,8 @@ test('StockDetailPage renders sell button when user owns at least 1 share of the
     userPortfolio: [
       {
         stockName: 'Tesla',
-        sharesOwned: 1
+        valueOwned: 100,
+        ticker_symbol: 'TSLA'
       }
     ]
   };
