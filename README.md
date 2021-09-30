@@ -1,5 +1,5 @@
 <p align="center">
-<img src="https://github.com/BOC-Rubber-Duck/Diamond_Hands.png">
+<img src="./Diamond_Hands.png" width="150px">
 </p>
 
 # Diamond Hands Stock App
@@ -9,7 +9,23 @@
 * This Stock "paper-trading" app was the final capstone project for the Hack Reactor <a href="https://www.hackreactor.com/">Software Engineering Immersive Program.</a>
 * The Rubber Ducks engineering team were a part of the Remote Part Time Program Cohort 28 (RPP28)
 
-## Installation (Local Development)
+## Tech Stack:
+* PostgreSQL database
+* Express with express-router
+* React.js
+* Node.js
+
+## Dependencies:
+* The app requires various packages available via NPM. All of these packages are enumerated in the <a href="https://github.com/BOC-Rubber-Duck/stock-app/blob/main/package.json">package.json</a> file in the repository. Installation instructions are in the following sections.
+
+* User accounts authentication is done via <a href="http://www.passportjs.org/docs/configure/">Passportjs.</a> You will need to configure a SESSION_SECRET_KEY as indicated in the <a href="./.env.example">.env.example</a> file.
+
+* In addition to running a server, a PostgreSQL database instance will have to be deployed and accessible to the server. Instructions for doing so are below:
+
+* The stock prices are sourced via a free API service with https://marketstack.com.
+To get an API key, register for a free account  with 1000 API requests/mo here: <a href="https://marketstack.com/documentation">MarketStack API</a>
+
+## Installation (Local Development):
 
 #### In MacOS:
 * From the root directory, install the following:
@@ -29,15 +45,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
 npm install
 ```
 
-### Dependencies
-* The app requires various packages available via NPM. All of these packages are enumerated in the <a href="https://github.com/BOC-Rubber-Duck/stock-app/blob/main/package.json">package.json</a> file in the repository. Installation instructions are in the following sections.
-
-* In addition to running a server, a PostgreSQL database instance will have to be deployed and accessible to the server. Instructions for doing so are below:
-
-* The stock prices are sourced via a free API service with https://marketstack.com.
-To get an API key, register for a free account  with 1000 API requests/mo here: <a href="https://marketstack.com/documentation">MarketStack API</a>
-
-### Running Local
+### Running Local:
 * The following are the scripts that are relevent for local development and deployment (Found in <a href="https://github.com/BOC-Rubber-Duck/stock-app/blob/main/package.json">package.json</a> file):
 1. "react-dev" webpack build script
 ```
@@ -106,7 +114,7 @@ sudo docker ps
 ```
 psql -h localhost -p 49153 -d docker -U docker --password
 ```
-### Deploy Production
+## Production Deployment
 
 ### CI/CD recommendations:
 
@@ -180,9 +188,15 @@ Run the following commands from the './db/' folder of this project:
 ```
 psql -h <IPADDRESS> -U user -d stonks -f setup.sql
 ```
+## Future Features/Improvements:
+* Have clients pay to add the ability to watch stocks (more current stock data)
+* Add a watch list that users can add stocks that they’re interested in & what price they want to watch it for alerts
+* Push notifications if a stock is at the alert price in your watchlist
+* Chronjobs/scheduled server tasks - runs commands at a specified duration → pull stock data for watch list / push notifications
+* Connect to a brokerage API or to the user’s brokerage account that allows users to manage their real stock portfolio
+* Migrate to ReactNative mobile app
 
-
-## Contributions
+## Contributions:
 Members of the Rubber Duck Team ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
