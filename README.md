@@ -9,6 +9,22 @@
 * This Stock "paper-trading" app was the final capstone project for the Hack Reactor <a href="https://www.hackreactor.com/">Software Engineering Immersive Program.</a>
 * The Rubber Ducks engineering team were a part of the Remote Part Time Program Cohort 28 (RPP28)
 
+
+## Features
+  ### Secure Login
+  ![Login](./readme-imgs/login/main.png)
+  ### Leaderboard of all users of the application, ranked by net gain
+  ![Leaderboard](./readme-imgs/leaderboard/leaderboard.png)
+  ### Friend other users to narrow the leaderboard view
+  ![Leaderboard-friends](./readme-imgs/leaderboard/friends.png)
+  ### View your profile with stocks owned, cash, and portfolio value
+  ![Profile](./readme-imgs/profile/profile.png)
+  ### The ability to search for and buy/sell 'stocks'
+  ![Search](./readme-imgs/search/search-stocks.png)![Graph](./readme-imgs/search/graph.png)![Buy](./readme-imgs/search/buy.png)
+  ### View stocks owned by other users
+  ![Friend-View](./readme-imgs/profile/friend-prof.png)
+
+
 ## Installation (Local Development)
 
 #### In MacOS:
